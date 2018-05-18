@@ -4,26 +4,107 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="page == 'main'">
-  <img class="header-image" src="../../assets/img/queen-live.png" >
-  <div class="main-content" text-wrap text-center>
+<ion-content *ngIf="user">
+  <img *ngIf="page == 'main'"  class="header-image" src="../../assets/img/queen-live.png" >
+  <div *ngIf="page == 'main'" class="main-content" text-wrap text-center>
     <div class="circular">
       <img src="../../assets/img/marty-avatar.png">
     </div>
+    <h2>{{user.firstname}} {{user.lastname}}</h2>
+    <p class="profile-description">{{user.description}}</p>
+    <hr>
 
-    <h2>Peter Müller</h2>
-    <p class="profile-description">I save the wrap and the world!</p>
+    <h3>{{'PROFILE_BADGES'|translate}}</h3>
+    <ion-grid class="badges">
+      <ion-row>
+        <ion-col *ngFor="let gotBadge of user.badges" col-3>
+          <ion-icon name="alarm" [color]="gotBadge ? 'primary' : 'dark'"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
     <hr>
     <ion-list no-lines>
-      <button ion-button block [navPush]="subSettings" [navParams]="notificationsSettings">{{'SETTINGS_NOTIFICATIONS'|translate}}</button>
-      <button ion-button block [navPush]="subSettings" [navParams]="profileSettings">{{'SETTINGS_PROFILE'|translate}}</button>
-      <button ion-button block [navPush]="subSettings" [navParams]="locationSettings">{{'SETTINGS_LOCATION'|translate}}</button>
-      <button ion-button block>{{'SETTINGS_LOGOUT'|translate}}</button>
+      <button ion-button block [navPush]="subSettings" [navParams]="notificationsSettings">{{'SETTINGS_NOTIFICATIONS'|translate|uppercase}}</button>
+      <button ion-button block [navPush]="subSettings" [navParams]="profileSettings">{{'SETTINGS_PROFILE'|translate|uppercase}}</button>
+      <button ion-button block [navPush]="subSettings" [navParams]="locationSettings">{{'SETTINGS_LOCATION'|translate|uppercase}}</button>
+      <button ion-button block>{{'SETTINGS_LOGOUT'|translate|uppercase}}</button>
     </ion-list>
   </div>
-</ion-content>
 
-<ion-content *ngIf="page == 'notifications'">
+  <div *ngIf="page == 'notifications'" class="main-content" text-wrap text-center>
+      <ion-list no-lines>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_FRIEND'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_FOOD'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_MESSAGE'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_RECIPE'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <button ion-button block>{{'SAVE'|translate|uppercase}}</button>
+      </ion-list>
+  </div>
+
+  <div *ngIf="page == 'profile'" class="main-content" text-wrap text-center>
+    <ion-list no-lines>
+      <ion-item>
+        <ion-icon name="person" item-start></ion-icon>
+        <ion-input placeholder="{{'PROFILE_FIRSTNAME'|translate|uppercase}}" [(ngModel)]="user.firstname"></ion-input>
+        <ion-input placeholder="{{'PROFILE_LASTNAME'|translate|uppercase}}" [(ngModel)]="user.lastname"></ion-input>
+      </ion-item>
+      <hr>
+      <ion-item>
+        <ion-icon name="mail" item-start></ion-icon>
+        <ion-input placeholder="{{'PROFILE_EMAIL'|translate|uppercase}}" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
+      <hr>
+      <ion-item>
+        <ion-icon name="call" item-start></ion-icon>
+        <ion-input placeholder="{{'PROFILE_PHONE'|translate|uppercase}}" [(ngModel)]="user.phone"></ion-input>
+      </ion-item>
+      <hr>
+      <ion-item>
+        <ion-icon name="home" item-start></ion-icon>
+        <ion-input placeholder="{{'PROFILE_STREET'|translate|uppercase}}" [(ngModel)]="user.address.street"></ion-input>
+        <ion-input placeholder="{{'PROFILE_NUMBER'|translate|uppercase}}" [(ngModel)]="user.address.number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon class="hiddenIcon" name="home" item-start></ion-icon>
+        <ion-input placeholder="{{'PROFILE_ZIP'|translate|uppercase}}" [(ngModel)]="user.address.zip"></ion-input>
+        <ion-input placeholder="{{'PROFILE_CITY'|translate|uppercase}}" [(ngModel)]="user.address.city"></ion-input>
+      </ion-item>
+      <hr>
+      <button ion-item>
+        <ion-icon name="contact" item-start></ion-icon>
+        Profilbild
+      </button>
+      <hr>
+      <button ion-item>
+        <ion-icon name="image" item-start></ion-icon>
+        Hintergrundbild
+      </button>
+      <hr>
+      <ion-item>
+        <ion-icon name="book" item-start></ion-icon>
+        <ion-textarea rows="4"
+                      placeholder="{{'PROFILE_DESCRIPTION'|translate|uppercase}}"
+                      [(ngModel)]="user.description"></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <button ion-button block>{{'SAVE'|translate|uppercase}}</button>
+    <button ion-button block color="danger">{{'PROFILE_DELETE_ACCOUNT'|translate|uppercase}}</button>
+  </div>
+
+  <div *ngIf="page == 'location'" class="main-content" text-wrap text-center>
     <ion-list no-lines>
       <ion-item>
         <ion-icon name="mail" color="primary" item-start></ion-icon>
@@ -32,27 +113,5 @@
       </ion-item>
       <button ion-button block>{{'SAVE'|translate}}</button>
     </ion-list>
-</ion-content>
-
-<ion-content *ngIf="page == 'profile'">
-    <ion-list no-lines>
-      <ion-item>
-        <ion-icon name="mail" color="primary" item-start></ion-icon>
-        <p>Email</p>
-        123test@email.com
-      </ion-item>
-      <button ion-button block>{{'SAVE'|translate}}</button>
-    </ion-list>
-    <button ion-button block color="danger" (click)="deleteAccount(user)">Delete Account</button>
-</ion-content>
-
-<ion-content *ngIf="page == 'location'">
-    <ion-list no-lines>
-      <ion-item>
-        <ion-icon name="mail" color="primary" item-start></ion-icon>
-        <p>Email</p>
-        123test@email.com
-      </ion-item>
-      <button ion-button block>{{'BUTTON_SAVE'|translate}}</button>
-    </ion-list>
+  </div>
 </ion-content>

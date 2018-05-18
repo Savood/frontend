@@ -24,8 +24,24 @@
   "SETTINGS_PROFILE": "Profil ändern",
   "SETTINGS_LOCATION": "Standort",
   "SETTINGS_LOGOUT": "Abmelden",
-
   "SAVE": "Speichern",
+
+  "PROFILE_BADGES": "Abzeichen",
+  "PROFILE_FIRSTNAME": "Vorname",
+  "PROFILE_LASTNAME": "Nachname",
+  "PROFILE_EMAIL": "E-Mail",
+  "PROFILE_DESCRIPTION": "Beschreibung",
+  "PROFILE_PHONE": "Telefon",
+  "PROFILE_DELETE_ACCOUNT": "Konto löschen",
+  "PROFILE_STREET": "Straße",
+  "PROFILE_NUMBER": "Hausnummer",
+  "PROFILE_ZIP": "Postleitzahl",
+  "PROFILE_CITY": "Stadt",
+
+  "NOTIFICATIONS_FRIEND": "Neue Freunde",
+  "NOTIFICATIONS_FOOD": "Neue Lebensmittel in der Nähe",
+  "NOTIFICATIONS_MESSAGE": "Neue Nachrichten",
+  "NOTIFICATIONS_RECIPE": "Neue Rezepte" ,
 
   "WELCOME_TITLE": "Willkommen",
 
