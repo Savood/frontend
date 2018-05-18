@@ -1,45 +1,58 @@
 <ion-header>
-
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>{{ pageTitle }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="page == 'main'">
+  <img class="header-image" src="../../assets/img/queen-live.png" >
+  <div class="main-content" text-wrap text-center>
+    <div class="circular">
+      <img src="../../assets/img/marty-avatar.png">
+    </div>
 
-  <form [formGroup]="form" *ngIf="settingsReady">
-    <ion-list *ngIf="page == 'main'">
-      <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION1' | translate }}</ion-label>
-        <ion-toggle formControlName="option1"></ion-toggle>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION2' | translate }}</ion-label>
-        <ion-input formControlName="option2"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION3' | translate }}</ion-label>
-        <ion-select formControlName="option3">
-          <ion-option value="1" checked="true">1</ion-option>
-          <ion-option value="2">2</ion-option>
-          <ion-option value="3">3</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <button ion-item [navPush]="subSettings" [navParams]="profileSettings">
-        {{ 'SETTINGS_PROFILE_BUTTON' | translate }}
-      </button>
+    <h2>Peter Müller</h2>
+    <p class="profile-description">I save the wrap and the world!</p>
+    <hr>
+    <ion-list no-lines>
+      <button ion-button block [navPush]="subSettings" [navParams]="notificationsSettings">{{'SETTINGS_NOTIFICATIONS'|translate}}</button>
+      <button ion-button block [navPush]="subSettings" [navParams]="profileSettings">{{'SETTINGS_PROFILE'|translate}}</button>
+      <button ion-button block [navPush]="subSettings" [navParams]="locationSettings">{{'SETTINGS_LOCATION'|translate}}</button>
+      <button ion-button block>{{'SETTINGS_LOGOUT'|translate}}</button>
     </ion-list>
+  </div>
+</ion-content>
 
-    <ion-list *ngIf="page == 'profile'">
+<ion-content *ngIf="page == 'notifications'">
+    <ion-list no-lines>
       <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION4' | translate }}</ion-label>
-        <ion-input formControlName="option4"></ion-input>
+        <ion-icon name="mail" color="primary" item-start></ion-icon>
+        <p>Email</p>
+        123test@email.com
       </ion-item>
+      <button ion-button block>{{'SAVE'|translate}}</button>
     </ion-list>
-  </form>
+</ion-content>
 
+<ion-content *ngIf="page == 'profile'">
+    <ion-list no-lines>
+      <ion-item>
+        <ion-icon name="mail" color="primary" item-start></ion-icon>
+        <p>Email</p>
+        123test@email.com
+      </ion-item>
+      <button ion-button block>{{'SAVE'|translate}}</button>
+    </ion-list>
+    <button ion-button block color="danger" (click)="deleteAccount(user)">Delete Account</button>
+</ion-content>
+
+<ion-content *ngIf="page == 'location'">
+    <ion-list no-lines>
+      <ion-item>
+        <ion-icon name="mail" color="primary" item-start></ion-icon>
+        <p>Email</p>
+        123test@email.com
+      </ion-item>
+      <button ion-button block>{{'BUTTON_SAVE'|translate}}</button>
+    </ion-list>
 </ion-content>

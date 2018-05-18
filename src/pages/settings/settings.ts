@@ -25,7 +25,17 @@ export class SettingsPage {
 
   profileSettings = {
     page: 'profile',
-    pageTitleKey: 'SETTINGS_PAGE_PROFILE'
+    pageTitleKey: 'SETTINGS_PROFILE'
+  };
+
+  locationSettings = {
+    page: 'profile',
+    pageTitleKey: 'SETTINGS_LOCATION'
+  };
+
+  notificationsSettings = {
+    page: 'profile',
+    pageTitleKey: 'SETTINGS_NOTIFICATIONS'
   };
 
   page: string = 'main';
@@ -79,7 +89,7 @@ export class SettingsPage {
 
     this.translate.get(this.pageTitleKey).subscribe((res) => {
       this.pageTitle = res;
-    })
+    });
 
     this.settings.load().then(() => {
       this.settingsReady = true;
