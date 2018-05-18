@@ -11,19 +11,21 @@
   "TAB1_TITLE": "Items",
   "TAB2_TITLE": "Suche",
   "TAB3_TITLE": "Nachrichten",
-  "TAB4_TITLE": "Einstellung",
+  "TAB4_TITLE": "Account",
 
   "MAP_TITLE": "Karte",
 
   "WELCOME_INTRO": "Der Startpunkt für Deine nächste tolle Ionic App",
 
-  "SETTINGS_TITLE": "Einstellungen",
-  "SETTINGS_OPTION1": "Option 1",
-  "SETTINGS_OPTION2": "Option 2",
-  "SETTINGS_OPTION3": "Option 3",
-  "SETTINGS_OPTION4": "Option 4",
-
+  "SETTINGS_TITLE": "Mein Savood",
   "SETTINGS_PAGE_PROFILE": "Profil ändern",
+
+  "SETTINGS_NOTIFICATIONS": "Benachrichtigungen",
+  "SETTINGS_PROFILE": "Profil ändern",
+  "SETTINGS_LOCATION": "Standort",
+  "SETTINGS_LOGOUT": "Abmelden",
+
+  "SAVE": "Speichern",
 
   "WELCOME_TITLE": "Willkommen",
 
