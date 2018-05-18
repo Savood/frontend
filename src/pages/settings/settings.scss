@@ -1,24 +1,9 @@
 page-settings {
 
-  .header-image {
-    //background-image: url(../../assets/img/background/background-2.jpg);
-    height: 30vh;
-    width: 100%;
-    background-size: cover;
-    background-position: center center;
-    position: relative;
-    z-index: -1;
-    object-fit: cover;
-    object-position: center;
+  .badges ion-row ion-col ion-icon{
+    font-size: 2em;
+  }
 
-  }
-  .main-content {
-    margin-top: -20px;
-    padding: 20px;
-    background-color: white;
-    // background: #F5F5F5;
-    position: relative !important;
-  }
   .circular {
     width: 200px;
     height: 200px;
@@ -34,11 +19,9 @@ page-settings {
 
     background: map-get($colors, secondary);
 
-
-    img{
+    img {
       height: 200px;
       width: 200px;
-
 
       object-fit: cover;
 
@@ -49,10 +32,44 @@ page-settings {
 
       //border-radius: 50%;
     }
-
   }
+
+  .header-image {
+    //background-image: url(../../assets/img/background/background-2.jpg);
+    height: 30vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    z-index: -1;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hiddenIcon{
+    color: white;
+  }
+
+  .input-cover{
+    display: none;
+  }
+
+  ion-item, ion-item .item-inner{
+    border-bottom: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  .main-content {
+    margin-top: -20px;
+    padding: 20px 20px 0 20px;
+    background-color: white;
+    // background: #F5F5F5;
+    position: relative !important;
+  }
+
   .profile-description {
     font-size: 15px;
-    color: #888;
+    color: map-get($colors, dark);
   }
 }

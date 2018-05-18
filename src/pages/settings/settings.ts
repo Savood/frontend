@@ -17,11 +17,31 @@ import { Settings } from '../../providers';
 })
 export class SettingsPage {
   // Our local settings object
+  user: any = {
+    avatarURL: '',
+    firstname: 'Marty',
+    lastname: 'McFly',
+    email: '123test@email.com',
+    phone: '202-555-0191',
+    address: {
+      street: 'Musterstraße',
+      number: '1337',
+      zip: '42069',
+      city: 'Musterstadt'
+    },
+    description: 'I save the wrap and the world',
+    badges: [true,false,true,true,true,false,false,true,false]
+  };
+
   options: any;
 
   settingsReady = false;
 
   form: FormGroup;
+
+  page: string = 'main';
+  pageTitleKey: string = 'SETTINGS_TITLE';
+  pageTitle: string;
 
   profileSettings = {
     page: 'profile',
@@ -29,18 +49,14 @@ export class SettingsPage {
   };
 
   locationSettings = {
-    page: 'profile',
+    page: 'location',
     pageTitleKey: 'SETTINGS_LOCATION'
   };
 
   notificationsSettings = {
-    page: 'profile',
+    page: 'notifications',
     pageTitleKey: 'SETTINGS_NOTIFICATIONS'
   };
-
-  page: string = 'main';
-  pageTitleKey: string = 'SETTINGS_TITLE';
-  pageTitle: string;
 
   subSettings: any = SettingsPage;
 
