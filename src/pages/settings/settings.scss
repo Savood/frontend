@@ -34,8 +34,22 @@ page-settings {
     }
   }
 
+  .content-location {
+    position: relative !important;
+    overflow: hidden;
+  }
+
+  .content-main {
+    margin-top: -24px;
+    padding: 24px 24px 0 24px;
+    position: relative !important;
+  }
+
+  .content-profile {
+    padding: 24px;
+  }
+
   .header-image {
-    //background-image: url(../../assets/img/background/background-2.jpg);
     height: 30vh;
     width: 100%;
     background-size: cover;
@@ -60,12 +74,9 @@ page-settings {
     box-shadow: none !important;
   }
 
-  .main-content {
-    margin-top: -20px;
-    padding: 20px 20px 0 20px;
-    background-color: white;
-    // background: #F5F5F5;
-    position: relative !important;
+  #map{
+    height: 45vh;
+    width: 100%;
   }
 
   .profile-description {

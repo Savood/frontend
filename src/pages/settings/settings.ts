@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Settings } from '../../providers';
+import {} from '@types/googlemaps';
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -67,30 +68,6 @@ export class SettingsPage {
     public translate: TranslateService) {
   }
 
-  _buildForm() {
-    let group: any = {
-      option1: [this.options.option1],
-      option2: [this.options.option2],
-      option3: [this.options.option3]
-    };
-
-    switch (this.page) {
-      case 'main':
-        break;
-      case 'profile':
-        group = {
-          option4: [this.options.option4]
-        };
-        break;
-    }
-    this.form = this.formBuilder.group(group);
-
-    // Watch the form for changes, and
-    this.form.valueChanges.subscribe((v) => {
-      this.settings.merge(this.form.value);
-    });
-  }
-
   ionViewDidLoad() {
     // Build an empty form for the template to render
     this.form = this.formBuilder.group({});
@@ -110,12 +87,27 @@ export class SettingsPage {
     this.settings.load().then(() => {
       this.settingsReady = true;
       this.options = this.settings.allSettings;
-
-      this._buildForm();
     });
+  }
+
+  ionViewDidEnter() {
+    if(this.navParams.get('page') == 'location'){
+      this.initMap();
+    }
   }
 
   ngOnChanges() {
     console.log('Ng All Changes');
+  }
+
+  initMap(){
+    let map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 4,
+      center: {lat: 49.474265, lng: 8.534308}
+    });
+    let marker = new google.maps.Marker({
+      position: {lat: 49.474206, lng: 8.5343926},
+      map: map
+    });
   }
 }

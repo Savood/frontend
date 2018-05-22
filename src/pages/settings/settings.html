@@ -6,7 +6,7 @@
 
 <ion-content *ngIf="user">
   <img *ngIf="page == 'main'"  class="header-image" src="../../assets/img/queen-live.png" >
-  <div *ngIf="page == 'main'" class="main-content" text-wrap text-center>
+  <div *ngIf="page == 'main'" class="content-main" text-wrap text-center>
     <div class="circular">
       <img src="../../assets/img/marty-avatar.png">
     </div>
@@ -25,14 +25,22 @@
 
     <hr>
     <ion-list no-lines>
-      <button ion-button block [navPush]="subSettings" [navParams]="notificationsSettings">{{'SETTINGS_NOTIFICATIONS'|translate|uppercase}}</button>
-      <button ion-button block [navPush]="subSettings" [navParams]="profileSettings">{{'SETTINGS_PROFILE'|translate|uppercase}}</button>
-      <button ion-button block [navPush]="subSettings" [navParams]="locationSettings">{{'SETTINGS_LOCATION'|translate|uppercase}}</button>
-      <button ion-button block>{{'SETTINGS_LOGOUT'|translate|uppercase}}</button>
+      <button ion-button block [navPush]="subSettings" [navParams]="notificationsSettings">
+        {{'SETTINGS_NOTIFICATIONS'|translate|uppercase}}
+      </button>
+      <button ion-button block [navPush]="subSettings" [navParams]="profileSettings">
+        {{'SETTINGS_PROFILE'|translate|uppercase}}
+      </button>
+      <button ion-button block [navPush]="subSettings" [navParams]="locationSettings">
+        {{'SETTINGS_LOCATION'|translate|uppercase}}
+      </button>
+      <button ion-button block>
+        {{'SETTINGS_LOGOUT'|translate|uppercase}}
+      </button>
     </ion-list>
   </div>
 
-  <div *ngIf="page == 'notifications'" class="main-content" text-wrap text-center>
+  <div *ngIf="page == 'notifications'" class="content-notifications" text-wrap text-center>
       <ion-list no-lines>
         <ion-item>
           <ion-label>{{'NOTIFICATIONS_FRIEND'|translate}}</ion-label>
@@ -54,7 +62,7 @@
       </ion-list>
   </div>
 
-  <div *ngIf="page == 'profile'" class="main-content" text-wrap text-center>
+  <div *ngIf="page == 'profile'" class="content-profile" text-wrap text-center>
     <ion-list no-lines>
       <ion-item>
         <ion-icon name="person" item-start></ion-icon>
@@ -104,14 +112,8 @@
     <button ion-button block color="danger">{{'PROFILE_DELETE_ACCOUNT'|translate|uppercase}}</button>
   </div>
 
-  <div *ngIf="page == 'location'" class="main-content" text-wrap text-center>
-    <ion-list no-lines>
-      <ion-item>
-        <ion-icon name="mail" color="primary" item-start></ion-icon>
-        <p>Email</p>
-        123test@email.com
-      </ion-item>
-      <button ion-button block>{{'SAVE'|translate}}</button>
-    </ion-list>
+  <div *ngIf="page == 'location'" class="content-location" text-wrap text-center>
+    <div id="map"></div>
+    <button ion-button block>{{'SAVE'|translate}}</button>
   </div>
 </ion-content>
