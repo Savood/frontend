@@ -1,10 +1,10 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
 
 import { Settings } from '../../providers';
-// import {} from '@types/googlemaps';
+import {} from '@types/googlemaps';
 import {
   GoogleMaps,
   GoogleMap,
@@ -12,7 +12,7 @@ import {
   GoogleMapOptions,
   CameraPosition,
   MarkerOptions,
-  Marker
+  Marker, LatLng
 } from '@ionic-native/google-maps';
 
 /**
@@ -28,6 +28,7 @@ import {
 export class SettingsPage {
 
   map: GoogleMap;
+  @ViewChild('map') mapElement : ElementRef;
 
   // Our local settings object
   user: any = {
@@ -77,7 +78,8 @@ export class SettingsPage {
     public settings: Settings,
     public formBuilder: FormBuilder,
     public navParams: NavParams,
-    public translate: TranslateService) {
+    public translate: TranslateService,
+    public plt: Platform) {
   }
 
   ionViewDidLoad() {
@@ -113,57 +115,33 @@ export class SettingsPage {
   }
 
   initMap(){
-    let mapOptions: GoogleMapOptions = {
-      camera: {
-        target: {
-          lat: 43.0741904,
-          lng: -89.3809802
-        },
-        zoom: 18,
-        tilt: 30
-      }
-    };
+    let location: LatLng = new LatLng(49.474265, 8.534308);
 
-    this.map = GoogleMaps.create('map_canvas', mapOptions);
+    if(this.plt.is('ios') ||this.plt.is('android')){
 
-    // Wait the MAP_READY before using any methods.
-    this.map.one(GoogleMapsEvent.MAP_READY)
-      .then(() => {
-        console.log('Map is ready!');
+      let mapOptions: GoogleMapOptions = {
+        camera: {
+          target: location,
+          zoom: 15,
+        }
+      };
 
-        // Now you can use all methods safely.
-        this.map.addMarker({
-          title: 'Ionic',
-          icon: 'blue',
-          animation: 'DROP',
-          position: {
-            lat: 43.0741904,
-            lng: -89.3809802
-          }
-        })
-          .then(marker => {
-            marker.on(GoogleMapsEvent.MARKER_CLICK)
-              .subscribe(() => {
-                alert('clicked');
-              });
-          });
+      this.map = GoogleMaps.create(this.mapElement.nativeElement, mapOptions);
 
+      this.map.addMarker({
+        title: 'Ionic',
+        icon: 'blue',
+        position: location
       });
-
-  //   let map = new plugin.google.maps.Map(this.map.nativeElement, {
-  //     zoom: 4,
-  //     center: {lat: 49.474265, lng: 8.534308}
-  //   });
-  //   let marker = new google.maps.Marker({
-  //     position: {lat: 49.474206, lng: 8.5343926},
-  //     map: map
-  //   });
-  //   map.animateCamera({
-  //     target: {lat: 37.422359, lng: -122.084344},
-  //     zoom: 17,
-  //     tilt: 60,
-  //     bearing: 140,
-  //     duration: 5000
-  //   });
+    }else{
+      let map = new google.maps.Map(this.mapElement.nativeElement, {
+        zoom: 15,
+        center: location
+      });
+      let marker = new google.maps.Marker({
+        position: location,
+        map: map
+      });
+    }
   }
 }
