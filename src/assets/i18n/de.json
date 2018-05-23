@@ -42,6 +42,8 @@
   "NOTIFICATIONS_FOOD": "Neue Lebensmittel in der Nähe",
   "NOTIFICATIONS_MESSAGE": "Neue Nachrichten",
   "NOTIFICATIONS_RECIPE": "Neue Rezepte" ,
+  "PICKOFF_LOCATION": "Abholort",
+  "USE_CURRENT_LOCATION": "Aktuellen Standort verwenden",
 
   "WELCOME_TITLE": "Willkommen",
 
