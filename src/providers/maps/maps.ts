@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import {ElementRef, Injectable} from '@angular/core';
 import {Platform} from "ionic-angular";
-import {GoogleMaps, LatLng} from "@ionic-native/google-maps";
+import {GoogleMap, GoogleMaps, LatLng} from "@ionic-native/google-maps";
 
 /*
   Generated class for the MapsService provider.
@@ -39,6 +39,25 @@ export class MapsService {
         map: map
       });
     }
+  }
+
+  //TODO: needs testing
+  addMarker(location: LatLng, title: String, map: any){
+    if(map instanceof GoogleMap) {
+      map.addMarker({
+        title: 'Ionic',
+        icon: 'red',
+        position: location
+      });
+    }
+
+    if(map instanceof google.maps.Map) {
+      new google.maps.Marker({
+        position: location,
+        map: map
+      });
+    }
+
   }
 
 }
