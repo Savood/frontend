@@ -42,7 +42,7 @@ export class MapsService {
   }
 
   //TODO: needs testing
-  addMarker(location: LatLng, title: String, map: any){
+  newMarker(location: LatLng, title: String, map: any){
     if(map instanceof GoogleMap) {
       map.addMarker({
         title: 'Ionic',
