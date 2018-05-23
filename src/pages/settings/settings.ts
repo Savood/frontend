@@ -4,7 +4,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Settings } from '../../providers';
-import {} from '@types/googlemaps';
+// import {} from '@types/googlemaps';
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  MarkerOptions,
+  Marker
+} from '@ionic-native/google-maps';
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -18,7 +27,7 @@ import {} from '@types/googlemaps';
 })
 export class SettingsPage {
 
-  @ViewChild('map') map: ElementRef;
+  map: GoogleMap;
 
   // Our local settings object
   user: any = {
@@ -104,13 +113,57 @@ export class SettingsPage {
   }
 
   initMap(){
-    let map = new google.maps.Map(this.map.nativeElement, {
-      zoom: 4,
-      center: {lat: 49.474265, lng: 8.534308}
-    });
-    let marker = new google.maps.Marker({
-      position: {lat: 49.474206, lng: 8.5343926},
-      map: map
-    });
+    let mapOptions: GoogleMapOptions = {
+      camera: {
+        target: {
+          lat: 43.0741904,
+          lng: -89.3809802
+        },
+        zoom: 18,
+        tilt: 30
+      }
+    };
+
+    this.map = GoogleMaps.create('map_canvas', mapOptions);
+
+    // Wait the MAP_READY before using any methods.
+    this.map.one(GoogleMapsEvent.MAP_READY)
+      .then(() => {
+        console.log('Map is ready!');
+
+        // Now you can use all methods safely.
+        this.map.addMarker({
+          title: 'Ionic',
+          icon: 'blue',
+          animation: 'DROP',
+          position: {
+            lat: 43.0741904,
+            lng: -89.3809802
+          }
+        })
+          .then(marker => {
+            marker.on(GoogleMapsEvent.MARKER_CLICK)
+              .subscribe(() => {
+                alert('clicked');
+              });
+          });
+
+      });
+
+  //   let map = new plugin.google.maps.Map(this.map.nativeElement, {
+  //     zoom: 4,
+  //     center: {lat: 49.474265, lng: 8.534308}
+  //   });
+  //   let marker = new google.maps.Marker({
+  //     position: {lat: 49.474206, lng: 8.5343926},
+  //     map: map
+  //   });
+  //   map.animateCamera({
+  //     target: {lat: 37.422359, lng: -122.084344},
+  //     zoom: 17,
+  //     tilt: 60,
+  //     bearing: 140,
+  //     duration: 5000
+  //   });
   }
 }
