@@ -4,9 +4,9 @@ import { IonicPage, NavController } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-cards',
-  templateUrl: 'cards.html'
+  templateUrl: 'offerings.html'
 })
-export class CardsPage {
+export class OfferingsPage {
   cardItems: any[];
 
   constructor(public navCtrl: NavController) {
