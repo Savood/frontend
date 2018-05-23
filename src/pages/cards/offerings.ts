@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import {FabContainer, IonicPage, NavController} from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,6 +8,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 })
 export class OfferingsPage {
   cardItems: any[];
+  toggle = false;
 
   constructor(public navCtrl: NavController) {
     this.cardItems = [
@@ -41,4 +42,6 @@ export class OfferingsPage {
     ];
 
   }
+
+
 }
