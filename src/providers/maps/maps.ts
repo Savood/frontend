@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {ElementRef, Injectable} from '@angular/core';
 import {Platform} from "ionic-angular";
 import {GoogleMap, GoogleMaps, LatLng} from "@ionic-native/google-maps";
@@ -13,23 +13,34 @@ import {GoogleMap, GoogleMaps, LatLng} from "@ionic-native/google-maps";
 export class MapsService {
 
   constructor(public http: HttpClient,
-    public plt: Platform) {
+              public plt: Platform) {
   }
 
-  initMap(location: LatLng, mapElement: ElementRef){
-    if(this.plt.is('ios') ||this.plt.is('android')) {
+  initMap(mapElement: ElementRef) {
+    if (this.plt.is('ios') || this.plt.is('android')) {
       let map = GoogleMaps.create(mapElement.nativeElement, {
         camera: {
-          target: location,
+          target: {lat: -34.397, lng: 150.644},
           zoom: 15,
         }
       });
       map.addMarker({
         title: 'Ionic',
         icon: 'red',
-        position: location
+        position: {lat: -34.397, lng: 150.644}
       });
     } else {
+      let location: LatLng = new LatLng( -34.397, 150.644);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            location = new LatLng(position.coords.latitude, position.coords.longitude);
+          },
+          (error) => {
+            console.log(error)
+          }
+        )
+      }
       let map = new google.maps.Map(mapElement.nativeElement, {
         zoom: 15,
         center: location
@@ -42,18 +53,20 @@ export class MapsService {
   }
 
   //TODO: needs testing
-  newMarker(location: LatLng, title: String, map: any){
-    if(map instanceof GoogleMap) {
+  newMarker(location: LatLng, title: string, map: any) {
+    if (map instanceof GoogleMap) {
       map.addMarker({
-        title: 'Ionic',
+        title: title,
         icon: 'red',
         position: location
       });
     }
 
-    if(map instanceof google.maps.Map) {
+    if (map instanceof google.maps.Map) {
       new google.maps.Marker({
+        title: title,
         position: location,
+        icon: 'red',
         map: map
       });
     }
