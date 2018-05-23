@@ -3,7 +3,8 @@ import {ElementRef, Injectable} from '@angular/core';
 import {Platform} from "ionic-angular";
 import {GoogleMap, GoogleMaps, LatLng} from "@ionic-native/google-maps";
 import {} from '@types/googlemaps';
-import { Geolocation} from "@ionic-native/geolocation";
+import {Geolocation} from "@ionic-native/geolocation";
+import {Observable} from "rxjs/Observable";
 
 /*
   Generated class for the MapsService provider.
@@ -19,35 +20,41 @@ export class MapsService {
               public geolocation: Geolocation) {
   }
 
-  initMap(mapElement: ElementRef) {
-    let location: LatLng;
+  getLocation(): Promise<LatLng> {
     if (this.geolocation) {
-      this.geolocation.getCurrentPosition().then(
+      return this.geolocation.getCurrentPosition().then(
         (position) => {
-          location = new LatLng(position.coords.latitude, position.coords.longitude);
+          return new LatLng(position.coords.latitude, position.coords.longitude);
         },
         (error) => {
           console.log(error.message);
-          location = new LatLng( 0, 0);
+          return new LatLng(0, 0);
         }
-      ).then(
-        () => {
-          if (this.plt.is('ios') || this.plt.is('android')) {
-            GoogleMaps.create(mapElement.nativeElement, {
-              camera: {
-                target: location,
-                zoom: 15,
-              }
-            });
-          } else {
-            new google.maps.Map(mapElement.nativeElement, {
-              center: location,
-              zoom: 15
-            });
-          }
-        }
-      );
+      )
+    } else {
+      alert('ERROR');
+      return new Promise(() => new LatLng(0, 0));
     }
+  }
+
+  initMap(mapElement: ElementRef) {
+    this.getLocation().then(
+      (location) => {
+        if (this.plt.is('ios') || this.plt.is('android')) {
+          GoogleMaps.create(mapElement.nativeElement, {
+            camera: {
+              target: location,
+              zoom: 15,
+            }
+          });
+        } else {
+          new google.maps.Map(mapElement.nativeElement, {
+            center: location,
+            zoom: 15
+          });
+
+        }
+      });
   }
 
   //TODO: needs testing
