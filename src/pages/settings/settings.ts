@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -17,6 +17,9 @@ import {} from '@types/googlemaps';
   templateUrl: 'settings.html'
 })
 export class SettingsPage {
+
+  @ViewChild('map') map: ElementRef;
+
   // Our local settings object
   user: any = {
     avatarURL: '',
@@ -101,7 +104,7 @@ export class SettingsPage {
   }
 
   initMap(){
-    let map = new google.maps.Map(document.getElementById('map'), {
+    let map = new google.maps.Map(this.map.nativeElement, {
       zoom: 4,
       center: {lat: 49.474265, lng: 8.534308}
     });

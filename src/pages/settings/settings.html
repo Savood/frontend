@@ -6,6 +6,7 @@
 
 <ion-content *ngIf="user">
   <img *ngIf="page == 'main'"  class="header-image" src="../../assets/img/queen-live.png" >
+
   <div *ngIf="page == 'main'" class="content-main" text-wrap text-center>
     <div class="circular">
       <img src="../../assets/img/marty-avatar.png">
@@ -34,7 +35,7 @@
       <button ion-button block [navPush]="subSettings" [navParams]="locationSettings">
         {{'SETTINGS_LOCATION'|translate|uppercase}}
       </button>
-      <button ion-button block>
+      <button ion-button block color="danger">
         {{'SETTINGS_LOGOUT'|translate|uppercase}}
       </button>
     </ion-list>
@@ -58,7 +59,7 @@
           <ion-label>{{'NOTIFICATIONS_RECIPE'|translate}}</ion-label>
           <ion-checkbox></ion-checkbox>
         </ion-item>
-        <button ion-button block>{{'SAVE'|translate|uppercase}}</button>
+        <button ion-button block navPop>{{'SAVE'|translate|uppercase}}</button>
       </ion-list>
   </div>
 
@@ -108,12 +109,14 @@
                       [(ngModel)]="user.description"></ion-textarea>
       </ion-item>
     </ion-list>
-    <button ion-button block>{{'SAVE'|translate|uppercase}}</button>
+    <button ion-button block navPop>{{'SAVE'|translate|uppercase}}</button>
     <button ion-button block color="danger">{{'PROFILE_DELETE_ACCOUNT'|translate|uppercase}}</button>
   </div>
 
   <div *ngIf="page == 'location'" class="content-location" text-wrap text-center>
-    <div id="map"></div>
-    <button ion-button block>{{'SAVE'|translate}}</button>
+    <div #map id="map"></div>
+    <div class="text-location">
+      <button ion-button block navPop>{{'SAVE'|translate}}</button>
+    </div>
   </div>
 </ion-content>
