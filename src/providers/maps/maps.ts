@@ -2,6 +2,8 @@ import {HttpClient} from '@angular/common/http';
 import {ElementRef, Injectable} from '@angular/core';
 import {Platform} from "ionic-angular";
 import {GoogleMap, GoogleMaps, LatLng} from "@ionic-native/google-maps";
+import {} from '@types/googlemaps';
+import { Geolocation} from "@ionic-native/geolocation";
 
 /*
   Generated class for the MapsService provider.
@@ -13,42 +15,38 @@ import {GoogleMap, GoogleMaps, LatLng} from "@ionic-native/google-maps";
 export class MapsService {
 
   constructor(public http: HttpClient,
-              public plt: Platform) {
+              public plt: Platform,
+              public geolocation: Geolocation) {
   }
 
   initMap(mapElement: ElementRef) {
-    if (this.plt.is('ios') || this.plt.is('android')) {
-      let map = GoogleMaps.create(mapElement.nativeElement, {
-        camera: {
-          target: {lat: -34.397, lng: 150.644},
-          zoom: 15,
+    let location: LatLng;
+    if (this.geolocation) {
+      this.geolocation.getCurrentPosition().then(
+        (position) => {
+          location = new LatLng(position.coords.latitude, position.coords.longitude);
+        },
+        (error) => {
+          console.log(error.message);
+          location = new LatLng( 0, 0);
         }
-      });
-      map.addMarker({
-        title: 'Ionic',
-        icon: 'red',
-        position: {lat: -34.397, lng: 150.644}
-      });
-    } else {
-      let location: LatLng = new LatLng( -34.397, 150.644);
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            location = new LatLng(position.coords.latitude, position.coords.longitude);
-          },
-          (error) => {
-            console.log(error)
+      ).then(
+        () => {
+          if (this.plt.is('ios') || this.plt.is('android')) {
+            GoogleMaps.create(mapElement.nativeElement, {
+              camera: {
+                target: location,
+                zoom: 15,
+              }
+            });
+          } else {
+            new google.maps.Map(mapElement.nativeElement, {
+              center: location,
+              zoom: 15
+            });
           }
-        )
-      }
-      let map = new google.maps.Map(mapElement.nativeElement, {
-        zoom: 15,
-        center: location
-      });
-      new google.maps.Marker({
-        position: location,
-        map: map
-      });
+        }
+      );
     }
   }
 
