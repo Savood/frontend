@@ -1,45 +1,134 @@
 <ion-header>
-
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>{{ pageTitle }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="user">
+  <img *ngIf="page == 'main'"  class="header-image" src="../../assets/img/queen-live.png" >
 
-  <form [formGroup]="form" *ngIf="settingsReady">
-    <ion-list *ngIf="page == 'main'">
-      <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION1' | translate }}</ion-label>
-        <ion-toggle formControlName="option1"></ion-toggle>
-      </ion-item>
+  <div *ngIf="page == 'main'" class="content-main" text-wrap text-center>
+    <div class="circular">
+      <img src="../../assets/img/marty-avatar.png">
+    </div>
+    <h2>{{user.firstname}} {{user.lastname}}</h2>
+    <p class="profile-description">{{user.description}}</p>
+    <hr>
 
-      <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION2' | translate }}</ion-label>
-        <ion-input formControlName="option2"></ion-input>
-      </ion-item>
+    <h3>{{'PROFILE_BADGES'|translate}}</h3>
+    <ion-grid class="badges">
+      <ion-row>
+        <ion-col *ngFor="let gotBadge of user.badges" col-3>
+          <ion-icon name="alarm" [color]="gotBadge ? 'primary' : 'dark'"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-      <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION3' | translate }}</ion-label>
-        <ion-select formControlName="option3">
-          <ion-option value="1" checked="true">1</ion-option>
-          <ion-option value="2">2</ion-option>
-          <ion-option value="3">3</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <button ion-item [navPush]="subSettings" [navParams]="profileSettings">
-        {{ 'SETTINGS_PROFILE_BUTTON' | translate }}
+    <hr>
+    <ion-list no-lines>
+      <button ion-button block [navPush]="subSettings" [navParams]="notificationsSettings">
+        {{'SETTINGS_NOTIFICATIONS'|translate|uppercase}}
+      </button>
+      <button ion-button block [navPush]="subSettings" [navParams]="profileSettings">
+        {{'SETTINGS_PROFILE'|translate|uppercase}}
+      </button>
+      <button ion-button block [navPush]="subSettings" [navParams]="locationSettings">
+        {{'SETTINGS_LOCATION'|translate|uppercase}}
+      </button>
+      <button ion-button block color="danger">
+        {{'SETTINGS_LOGOUT'|translate|uppercase}}
       </button>
     </ion-list>
+  </div>
 
-    <ion-list *ngIf="page == 'profile'">
+  <div *ngIf="page == 'notifications'" class="content-notifications" text-wrap text-center>
+      <ion-list no-lines>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_FRIEND'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_FOOD'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_MESSAGE'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_RECIPE'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <button ion-button block navPop>{{'SAVE'|translate|uppercase}}</button>
+      </ion-list>
+  </div>
+
+  <div *ngIf="page == 'profile'" class="content-profile" text-wrap text-center>
+    <ion-list no-lines>
       <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION4' | translate }}</ion-label>
-        <ion-input formControlName="option4"></ion-input>
+        <ion-icon name="person" item-start></ion-icon>
+        <ion-input placeholder="{{'PROFILE_FIRSTNAME'|translate|uppercase}}" [(ngModel)]="user.firstname"></ion-input>
+        <ion-input placeholder="{{'PROFILE_LASTNAME'|translate|uppercase}}" [(ngModel)]="user.lastname"></ion-input>
+      </ion-item>
+      <hr>
+      <ion-item>
+        <ion-icon name="mail" item-start></ion-icon>
+        <ion-input placeholder="{{'PROFILE_EMAIL'|translate|uppercase}}" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
+      <hr>
+      <ion-item>
+        <ion-icon name="call" item-start></ion-icon>
+        <ion-input placeholder="{{'PROFILE_PHONE'|translate|uppercase}}" [(ngModel)]="user.phone"></ion-input>
+      </ion-item>
+      <hr>
+      <ion-item>
+        <ion-icon name="home" item-start></ion-icon>
+        <ion-input placeholder="{{'PROFILE_STREET'|translate|uppercase}}" [(ngModel)]="user.address.street"></ion-input>
+        <ion-input placeholder="{{'PROFILE_NUMBER'|translate|uppercase}}" [(ngModel)]="user.address.number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon class="hiddenIcon" name="home" item-start></ion-icon>
+        <ion-input placeholder="{{'PROFILE_ZIP'|translate|uppercase}}" [(ngModel)]="user.address.zip"></ion-input>
+        <ion-input placeholder="{{'PROFILE_CITY'|translate|uppercase}}" [(ngModel)]="user.address.city"></ion-input>
+      </ion-item>
+      <hr>
+      <button ion-item>
+        <ion-icon name="contact" item-start></ion-icon>
+        Profilbild
+      </button>
+      <hr>
+      <button ion-item>
+        <ion-icon name="image" item-start></ion-icon>
+        Hintergrundbild
+      </button>
+      <hr>
+      <ion-item>
+        <ion-icon name="book" item-start></ion-icon>
+        <ion-textarea rows="4"
+                      placeholder="{{'PROFILE_DESCRIPTION'|translate|uppercase}}"
+                      [(ngModel)]="user.description"></ion-textarea>
       </ion-item>
     </ion-list>
-  </form>
+    <button ion-button block navPop>{{'SAVE'|translate|uppercase}}</button>
+    <button ion-button block color="danger">{{'PROFILE_DELETE_ACCOUNT'|translate|uppercase}}</button>
+  </div>
 
+  <div *ngIf="page == 'location'" class="content-location" text-wrap text-center>
+    <div #map id="map"></div>
+    <div class="text-location">
+      <ion-list>
+        <h3>{{'PICKOFF_LOCATION'|translate}}</h3>
+        <ion-item>
+          <ion-input placeholder="{{'PROFILE_STREET'|translate|uppercase}}" [(ngModel)]="user.address.street"></ion-input>
+          <ion-input placeholder="{{'PROFILE_NUMBER'|translate|uppercase}}" [(ngModel)]="user.address.number"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="{{'PROFILE_ZIP'|translate|uppercase}}" [(ngModel)]="user.address.zip"></ion-input>
+          <ion-input placeholder="{{'PROFILE_CITY'|translate|uppercase}}" [(ngModel)]="user.address.city"></ion-input>
+        </ion-item>
+      </ion-list>
+      <button ion-button block navPop>{{'USE_CURRENT_LOCATION'|translate}}</button>
+      <button ion-button block navPop>{{'SAVE'|translate}}</button>
+    </div>
+  </div>
 </ion-content>

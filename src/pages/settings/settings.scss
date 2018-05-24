@@ -1,3 +1,86 @@
 page-settings {
 
+  .badges ion-row ion-col ion-icon{
+    font-size: 2em;
+  }
+
+  .circular {
+    width: 200px;
+    height: 200px;
+    position: inherit;
+    border-radius: 50%;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    border: solid white;
+    margin-top: -120px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+
+    background: map-get($colors, secondary);
+
+    img {
+      height: 200px;
+      width: 200px;
+
+      object-fit: cover;
+
+      object-position: center;
+
+      position: inherit;
+      //height: 100%;
+
+      //border-radius: 50%;
+    }
+  }
+
+  .content-location {
+    position: relative !important;
+    overflow: hidden;
+  }
+
+  .content-main {
+    margin-top: -16px;
+    padding: 16px 16px 0 16px;
+    position: relative !important;
+  }
+
+  .content-profile, .content-notifications, .text-location {
+    padding: 16px;
+  }
+
+  .header-image {
+    height: 30vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    z-index: -1;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hiddenIcon{
+    color: white;
+  }
+
+  .input-cover{
+    display: none;
+  }
+
+  ion-item, ion-item .item-inner{
+    border-bottom: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  #map{
+    height: 45vh;
+    width: 100%;
+  }
+
+  .profile-description {
+    font-size: 15px;
+    color: map-get($colors, dark);
+  }
 }

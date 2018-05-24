@@ -11,19 +11,39 @@
   "TAB1_TITLE": "Items",
   "TAB2_TITLE": "Suche",
   "TAB3_TITLE": "Nachrichten",
-  "TAB4_TITLE": "Einstellung",
+  "TAB4_TITLE": "Account",
 
   "MAP_TITLE": "Karte",
 
   "WELCOME_INTRO": "Der Startpunkt für Deine nächste tolle Ionic App",
 
-  "SETTINGS_TITLE": "Einstellungen",
-  "SETTINGS_OPTION1": "Option 1",
-  "SETTINGS_OPTION2": "Option 2",
-  "SETTINGS_OPTION3": "Option 3",
-  "SETTINGS_OPTION4": "Option 4",
-
+  "SETTINGS_TITLE": "Mein Savood",
   "SETTINGS_PAGE_PROFILE": "Profil ändern",
+
+  "SETTINGS_NOTIFICATIONS": "Benachrichtigungen",
+  "SETTINGS_PROFILE": "Profil ändern",
+  "SETTINGS_LOCATION": "Standort",
+  "SETTINGS_LOGOUT": "Abmelden",
+  "SAVE": "Speichern",
+
+  "PROFILE_BADGES": "Abzeichen",
+  "PROFILE_FIRSTNAME": "Vorname",
+  "PROFILE_LASTNAME": "Nachname",
+  "PROFILE_EMAIL": "E-Mail",
+  "PROFILE_DESCRIPTION": "Beschreibung",
+  "PROFILE_PHONE": "Telefon",
+  "PROFILE_DELETE_ACCOUNT": "Konto löschen",
+  "PROFILE_STREET": "Straße",
+  "PROFILE_NUMBER": "Hausnummer",
+  "PROFILE_ZIP": "Postleitzahl",
+  "PROFILE_CITY": "Stadt",
+
+  "NOTIFICATIONS_FRIEND": "Neue Freunde",
+  "NOTIFICATIONS_FOOD": "Neue Lebensmittel in der Nähe",
+  "NOTIFICATIONS_MESSAGE": "Neue Nachrichten",
+  "NOTIFICATIONS_RECIPE": "Neue Rezepte" ,
+  "PICKOFF_LOCATION": "Abholort",
+  "USE_CURRENT_LOCATION": "Aktuellen Standort verwenden",
 
   "WELCOME_TITLE": "Willkommen",
 
