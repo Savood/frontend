@@ -147,10 +147,11 @@ export class SettingsPage {
   usePointerLocation() {
     this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
       (address) => {
+        console.log(address);
         this.defaultPickoffLocation = address;
       },
       (error) => {
-        alert(error)
+        alert(error);
       }
     );
   }

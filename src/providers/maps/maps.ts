@@ -45,14 +45,15 @@ export class MapsService {
   }
 
   async getAddress(location: Location): Promise<any> {
-    return this.map.getAddress(location).then(
-      (results) => {
-        return results;
-      },
-      (error) => {
-        return error;
-      }
-    );
+    return new Promise<any>((resolve, reject) => {
+      return this.map.getAddress(location).then(
+        (results) => {
+          resolve(results);
+        },
+        (error) => {
+          reject(error);
+        });
+    });
   }
 
 }

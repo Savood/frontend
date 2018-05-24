@@ -50,16 +50,20 @@ export class NativeMapsService {
     return new Promise<any>((resolve, reject) => {
       return Geocoder.geocode({position: latLng}).then(
         (address) => {
-          let newLocation = {
-            street: address[0].thoroughfare,
-            number: address[0].subThoroughfare,
-            zip: address[0].postalCode,
-            city: address[0].locality
-          };
-          resolve(newLocation);
+          if (address[0]) {
+            let newLocation = {
+              street: address[0].thoroughfare ? address[0].thoroughfare : null,
+              number: address[0].subThoroughfare ? address[0].subThoroughfare : null,
+              zip: address[0].postalCode ? address[0].postalCode : null,
+              city: address[0].locality ? address[0].locality : null,
+            };
+            resolve(newLocation);
+          } else {
+            reject('NO_ADDRESS_FOUND');
+          }
         },
-        (error) => {
-          reject(error);
+        () => {
+          reject('GEOCODER_ERROR');
         });
     });
   }
