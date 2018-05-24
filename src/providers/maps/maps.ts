@@ -4,7 +4,6 @@ import {Platform} from "ionic-angular";
 import {GoogleMap, GoogleMaps, LatLng} from "@ionic-native/google-maps";
 import {} from '@types/googlemaps';
 import {Geolocation} from "@ionic-native/geolocation";
-import {Observable} from "rxjs/Observable";
 
 /*
   Generated class for the MapsService provider.
@@ -28,50 +27,60 @@ export class MapsService {
         },
         (error) => {
           console.log(error.message);
-          return new LatLng(0, 0);
+          alert("ERROR: {{error.message}}");
+          return new LatLng(8.4660395, 49.4874592);
         }
       )
     } else {
-      alert('ERROR');
-      return new Promise(() => new LatLng(0, 0));
+      alert('ERROR: Location Service not available');
+      return new Promise(() => new LatLng(8.4660395, 49.4874592));
     }
   }
 
-  initMap(mapElement: ElementRef) {
-    this.getLocation().then(
-      (location) => {
-        if (this.plt.is('ios') || this.plt.is('android')) {
-          GoogleMaps.create(mapElement.nativeElement, {
-            camera: {
-              target: location,
-              zoom: 15,
-            }
-          });
-        } else {
-          new google.maps.Map(mapElement.nativeElement, {
-            center: location,
-            zoom: 15
-          });
+  initMap(mapElement: ElementRef, location?: LatLng) {
+    if(location){
+      return this.newMap(mapElement, location)
+    } else {
+      this.getLocation().then(
+        (location) => {
+          return this.newMap(mapElement, location)
+        });
+    }
+    console.log("hello")
+  }
 
+  private newMap(mapElement: ElementRef, location: LatLng): any{
+    if (this.plt.is('ios') || this.plt.is('android')) {
+      return GoogleMaps.create(mapElement.nativeElement, {
+        camera: {
+          target: location,
+          zoom: 15,
         }
       });
+    } else {
+      return new google.maps.Map(mapElement.nativeElement, {
+        center: location,
+        zoom: 15
+      });
+    }
   }
 
   //TODO: needs testing
   newMarker(location: LatLng, title: string, map: any) {
+    console.log(map);
     if (map instanceof GoogleMap) {
+      console.log(map);
       map.addMarker({
         title: title,
-        icon: 'red',
         position: location
       });
     }
 
     if (map instanceof google.maps.Map) {
+      console.log(map);
       new google.maps.Marker({
         title: title,
         position: location,
-        icon: 'red',
         map: map
       });
     }

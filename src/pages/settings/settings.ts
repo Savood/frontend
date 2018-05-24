@@ -5,15 +5,8 @@ import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
 
 import { Settings } from '../../providers';
 import {} from '@types/googlemaps';
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
-  Marker, LatLng
-} from '@ionic-native/google-maps';
+import { LatLng } from '@ionic-native/google-maps';
+import {MapsService} from "../../providers/maps/maps";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -26,8 +19,6 @@ import {
   templateUrl: 'settings.html'
 })
 export class SettingsPage {
-
-  map: GoogleMap;
   @ViewChild('map') mapElement : ElementRef;
 
   // Our local settings object
@@ -79,6 +70,7 @@ export class SettingsPage {
     public formBuilder: FormBuilder,
     public navParams: NavParams,
     public translate: TranslateService,
+    public _maps: MapsService,
     public plt: Platform) {
   }
 
@@ -115,33 +107,7 @@ export class SettingsPage {
   }
 
   initMap(){
-    let location: LatLng = new LatLng(49.474265, 8.534308);
-
-    if(this.plt.is('ios') ||this.plt.is('android')){
-
-      let mapOptions: GoogleMapOptions = {
-        camera: {
-          target: location,
-          zoom: 15,
-        }
-      };
-
-      this.map = GoogleMaps.create(this.mapElement.nativeElement, mapOptions);
-
-      this.map.addMarker({
-        title: 'Ionic',
-        icon: 'blue',
-        position: location
-      });
-    }else{
-      let map = new google.maps.Map(this.mapElement.nativeElement, {
-        zoom: 15,
-        center: location
-      });
-      let marker = new google.maps.Marker({
-        position: location,
-        map: map
-      });
-    }
+    let myMap = this._maps.initMap(this.mapElement, new LatLng(49.4874592, 8.4660395));
+    this._maps.newMarker(new LatLng(49.4874592, 8.4660395), 'Hello Markus', myMap);
   }
 }
