@@ -147,27 +147,7 @@ export class SettingsPage {
   usePointerLocation() {
     this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
       (address) => {
-        this.defaultPickoffLocation = {
-          street: null,
-          number: null,
-          zip: null,
-          city: null
-        };
-
-        for(let component of address.address_components){
-          if(component.types[0] == 'street_number'){
-            this.defaultPickoffLocation.number = component.long_name;
-          }
-          if(component.types[0] == 'route'){
-            this.defaultPickoffLocation.street = component.long_name;
-          }
-          if(component.types[0] == 'locality'){
-            this.defaultPickoffLocation.city = component.long_name;
-          }
-          if(component.types[0] == 'postal_code'){
-            this.defaultPickoffLocation.zip = component.long_name;
-          }
-        }
+        this.defaultPickoffLocation = address;
       },
       (error) => {
         alert(error)

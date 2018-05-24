@@ -44,22 +44,40 @@ export class JSMapsService {
   async getAddress(location: Location): Promise<any> {
     let latLng = new LatLng(location.latitude, location.longitude);
 
-    return new Promise<any>(((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       this.geocoder.geocode({location: latLng}, (results, status) => {
         if (status.toString() === 'OK') {
           if (results[0]) {
-            console.log(results[0]);
-            resolve(results[0]);
+            let newLocation = {
+              street: null,
+              number: null,
+              zip: null,
+              city: null
+            };
+
+            for (let component of results[0].address_components) {
+              if (component.types[0] == 'street_number') {
+                newLocation.number = component.long_name;
+              }
+              if (component.types[0] == 'route') {
+                newLocation.street = component.long_name;
+              }
+              if (component.types[0] == 'locality') {
+                newLocation.city = component.long_name;
+              }
+              if (component.types[0] == 'postal_code') {
+                newLocation.zip = component.long_name;
+              }
+            }
+            resolve(newLocation);
           } else {
-            console.log("error");
             reject('NO_ADDRESS_FOUND');
           }
         } else {
-          console.log("error");
           reject('GEOCODER_ERROR' + status);
         }
       });
-    }));
+    });
 
   }
 

@@ -19,8 +19,8 @@ export class MapsService {
 
   constructor(public http: HttpClient,
               public plt: Platform) {
-    if(this.plt.is('cordova') &&
-      (this.plt.is('ios') || this.plt.is('android'))){
+    if (this.plt.is('cordova') &&
+      (this.plt.is('ios') || this.plt.is('android'))) {
       this.map = new NativeMapsService(GoogleMaps);
     } else {
       this.map = new JSMapsService();
@@ -29,7 +29,7 @@ export class MapsService {
 
   initMap(mapElement: ElementRef, location: Location) {
     let zoom: number = 15;
-    if(location){
+    if (location) {
       return this.map.init(mapElement, location, zoom);
     } else {
       return this.map.init(mapElement, location, zoom);
@@ -40,14 +40,18 @@ export class MapsService {
     return this.map.addMarker(location, title, draggable)
   }
 
-  getMarkerPosition(marker: any): any{
+  getMarkerPosition(marker: any): any {
     return this.map.getMarkerPosition(marker);
   }
 
-  async getAddress(location: Location): Promise<any>{
+  async getAddress(location: Location): Promise<any> {
     return this.map.getAddress(location).then(
-      (results) => {return results},
-      (error) => { console.log(error)}
+      (results) => {
+        return results;
+      },
+      (error) => {
+        return error;
+      }
     );
   }
 
