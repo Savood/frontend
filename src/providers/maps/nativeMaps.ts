@@ -7,9 +7,7 @@ export class NativeMapsService {
 
   map: any;
 
-  constructor(public googleMaps: GoogleMaps,) {
-
-  }
+  constructor(public googleMaps: GoogleMaps,) { }
 
   init(element: ElementRef, location: Location, zoom: number) {
 

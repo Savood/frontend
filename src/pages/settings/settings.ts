@@ -151,7 +151,9 @@ export class SettingsPage {
         this.defaultPickoffLocation = address;
       },
       (error) => {
-        alert(error);
+        this.translate.get(error).subscribe((res) => {
+          alert(res)
+        });
       }
     );
   }

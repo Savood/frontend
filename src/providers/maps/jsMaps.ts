@@ -9,9 +9,7 @@ export class JSMapsService {
   map: any;
   geocoder = new google.maps.Geocoder();
 
-  constructor() {
-
-  }
+  constructor() { }
 
   init(element: ElementRef, location: Location, zoom: number) {
     let latLng = new google.maps.LatLng(location.latitude, location.longitude);
@@ -78,7 +76,5 @@ export class JSMapsService {
         }
       });
     });
-
   }
-
 }

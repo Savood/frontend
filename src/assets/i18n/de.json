@@ -38,6 +38,9 @@
   "ZIP": "Postleitzahl",
   "CITY": "Stadt",
 
+  "NO_ADDRESS_FOUND": "Keine Adresse gefunden",
+  "GEOCODE_ERROR": "Fehler bei der Positionsbestimmung",
+
   "NOTIFICATIONS_FRIEND": "Neue Freunde",
   "NOTIFICATIONS_FOOD": "Neue Lebensmittel in der Nähe",
   "NOTIFICATIONS_MESSAGE": "Neue Nachrichten",
