@@ -1,9 +1,10 @@
 import {HttpClient} from '@angular/common/http';
 import {ElementRef, Injectable} from '@angular/core';
 import {Platform} from "ionic-angular";
-import {GoogleMap, GoogleMaps, LatLng} from "@ionic-native/google-maps";
-import {} from '@types/googlemaps';
-import {Geolocation} from "@ionic-native/geolocation";
+import {GoogleMaps} from "@ionic-native/google-maps";
+import {JSMapsService} from "./jsMaps";
+import {NativeMapsService} from "./nativeMaps";
+import {Location} from "../../models/location";
 
 /*
   Generated class for the MapsService provider.
@@ -14,77 +15,40 @@ import {Geolocation} from "@ionic-native/geolocation";
 @Injectable()
 export class MapsService {
 
+  map: any;
+
   constructor(public http: HttpClient,
-              public plt: Platform,
-              public geolocation: Geolocation) {
-  }
-
-  getLocation(): Promise<LatLng> {
-    if (this.geolocation) {
-      return this.geolocation.getCurrentPosition().then(
-        (position) => {
-          return new LatLng(position.coords.latitude, position.coords.longitude);
-        },
-        (error) => {
-          console.log(error.message);
-          alert("ERROR: {{error.message}}");
-          return new LatLng(8.4660395, 49.4874592);
-        }
-      )
+              public plt: Platform) {
+    if(this.plt.is('cordova') &&
+      (this.plt.is('ios') || this.plt.is('android'))){
+      this.map = new NativeMapsService(GoogleMaps);
     } else {
-      alert('ERROR: Location Service not available');
-      return new Promise(() => new LatLng(8.4660395, 49.4874592));
+      this.map = new JSMapsService();
     }
   }
 
-  initMap(mapElement: ElementRef, location?: LatLng) {
+  initMap(mapElement: ElementRef, location: Location) {
+    let zoom: number = 15;
     if(location){
-      return this.newMap(mapElement, location)
+      return this.map.init(mapElement, location, zoom);
     } else {
-      this.getLocation().then(
-        (location) => {
-          return this.newMap(mapElement, location)
-        });
-    }
-    console.log("hello")
-  }
-
-  private newMap(mapElement: ElementRef, location: LatLng): any{
-    if (this.plt.is('ios') || this.plt.is('android')) {
-      return GoogleMaps.create(mapElement.nativeElement, {
-        camera: {
-          target: location,
-          zoom: 15,
-        }
-      });
-    } else {
-      return new google.maps.Map(mapElement.nativeElement, {
-        center: location,
-        zoom: 15
-      });
+      return this.map.init(mapElement, location, zoom);
     }
   }
 
-  //TODO: needs testing
-  newMarker(location: LatLng, title: string, map: any) {
-    console.log(map);
-    if (map instanceof GoogleMap) {
-      console.log(map);
-      map.addMarker({
-        title: title,
-        position: location
-      });
-    }
+  async newMarker(location: Location, title: string, draggable?: boolean): Promise<any> {
+    return this.map.addMarker(location, title, draggable)
+  }
 
-    if (map instanceof google.maps.Map) {
-      console.log(map);
-      new google.maps.Marker({
-        title: title,
-        position: location,
-        map: map
-      });
-    }
+  getMarkerPosition(marker: any): any{
+    return this.map.getMarkerPosition(marker);
+  }
 
+  async getAddress(location: Location): Promise<any>{
+    return this.map.getAddress(location).then(
+      (results) => {return results},
+      (error) => { console.log(error)}
+    );
   }
 
 }

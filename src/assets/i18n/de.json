@@ -43,7 +43,10 @@
   "NOTIFICATIONS_MESSAGE": "Neue Nachrichten",
   "NOTIFICATIONS_RECIPE": "Neue Rezepte" ,
   "PICKOFF_LOCATION": "Abholort",
+  "DEFAULT_PICKOFF_LOCATION": "Standardabholort",
   "USE_CURRENT_LOCATION": "Aktuellen Standort verwenden",
+  "USE_POINTER_LOCATION": "Zeigerstandort verwenden",
+  "USE_ENTERED_LOCATION": "Eingegebenen Standort verwenden",
 
   "WELCOME_TITLE": "Willkommen",
 

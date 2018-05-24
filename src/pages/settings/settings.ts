@@ -1,12 +1,11 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
-import { Settings } from '../../providers';
-import {} from '@types/googlemaps';
-import { LatLng } from '@ionic-native/google-maps';
+import {Settings} from '../../providers';
 import {MapsService} from "../../providers/maps/maps";
+import {Geolocation} from "@ionic-native/geolocation";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -19,7 +18,7 @@ import {MapsService} from "../../providers/maps/maps";
   templateUrl: 'settings.html'
 })
 export class SettingsPage {
-  @ViewChild('map') mapElement : ElementRef;
+  @ViewChild('map') mapElement: ElementRef;
 
   // Our local settings object
   user: any = {
@@ -35,8 +34,17 @@ export class SettingsPage {
       city: 'Musterstadt'
     },
     description: 'I save the wrap and the world',
-    badges: [true,false,true,true,true,false,false,true,false]
+    badges: [true, false, true, true, true, false, false, true, false]
   };
+
+  defaultPickoffLocation: any = {
+    street: 'Musterstraße',
+    number: '1337',
+    zip: '42069',
+    city: 'Musterstadt'
+  };
+
+  locationMarker: any;
 
   options: any;
 
@@ -66,12 +74,12 @@ export class SettingsPage {
   subSettings: any = SettingsPage;
 
   constructor(public navCtrl: NavController,
-    public settings: Settings,
-    public formBuilder: FormBuilder,
-    public navParams: NavParams,
-    public translate: TranslateService,
-    public _maps: MapsService,
-    public plt: Platform) {
+              public settings: Settings,
+              public formBuilder: FormBuilder,
+              public navParams: NavParams,
+              public translate: TranslateService,
+              public _maps: MapsService,
+              public geolocation: Geolocation) {
   }
 
   ionViewDidLoad() {
@@ -97,7 +105,7 @@ export class SettingsPage {
   }
 
   ionViewDidEnter() {
-    if(this.navParams.get('page') == 'location'){
+    if (this.navParams.get('page') == 'location') {
       this.initMap();
     }
   }
@@ -106,8 +114,68 @@ export class SettingsPage {
     console.log('Ng All Changes');
   }
 
-  initMap(){
-    let myMap = this._maps.initMap(this.mapElement, new LatLng(49.4874592, 8.4660395));
-    this._maps.newMarker(new LatLng(49.4874592, 8.4660395), 'Hello Markus', myMap);
+  initMap() {
+    if (this.geolocation) {
+      this.geolocation.getCurrentPosition().then(
+        (position) => {
+          return {latitude: position.coords.latitude, longitude: position.coords.longitude};
+        },
+        (error) => {
+          alert('ERROR: ' + error.message);
+          return {latitude: 49.4874592, longitude: 8.4660395};
+        }
+      ).then(
+        (position) => {
+          this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
+          this._maps.newMarker(
+            {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
+            (marker) => {
+              this.locationMarker = marker
+            });
+        }
+      )
+    } else {
+      alert('ERROR: Location Service not available');
+      this._maps.initMap(this.mapElement, {latitude: 49.4874592, longitude: 8.4660395});
+      this._maps.newMarker({latitude: 49.4874592, longitude: 8.4660395}, 'userPos', true).then(
+        (marker) => {
+          this.locationMarker = marker
+        });
+    }
+  }
+
+  usePointerLocation() {
+    this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
+      (address) => {
+        this.defaultPickoffLocation = {
+          street: null,
+          number: null,
+          zip: null,
+          city: null
+        };
+
+        for(let component of address.address_components){
+          if(component.types[0] == 'street_number'){
+            this.defaultPickoffLocation.number = component.long_name;
+          }
+          if(component.types[0] == 'route'){
+            this.defaultPickoffLocation.street = component.long_name;
+          }
+          if(component.types[0] == 'locality'){
+            this.defaultPickoffLocation.city = component.long_name;
+          }
+          if(component.types[0] == 'postal_code'){
+            this.defaultPickoffLocation.zip = component.long_name;
+          }
+        }
+      },
+      (error) => {
+        alert(error)
+      }
+    );
+  }
+
+  useEnteredLocation() {
+
   }
 }
