@@ -59,7 +59,7 @@
           <ion-label>{{'NOTIFICATIONS_RECIPE'|translate}}</ion-label>
           <ion-checkbox></ion-checkbox>
         </ion-item>
-        <button ion-button block navPop>{{'SAVE'|translate|uppercase}}</button>
+        <button ion-button block color="secondary" navPop>{{'SAVE'|translate|uppercase}}</button>
       </ion-list>
   </div>
 
@@ -109,7 +109,7 @@
                       [(ngModel)]="user.description"></ion-textarea>
       </ion-item>
     </ion-list>
-    <button ion-button block navPop>{{'SAVE'|translate|uppercase}}</button>
+    <button ion-button block color="secondary" navPop>{{'SAVE'|translate|uppercase}}</button>
     <button ion-button block color="danger">{{'PROFILE_DELETE_ACCOUNT'|translate|uppercase}}</button>
   </div>
 
@@ -129,7 +129,7 @@
       </ion-list>
       <button ion-button block (click)="usePointerLocation()">{{'USE_POINTER_LOCATION'|translate}}</button>
       <button ion-button block (click)="useEnteredLocation()">{{'USE_ENTERED_LOCATION'|translate}}</button>
-      <button ion-button block navPop>{{'SAVE'|translate}}</button>
+      <button ion-button block color="secondary" navPop>{{'SAVE'|translate}}</button>
     </div>
   </div>
 </ion-content>

@@ -147,7 +147,6 @@ export class SettingsPage {
   usePointerLocation() {
     this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
       (address) => {
-        console.log(address);
         this.defaultPickoffLocation = address;
       },
       (error) => {
@@ -159,6 +158,21 @@ export class SettingsPage {
   }
 
   useEnteredLocation() {
+    let formattedAddress: string =
+      this.defaultPickoffLocation.street + " " +
+      this.defaultPickoffLocation.number + ", " +
+      this.defaultPickoffLocation.zip + " " +
+      this.defaultPickoffLocation.city;
 
+    this._maps.getLocation(formattedAddress).then(
+      (location) => {
+        this._maps.setMarkerPosition(this.locationMarker, location);
+      },
+      (error) => {
+        this.translate.get(error).subscribe((res) => {
+          alert(res)
+        });
+      }
+    );
   }
 }
