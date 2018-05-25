@@ -37,9 +37,14 @@ export class NativeMapsService {
     );
   }
 
-  getMarkerPosition(marker: Marker) {
+  getMarkerPosition(marker: Marker): Location {
     let location: Location = {latitude: marker.getPosition().lat, longitude: marker.getPosition().lng};
     return location;
+  }
+
+  setMarkerPosition(marker: Marker, location: Location){
+    let latLng: LatLng = new LatLng(location.latitude, location.longitude);
+    marker.setPosition(latLng);
   }
 
   async getAddress(location: Location): Promise<any> {
@@ -58,6 +63,26 @@ export class NativeMapsService {
             resolve(newLocation);
           } else {
             reject('NO_ADDRESS_FOUND');
+          }
+        },
+        () => {
+          reject('GEOCODER_ERROR');
+        });
+    });
+  }
+
+  async getLocation(address: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      return Geocoder.geocode({address: address}).then(
+        (location) => {
+          if (location[0]) {
+            let newLocation: Location = {
+              latitude: location[0].geometry.location.lat(),
+              longitude: location[0].geometry.location.lng()
+            };
+            resolve(newLocation);
+          } else {
+            reject('NO_LOCATION_FOUND');
           }
         },
         () => {
