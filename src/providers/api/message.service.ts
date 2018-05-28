@@ -12,192 +12,192 @@
 
 /* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams }               from '@angular/common/http';
+import {Inject, Injectable, Optional} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
-import { Observable }                                        from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import '../rxjs-operators';
 
-import { InvalidParameterInput } from '../../models/invalidParameterInput';
-import { Message } from '../../models/message';
+import {InvalidParameterInput} from '../../models/invalidParameterInput';
+import {Message} from '../../models/message';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
-import env from '../../environment/environment';
+import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
+import {Configuration} from '../configuration';
+import {CustomHttpUrlEncodingCodec} from '../encoder';
+import {env} from '../../environment/environment';
 
 @Injectable()
 export class MessageService {
 
-    protected basePath = env.api_endpoint;
-    public defaultHeaders = new HttpHeaders();
-    public configuration = new Configuration();
+  protected basePath = env.api_endpoint;
+  public defaultHeaders = new HttpHeaders();
+  public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
-        if (basePath) {
-            this.basePath = basePath;
-        }
-        if (configuration) {
-            this.configuration = configuration;
-            this.basePath = basePath || configuration.basePath || this.basePath;
-        }
+  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    if (basePath) {
+      this.basePath = basePath;
+    }
+    if (configuration) {
+      this.configuration = configuration;
+      this.basePath = basePath || configuration.basePath || this.basePath;
+    }
+  }
+
+  /**
+   * @param consumes string[] mime-types
+   * @return true: consumes contains 'multipart/form-data', false: otherwise
+   */
+  private canConsumeForm(consumes: string[]): boolean {
+    const form = 'multipart/form-data';
+    for (let consume of consumes) {
+      if (form === consume) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  /**
+   * Delete an message
+   *
+   * @param id
+   */
+  public messageIdDelete(id: number): Observable<{}> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling messageIdDelete.');
     }
 
-    /**
-     * @param consumes string[] mime-types
-     * @return true: consumes contains 'multipart/form-data', false: otherwise
-     */
-    private canConsumeForm(consumes: string[]): boolean {
-        const form = 'multipart/form-data';
-        for (let consume of consumes) {
-            if (form === consume) {
-                return true;
-            }
-        }
-        return false;
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      'application/json'
+    ];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
 
+    // to determine the Content-Type header
+    let consumes: string[] = [
+      'application/json'
+    ];
 
-    /**
-     * Delete an message
-     *
-     * @param id
-     */
-    public messageIdDelete(id: number): Observable<{}> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling messageIdDelete.');
-        }
+    return this.httpClient.delete<any>(`${this.basePath}/message/${encodeURIComponent(String(id))}`,
+      {
+        headers: headers,
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
 
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json'
-        ];
-
-        return this.httpClient.delete<any>(`${this.basePath}/message/${encodeURIComponent(String(id))}`,
-            {
-                headers: headers,
-                withCredentials: this.configuration.withCredentials,
-            }
-        );
+  /**
+   * Display an message
+   *
+   * @param id
+   */
+  public messageIdGet(id: number): Observable<Message> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling messageIdGet.');
     }
 
-    /**
-     * Display an message
-     *
-     * @param id
-     */
-    public messageIdGet(id: number): Observable<Message> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling messageIdGet.');
-        }
+    let headers = this.defaultHeaders;
 
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json'
-        ];
-
-        return this.httpClient.get<any>(`${this.basePath}/message/${encodeURIComponent(String(id))}`,
-            {
-                headers: headers,
-                withCredentials: this.configuration.withCredentials,
-            }
-        );
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      'application/json'
+    ];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
 
-    /**
-     * Update an message
-     *
-     * @param id
-     */
-    public messageIdPut(id: number): Observable<{}> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling messageIdPut.');
-        }
+    // to determine the Content-Type header
+    let consumes: string[] = [
+      'application/json'
+    ];
 
-        let headers = this.defaultHeaders;
+    return this.httpClient.get<any>(`${this.basePath}/message/${encodeURIComponent(String(id))}`,
+      {
+        headers: headers,
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
 
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json'
-        ];
-
-        return this.httpClient.put<any>(`${this.basePath}/message/${encodeURIComponent(String(id))}`,
-            null,
-            {
-                headers: headers,
-                withCredentials: this.configuration.withCredentials,
-            }
-        );
+  /**
+   * Update an message
+   *
+   * @param id
+   */
+  public messageIdPut(id: number): Observable<{}> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling messageIdPut.');
     }
 
-    /**
-     * Add a new message
-     *
-     * @param body Message that needs to be added
-     */
-    public messagePost(body: Message): Observable<Message> {
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling messagePost.');
-        }
+    let headers = this.defaultHeaders;
 
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json'
-        ];
-        let httpContentTypeSelected:string = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set("Content-Type", httpContentTypeSelected);
-        }
-
-        return this.httpClient.post<any>(`${this.basePath}/message`,
-            body,
-            {
-                headers: headers,
-                withCredentials: this.configuration.withCredentials,
-            }
-        );
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      'application/json'
+    ];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
+
+    // to determine the Content-Type header
+    let consumes: string[] = [
+      'application/json'
+    ];
+
+    return this.httpClient.put<any>(`${this.basePath}/message/${encodeURIComponent(String(id))}`,
+      null,
+      {
+        headers: headers,
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
+
+  /**
+   * Add a new message
+   *
+   * @param body Message that needs to be added
+   */
+  public messagePost(body: Message): Observable<Message> {
+    if (body === null || body === undefined) {
+      throw new Error('Required parameter body was null or undefined when calling messagePost.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      'application/json'
+    ];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    let consumes: string[] = [
+      'application/json'
+    ];
+    let httpContentTypeSelected: string = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set("Content-Type", httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<any>(`${this.basePath}/message`,
+      body,
+      {
+        headers: headers,
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
 
 }
