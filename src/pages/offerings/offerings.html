@@ -5,7 +5,6 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content>
   <!-- this fab is placed at bottom right -->
   <ion-fab bottom center #fab>
@@ -24,11 +23,24 @@
       </ion-fab-list>
   </ion-fab>
 </ion-content>
+<!--<descriptiontent class="card-background-page">-->
+  <!--<div *ngIf="toggle" class="blureffect" (click)="fab.close(); toggle=false">-->
+  <!--</div>-->
+
+  <!--<ion-card  *ngFor="let item of cardItems" (click)="openItem(item)">-->
+    <!--<img [src]="item.image">-->
+    <!--<div class="card-title">{{item.name}}</div>-->
+    <!--<div class="card-subtitle">41</div>-->
+  <!--</ion-card>-->
+<!--</descriptiontent>-->
+
+
 
 <ion-content>
   <div *ngIf="toggle" class="blureffect" (click)="fab.close(); toggle=false">
   </div>
-  <ion-card ion-item *ngFor="let item of cardItems" >
+  <ion-card ion-item *ngFor="let item of cardItems" (click)="openItem(item)" >
+
     <ion-item>
       <ion-avatar item-start>
         <img [src]="item.user.avatar">
@@ -39,8 +51,9 @@
 
     <img [src]="item.image">
 
+
     <ion-card-content>
-      <p>{{item.content}}</p>
+      <p text-wrap>{{item.description}}</p>
     </ion-card-content>
 
     <ion-row>
@@ -52,11 +65,17 @@
       </ion-col>
       <ion-col>
         <button ion-button color="primary" clear small icon-start>
+          <ion-icon name='restaurant'></ion-icon>
+          5
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button color="primary" clear small icon-start>
           <ion-icon name='text'></ion-icon>
           4
         </button>
       </ion-col>
     </ion-row>
   </ion-card>
-  <div style="height: 5%"></div>
+  <div style="height: 15%"></div>
 </ion-content>
