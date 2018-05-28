@@ -24,6 +24,9 @@ export class SettingsPage {
 
   // Our local settings object
   user: Profile;
+  userChanged = (newSettings) => {
+    this.user = newSettings;
+  };
 
   locationMarker: any;
 
@@ -31,7 +34,8 @@ export class SettingsPage {
 
   settingsReady = false;
 
-  form: FormGroup;
+  profileForm: FormGroup;
+  locationForm: FormGroup;
 
   page: string = 'main';
   pageTitleKey: string = 'SETTINGS_TITLE';
@@ -40,19 +44,22 @@ export class SettingsPage {
   profileSettings = {
     page: 'profile',
     pageTitleKey: 'SETTINGS_PROFILE',
-    user: this.user
+    user: this.user,
+    userChanged: this.userChanged
   };
 
   locationSettings = {
     page: 'location',
     pageTitleKey: 'SETTINGS_LOCATION',
-    user: this.user
+    user: this.user,
+    userChanged: this.userChanged
   };
 
   notificationsSettings = {
     page: 'notifications',
     pageTitleKey: 'SETTINGS_NOTIFICATIONS',
-    user: this.user
+    user: this.user,
+    userChanged: this.userChanged
   };
 
   subSettings: any = SettingsPage;
@@ -68,25 +75,46 @@ export class SettingsPage {
   }
 
   ionViewDidLoad() {
-    // Build an empty form for the template to render
-    this.form = this.formBuilder.group({});
   }
 
   ionViewWillEnter() {
-    // Build an empty form for the template to render
-    this.form = this.formBuilder.group({});
-
     this.page = this.navParams.get('page') || this.page;
     this.pageTitleKey = this.navParams.get('pageTitleKey') || this.pageTitleKey;
     this.user = this.navParams.get('user') || this.user;
+    this.userChanged = this.navParams.get('userChanged') || this.userChanged;
+
+    if(this.navParams.get('page') == 'profile'){
+      this.profileForm = this.formBuilder.group({
+        firstname: [this.user.firstname],
+        lastname: [this.user.lastname],
+        email: [this.user.email],
+        phone: [this.user.phone],
+        description: [this.user.description],
+      });
+    }
+
+    if(this.navParams.get('page') == 'location'){
+      this.locationForm = this.formBuilder.group({
+        street: [this.user.address.street],
+        number: [this.user.address.number],
+        zip: [this.user.address.zip],
+        city: [this.user.address.city],
+      });
+    }
+
+    this.notificationsSettings.user
+      = this.locationSettings.user
+      = this.profileSettings.user
+      = this.user;
 
     if(!this.user && this.page == "main"){
       this._user.profileIdGet(7).subscribe(
         (profile) => {
-          this.user = profile;
-          this.profileSettings.user = this.user;
-          this.locationSettings.user = this.user;
-          this.notificationsSettings.user = this.user;
+          this.notificationsSettings.user
+            = this.locationSettings.user
+            = this.profileSettings.user
+            = this.user
+            = profile
         }
       );
     }
@@ -155,9 +183,39 @@ export class SettingsPage {
   }
 
   saveProfileData(){
-    this._user.profileIdPut(this.user.id).subscribe(
+    if(this.profileForm.dirty){
+      let newSettings: Profile = this.profileForm.value;
+      newSettings.address = this.user.address;
+      newSettings.avatarId = this.user.avatarId;
+      newSettings.backgroundId = this.user.backgroundId;
+      newSettings.badges = this.user.badges;
+      newSettings.id = this.user.id;
 
-    );
+      this._user.profileIdPut(this.user.id).subscribe(
+        () => {
+          this.userChanged(newSettings);
+          this.navCtrl.pop().then()
+        }
+      )
+    } else {
+      this.navCtrl.pop()
+    }
+  }
+
+  saveLocationData(){
+    if(this.locationForm.dirty) {
+      let newSettings: Profile = this.user;
+      newSettings.address = this.locationForm.value;
+
+      this._user.profileIdPut(this.user.id).subscribe(
+        () => {
+          this.userChanged(newSettings);
+          this.navCtrl.pop().then()
+        }
+      )
+    } else {
+      this.navCtrl.pop()
+    }
   }
 
   useEnteredLocation() {

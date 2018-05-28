@@ -65,62 +65,80 @@
       </div>
 
     <div *ngIf="page == 'profile'" class="content-profile" text-wrap text-center>
-      <ion-list no-lines>
-        <ion-item>
-          <ion-icon name="person" item-start></ion-icon>
-          <ion-input placeholder="{{'PROFILE_FIRSTNAME'|translate|uppercase}}" [(ngModel)]="user.firstname"></ion-input>
-          <ion-input placeholder="{{'PROFILE_LASTNAME'|translate|uppercase}}" [(ngModel)]="user.lastname"></ion-input>
-        </ion-item>
-        <hr>
-        <ion-item>
-          <ion-icon name="mail" item-start></ion-icon>
-          <ion-input placeholder="{{'PROFILE_EMAIL'|translate|uppercase}}" [(ngModel)]="user.email"></ion-input>
-        </ion-item>
-        <hr>
-        <ion-item>
-          <ion-icon name="call" item-start></ion-icon>
-          <ion-input placeholder="{{'PROFILE_PHONE'|translate|uppercase}}" [(ngModel)]="user.phone"></ion-input>
-        </ion-item>
-        <hr>
-        <button ion-item>
-          <ion-icon name="contact" item-start></ion-icon>
-          Profilbild
-        </button>
-        <hr>
-        <button ion-item>
-          <ion-icon name="image" item-start></ion-icon>
-          Hintergrundbild
-        </button>
-        <hr>
-        <ion-item>
-          <ion-icon name="book" item-start></ion-icon>
-          <ion-textarea rows="4"
-                        placeholder="{{'PROFILE_DESCRIPTION'|translate|uppercase}}"
-                        [(ngModel)]="user.description"></ion-textarea>
-        </ion-item>
-      </ion-list>
-      <button ion-button block color="secondary" navPop>{{'SAVE'|translate|uppercase}}</button>
+      <form [formGroup]="profileForm">
+        <ion-list no-lines>
+          <ion-item>
+            <ion-icon name="person" item-start></ion-icon>
+            <ion-input
+              placeholder="{{'PROFILE_FIRSTNAME'|translate|uppercase}}"
+              formControlName="firstname"></ion-input>
+            <ion-input
+              placeholder="{{'PROFILE_LASTNAME'|translate|uppercase}}"
+              formControlName="lastname"></ion-input>
+          </ion-item>
+          <hr>
+          <ion-item>
+            <ion-icon name="mail" item-start></ion-icon>
+            <ion-input
+              placeholder="{{'PROFILE_EMAIL'|translate|uppercase}}"
+              formControlName="email"></ion-input>
+          </ion-item>
+          <hr>
+          <ion-item>
+            <ion-icon name="call" item-start></ion-icon>
+            <ion-input
+              placeholder="{{'PROFILE_PHONE'|translate|uppercase}}"
+              formControlName="phone"></ion-input>
+          </ion-item>
+          <hr>
+          <button ion-item>
+            <ion-icon name="contact" item-start></ion-icon>
+            Profilbild
+          </button>
+          <hr>
+          <button ion-item>
+            <ion-icon name="image" item-start></ion-icon>
+            Hintergrundbild
+          </button>
+          <hr>
+          <ion-item>
+            <ion-icon name="book" item-start></ion-icon>
+            <ion-textarea rows="4"
+                          placeholder="{{'PROFILE_DESCRIPTION'|translate|uppercase}}"
+                          formControlName="description"></ion-textarea>
+          </ion-item>
+        </ion-list>
+      </form>
+      <button ion-button block (click)="saveProfileData()">{{'SAVE'|translate|uppercase}}</button>
       <button ion-button block color="danger">{{'PROFILE_DELETE_ACCOUNT'|translate|uppercase}}</button>
     </div>
 
     <div *ngIf="page == 'location'" class="content-location" text-wrap text-center>
       <div #map id="map"></div>
-      <div class="text-location">
+      <form [formGroup]="locationForm" class="text-location">
         <ion-list>
           <h3>{{'DEFAULT_PICKOFF_LOCATION'|translate}}</h3>
           <ion-item>
-            <ion-input placeholder="{{'STREET'|translate|uppercase}}" [(ngModel)]="defaultPickoffLocation.street"></ion-input>
-            <ion-input placeholder="{{'NUMBER'|translate|uppercase}}" [(ngModel)]="defaultPickoffLocation.number"></ion-input>
+            <ion-input
+              placeholder="{{'STREET'|translate|uppercase}}"
+              formControlName="street"></ion-input>
+            <ion-input
+              placeholder="{{'NUMBER'|translate|uppercase}}"
+              formControlName="number"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input placeholder="{{'ZIP'|translate|uppercase}}" [(ngModel)]="defaultPickoffLocation.zip"></ion-input>
-            <ion-input placeholder="{{'CITY'|translate|uppercase}}" [(ngModel)]="defaultPickoffLocation.city"></ion-input>
+            <ion-input
+              placeholder="{{'ZIP'|translate|uppercase}}"
+              formControlName="zip"></ion-input>
+            <ion-input
+              placeholder="{{'CITY'|translate|uppercase}}"
+              formControlName="city"></ion-input>
           </ion-item>
         </ion-list>
         <button ion-button block (click)="usePointerLocation()">{{'USE_POINTER_LOCATION'|translate}}</button>
         <button ion-button block (click)="useEnteredLocation()">{{'USE_ENTERED_LOCATION'|translate}}</button>
-        <button ion-button block color="secondary" navPop>{{'SAVE'|translate}}</button>
-      </div>
+        <button ion-button block color="secondary"  (click)="saveLocationData()">{{'SAVE'|translate}}</button>
+      </form>
     </div>
   </div>
 </ion-content>
