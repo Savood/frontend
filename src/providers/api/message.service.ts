@@ -24,7 +24,7 @@ import { Message } from '../../models/message';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
-import env from '../../environment/environment';
+import {env} from '../../environment/environment';
 
 @Injectable()
 export class MessageService {
