@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
 
-import { Settings } from '../../providers';
+import {ProfileService, Settings} from '../../providers';
 import {} from '@types/googlemaps';
 import {
   GoogleMaps,
@@ -14,6 +14,7 @@ import {
   MarkerOptions,
   Marker, LatLng
 } from '@ionic-native/google-maps';
+import {Profile} from "../../models/profile";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -31,21 +32,7 @@ export class SettingsPage {
   @ViewChild('map') mapElement : ElementRef;
 
   // Our local settings object
-  user: any = {
-    avatarURL: '',
-    firstname: 'Marty',
-    lastname: 'McFly',
-    email: '123test@email.com',
-    phone: '202-555-0191',
-    address: {
-      street: 'Musterstraße',
-      number: '1337',
-      zip: '42069',
-      city: 'Musterstadt'
-    },
-    description: 'I save the wrap and the world',
-    badges: [true,false,true,true,true,false,false,true,false]
-  };
+  user: Profile;
 
   options: any;
 
@@ -59,17 +46,20 @@ export class SettingsPage {
 
   profileSettings = {
     page: 'profile',
-    pageTitleKey: 'SETTINGS_PROFILE'
+    pageTitleKey: 'SETTINGS_PROFILE',
+    user: this.user
   };
 
   locationSettings = {
     page: 'location',
-    pageTitleKey: 'SETTINGS_LOCATION'
+    pageTitleKey: 'SETTINGS_LOCATION',
+    user: this.user
   };
 
   notificationsSettings = {
     page: 'notifications',
-    pageTitleKey: 'SETTINGS_NOTIFICATIONS'
+    pageTitleKey: 'SETTINGS_NOTIFICATIONS',
+    user: this.user
   };
 
   subSettings: any = SettingsPage;
@@ -79,6 +69,7 @@ export class SettingsPage {
     public formBuilder: FormBuilder,
     public navParams: NavParams,
     public translate: TranslateService,
+    public _user: ProfileService,
     public plt: Platform) {
   }
 
@@ -93,6 +84,18 @@ export class SettingsPage {
 
     this.page = this.navParams.get('page') || this.page;
     this.pageTitleKey = this.navParams.get('pageTitleKey') || this.pageTitleKey;
+    this.user = this.navParams.get('user') || this.user;
+
+    if(!this.user && this.page == "main"){
+      this._user.profileIdGet(7).subscribe(
+        (profile) => {
+          this.user = profile;
+          this.profileSettings.user = this.user;
+          this.locationSettings.user = this.user;
+          this.notificationsSettings.user = this.user;
+        }
+      );
+    }
 
     this.translate.get(this.pageTitleKey).subscribe((res) => {
       this.pageTitle = res;
@@ -143,5 +146,11 @@ export class SettingsPage {
         map: map
       });
     }
+  }
+
+  saveProfileData(){
+    this._user.profileIdPut(this.user.id).subscribe(
+
+    );
   }
 }
