@@ -77,8 +77,8 @@ export class NativeMapsService {
         (location) => {
           if (location[0]) {
             let newLocation: Location = {
-              latitude: location[0].geometry.location.lat(),
-              longitude: location[0].geometry.location.lng()
+              latitude: location[0].position.lat,
+              longitude: location[0].position.lng
             };
             resolve(newLocation);
           } else {
