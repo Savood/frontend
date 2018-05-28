@@ -3,9 +3,11 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
-import {Settings} from '../../providers';
 import {MapsService} from "../../providers/maps/maps";
 import {Geolocation} from "@ionic-native/geolocation";
+import {ProfileService, Settings} from '../../providers';
+import {} from '@types/googlemaps';
+import {Profile} from "../../models/profile";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -21,28 +23,7 @@ export class SettingsPage {
   @ViewChild('map') mapElement: ElementRef;
 
   // Our local settings object
-  user: any = {
-    avatarURL: '',
-    firstname: 'Marty',
-    lastname: 'McFly',
-    email: '123test@email.com',
-    phone: '202-555-0191',
-    address: {
-      street: 'Musterstraße',
-      number: '1337',
-      zip: '42069',
-      city: 'Musterstadt'
-    },
-    description: 'I save the wrap and the world',
-    badges: [true, false, true, true, true, false, false, true, false]
-  };
-
-  defaultPickoffLocation: any = {
-    street: 'Musterstraße',
-    number: '1337',
-    zip: '42069',
-    city: 'Musterstadt'
-  };
+  user: Profile;
 
   locationMarker: any;
 
@@ -58,28 +39,32 @@ export class SettingsPage {
 
   profileSettings = {
     page: 'profile',
-    pageTitleKey: 'SETTINGS_PROFILE'
+    pageTitleKey: 'SETTINGS_PROFILE',
+    user: this.user
   };
 
   locationSettings = {
     page: 'location',
-    pageTitleKey: 'SETTINGS_LOCATION'
+    pageTitleKey: 'SETTINGS_LOCATION',
+    user: this.user
   };
 
   notificationsSettings = {
     page: 'notifications',
-    pageTitleKey: 'SETTINGS_NOTIFICATIONS'
+    pageTitleKey: 'SETTINGS_NOTIFICATIONS',
+    user: this.user
   };
 
   subSettings: any = SettingsPage;
 
   constructor(public navCtrl: NavController,
-              public settings: Settings,
-              public formBuilder: FormBuilder,
-              public navParams: NavParams,
-              public translate: TranslateService,
-              public _maps: MapsService,
-              public geolocation: Geolocation) {
+    public settings: Settings,
+    public formBuilder: FormBuilder,
+    public navParams: NavParams,
+    public translate: TranslateService,
+    public _user: ProfileService,
+    public _maps: MapsService,
+    public geolocation: Geolocation) {
   }
 
   ionViewDidLoad() {
@@ -93,6 +78,18 @@ export class SettingsPage {
 
     this.page = this.navParams.get('page') || this.page;
     this.pageTitleKey = this.navParams.get('pageTitleKey') || this.pageTitleKey;
+    this.user = this.navParams.get('user') || this.user;
+
+    if(!this.user && this.page == "main"){
+      this._user.profileIdGet(7).subscribe(
+        (profile) => {
+          this.user = profile;
+          this.profileSettings.user = this.user;
+          this.locationSettings.user = this.user;
+          this.notificationsSettings.user = this.user;
+        }
+      );
+    }
 
     this.translate.get(this.pageTitleKey).subscribe((res) => {
       this.pageTitle = res;
@@ -147,7 +144,7 @@ export class SettingsPage {
   usePointerLocation() {
     this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
       (address) => {
-        this.defaultPickoffLocation = address;
+        this.user.address = address;
       },
       (error) => {
         this.translate.get(error).subscribe((res) => {
@@ -157,12 +154,18 @@ export class SettingsPage {
     );
   }
 
+  saveProfileData(){
+    this._user.profileIdPut(this.user.id).subscribe(
+
+    );
+  }
+
   useEnteredLocation() {
     let formattedAddress: string =
-      this.defaultPickoffLocation.street + " " +
-      this.defaultPickoffLocation.number + ", " +
-      this.defaultPickoffLocation.zip + " " +
-      this.defaultPickoffLocation.city;
+      this.user.address.street + " " +
+      this.user.address.number + ", " +
+      this.user.address.zip + " " +
+      this.user.address.city;
 
     this._maps.getLocation(formattedAddress).then(
       (location) => {
