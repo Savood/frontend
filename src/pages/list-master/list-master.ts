@@ -24,7 +24,7 @@ export class ListMasterPage {
 
   /**
    * Prompt the user to add a new item. This shows our ItemCreatePage in a
-   * modal and then adds the new item to our data source if the user created one.
+   * modal and then adds the new item to our date source if the user created one.
    */
   addItem() {
     let addModal = this.modalCtrl.create('ItemCreatePage');
@@ -47,8 +47,8 @@ export class ListMasterPage {
    * Navigate to the detail page for this item.
    */
   openItem(item: Item) {
-    this.navCtrl.push('ItemDetailPage', {
+    this.navCtrl.push('OfferingDetailPage', {
       item: item
     });
-  }
+}
 }

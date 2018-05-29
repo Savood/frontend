@@ -41,7 +41,7 @@ export class ItemCreatePage {
         targetWidth: 96,
         targetHeight: 96
       }).then((data) => {
-        this.form.patchValue({ 'profilePic': 'data:image/jpg;base64,' + data });
+        this.form.patchValue({ 'profilePic': 'date:image/jpg;base64,' + data });
       }, (err) => {
         alert('Unable to take photo');
       })
@@ -66,7 +66,7 @@ export class ItemCreatePage {
   }
 
   /**
-   * The user cancelled, so we dismiss without sending data back.
+   * The user cancelled, so we dismiss without sending date back.
    */
   cancel() {
     this.viewCtrl.dismiss();

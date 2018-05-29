@@ -6,13 +6,18 @@ import { Items } from '../../providers';
 @IonicPage()
 @Component({
   selector: 'page-item-detail',
-  templateUrl: 'item-detail.html'
+  templateUrl: 'offering-detail.html'
 })
-export class ItemDetailPage {
-  item: any;
+export class OfferingDetailPage {
+  offering: any;
+  whichtab: string;
 
   constructor(public navCtrl: NavController, navParams: NavParams, items: Items) {
-    this.item = navParams.get('item') || items.defaultItem;
+    this.offering = navParams.get('offering') || items.defaultItem;
+    console.log(this.offering);
   }
 
+  ionViewWillEnter(){
+    this.whichtab = "info";
+  }
 }
