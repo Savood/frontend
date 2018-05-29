@@ -33,17 +33,23 @@
   "PROFILE_DESCRIPTION": "Beschreibung",
   "PROFILE_PHONE": "Telefon",
   "PROFILE_DELETE_ACCOUNT": "Konto löschen",
-  "PROFILE_STREET": "Straße",
-  "PROFILE_NUMBER": "Hausnummer",
-  "PROFILE_ZIP": "Postleitzahl",
-  "PROFILE_CITY": "Stadt",
+  "STREET": "Straße",
+  "NUMBER": "Hausnummer",
+  "ZIP": "Postleitzahl",
+  "CITY": "Stadt",
+
+  "NO_ADDRESS_FOUND": "Keine Adresse gefunden",
+  "GEOCODE_ERROR": "Fehler bei der Positionsbestimmung",
 
   "NOTIFICATIONS_FRIEND": "Neue Freunde",
   "NOTIFICATIONS_FOOD": "Neue Lebensmittel in der Nähe",
   "NOTIFICATIONS_MESSAGE": "Neue Nachrichten",
   "NOTIFICATIONS_RECIPE": "Neue Rezepte" ,
   "PICKOFF_LOCATION": "Abholort",
+  "DEFAULT_PICKOFF_LOCATION": "Standardabholort",
   "USE_CURRENT_LOCATION": "Aktuellen Standort verwenden",
+  "USE_POINTER_LOCATION": "Zeigerstandort verwenden",
+  "USE_ENTERED_LOCATION": "Eingegebenen Standort verwenden",
 
   "WELCOME_TITLE": "Willkommen",
 
@@ -62,9 +68,9 @@
   "CARDS_TITLE": "Social",
 
   "SEARCH_TITLE": "Suche",
-  "SEARCH_PLACEHOLDER": "Suche in der Artikel-Liste, z.B. \"Donald Duck\""
+  "SEARCH_PLACEHOLDER": "Suche in der Artikel-Liste, z.B. \"Donald Duck\"",
 
-  "OFFERINGS_TITLE": "Alle Savoods"
+  "OFFERINGS_TITLE": "Alle Savoods",
   "COMMENTS": "Kommentare",
   "LIKES": "Hochwähls"
 }

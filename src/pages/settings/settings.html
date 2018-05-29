@@ -5,11 +5,11 @@
 </ion-header>
 
 <ion-content *ngIf="user">
-  <img *ngIf="page == 'main'"  class="header-image" src="../../assets/img/queen-live.png" >
+  <img *ngIf="page == 'main'"  class="header-image" src="assets/img/queen-live.png" >
 
   <div *ngIf="page == 'main'" class="content-main" text-wrap text-center>
     <div class="circular">
-      <img src="../../assets/img/marty-avatar.png">
+      <img src="assets/img/marty-avatar.png">
     </div>
     <h2>{{user.firstname}} {{user.lastname}}</h2>
     <p class="profile-description">{{user.description}}</p>
@@ -59,7 +59,7 @@
           <ion-label>{{'NOTIFICATIONS_RECIPE'|translate}}</ion-label>
           <ion-checkbox></ion-checkbox>
         </ion-item>
-        <button ion-button block navPop>{{'SAVE'|translate|uppercase}}</button>
+        <button ion-button block color="secondary" navPop>{{'SAVE'|translate|uppercase}}</button>
       </ion-list>
   </div>
 
@@ -83,13 +83,13 @@
       <hr>
       <ion-item>
         <ion-icon name="home" item-start></ion-icon>
-        <ion-input placeholder="{{'PROFILE_STREET'|translate|uppercase}}" [(ngModel)]="user.address.street"></ion-input>
-        <ion-input placeholder="{{'PROFILE_NUMBER'|translate|uppercase}}" [(ngModel)]="user.address.number"></ion-input>
+        <ion-input placeholder="{{'STREET'|translate|uppercase}}" [(ngModel)]="user.address.street"></ion-input>
+        <ion-input placeholder="{{'NUMBER'|translate|uppercase}}" [(ngModel)]="user.address.number"></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon class="hiddenIcon" name="home" item-start></ion-icon>
-        <ion-input placeholder="{{'PROFILE_ZIP'|translate|uppercase}}" [(ngModel)]="user.address.zip"></ion-input>
-        <ion-input placeholder="{{'PROFILE_CITY'|translate|uppercase}}" [(ngModel)]="user.address.city"></ion-input>
+        <ion-input placeholder="{{'ZIP'|translate|uppercase}}" [(ngModel)]="user.address.zip"></ion-input>
+        <ion-input placeholder="{{'CITY'|translate|uppercase}}" [(ngModel)]="user.address.city"></ion-input>
       </ion-item>
       <hr>
       <button ion-item>
@@ -109,7 +109,7 @@
                       [(ngModel)]="user.description"></ion-textarea>
       </ion-item>
     </ion-list>
-    <button ion-button block navPop>{{'SAVE'|translate|uppercase}}</button>
+    <button ion-button block color="secondary" navPop>{{'SAVE'|translate|uppercase}}</button>
     <button ion-button block color="danger">{{'PROFILE_DELETE_ACCOUNT'|translate|uppercase}}</button>
   </div>
 
@@ -117,18 +117,19 @@
     <div #map id="map"></div>
     <div class="text-location">
       <ion-list>
-        <h3>{{'PICKOFF_LOCATION'|translate}}</h3>
+        <h3>{{'DEFAULT_PICKOFF_LOCATION'|translate}}</h3>
         <ion-item>
-          <ion-input placeholder="{{'PROFILE_STREET'|translate|uppercase}}" [(ngModel)]="user.address.street"></ion-input>
-          <ion-input placeholder="{{'PROFILE_NUMBER'|translate|uppercase}}" [(ngModel)]="user.address.number"></ion-input>
+          <ion-input placeholder="{{'STREET'|translate|uppercase}}" [(ngModel)]="defaultPickoffLocation.street"></ion-input>
+          <ion-input placeholder="{{'NUMBER'|translate|uppercase}}" [(ngModel)]="defaultPickoffLocation.number"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input placeholder="{{'PROFILE_ZIP'|translate|uppercase}}" [(ngModel)]="user.address.zip"></ion-input>
-          <ion-input placeholder="{{'PROFILE_CITY'|translate|uppercase}}" [(ngModel)]="user.address.city"></ion-input>
+          <ion-input placeholder="{{'ZIP'|translate|uppercase}}" [(ngModel)]="defaultPickoffLocation.zip"></ion-input>
+          <ion-input placeholder="{{'CITY'|translate|uppercase}}" [(ngModel)]="defaultPickoffLocation.city"></ion-input>
         </ion-item>
       </ion-list>
-      <button ion-button block navPop>{{'USE_CURRENT_LOCATION'|translate}}</button>
-      <button ion-button block navPop>{{'SAVE'|translate}}</button>
+      <button ion-button block (click)="usePointerLocation()">{{'USE_POINTER_LOCATION'|translate}}</button>
+      <button ion-button block (click)="useEnteredLocation()">{{'USE_ENTERED_LOCATION'|translate}}</button>
+      <button ion-button block color="secondary" navPop>{{'SAVE'|translate}}</button>
     </div>
   </div>
 </ion-content>

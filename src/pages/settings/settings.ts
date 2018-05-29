@@ -1,19 +1,11 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
-import { Settings } from '../../providers';
-import {} from '@types/googlemaps';
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
-  Marker, LatLng
-} from '@ionic-native/google-maps';
+import {Settings} from '../../providers';
+import {MapsService} from "../../providers/maps/maps";
+import {Geolocation} from "@ionic-native/geolocation";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -26,9 +18,7 @@ import {
   templateUrl: 'settings.html'
 })
 export class SettingsPage {
-
-  map: GoogleMap;
-  @ViewChild('map') mapElement : ElementRef;
+  @ViewChild('map') mapElement: ElementRef;
 
   // Our local settings object
   user: any = {
@@ -44,8 +34,17 @@ export class SettingsPage {
       city: 'Musterstadt'
     },
     description: 'I save the wrap and the world',
-    badges: [true,false,true,true,true,false,false,true,false]
+    badges: [true, false, true, true, true, false, false, true, false]
   };
+
+  defaultPickoffLocation: any = {
+    street: 'Musterstraße',
+    number: '1337',
+    zip: '42069',
+    city: 'Musterstadt'
+  };
+
+  locationMarker: any;
 
   options: any;
 
@@ -75,11 +74,12 @@ export class SettingsPage {
   subSettings: any = SettingsPage;
 
   constructor(public navCtrl: NavController,
-    public settings: Settings,
-    public formBuilder: FormBuilder,
-    public navParams: NavParams,
-    public translate: TranslateService,
-    public plt: Platform) {
+              public settings: Settings,
+              public formBuilder: FormBuilder,
+              public navParams: NavParams,
+              public translate: TranslateService,
+              public _maps: MapsService,
+              public geolocation: Geolocation) {
   }
 
   ionViewDidLoad() {
@@ -105,7 +105,7 @@ export class SettingsPage {
   }
 
   ionViewDidEnter() {
-    if(this.navParams.get('page') == 'location'){
+    if (this.navParams.get('page') == 'location') {
       this.initMap();
     }
   }
@@ -114,34 +114,65 @@ export class SettingsPage {
     console.log('Ng All Changes');
   }
 
-  initMap(){
-    let location: LatLng = new LatLng(49.474265, 8.534308);
-
-    if(this.plt.is('ios') ||this.plt.is('android')){
-
-      let mapOptions: GoogleMapOptions = {
-        camera: {
-          target: location,
-          zoom: 15,
+  initMap() {
+    if (this.geolocation) {
+      this.geolocation.getCurrentPosition().then(
+        (position) => {
+          return {latitude: position.coords.latitude, longitude: position.coords.longitude};
+        },
+        (error) => {
+          alert('ERROR: ' + error.message);
+          return {latitude: 49.4874592, longitude: 8.4660395};
         }
-      };
-
-      this.map = GoogleMaps.create(this.mapElement.nativeElement, mapOptions);
-
-      this.map.addMarker({
-        title: 'Ionic',
-        icon: 'blue',
-        position: location
-      });
-    }else{
-      let map = new google.maps.Map(this.mapElement.nativeElement, {
-        zoom: 15,
-        center: location
-      });
-      let marker = new google.maps.Marker({
-        position: location,
-        map: map
-      });
+      ).then(
+        (position) => {
+          this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
+          this._maps.newMarker(
+            {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
+            (marker) => {
+              this.locationMarker = marker
+            });
+        }
+      )
+    } else {
+      alert('ERROR: Location Service not available');
+      this._maps.initMap(this.mapElement, {latitude: 49.4874592, longitude: 8.4660395});
+      this._maps.newMarker({latitude: 49.4874592, longitude: 8.4660395}, 'userPos', true).then(
+        (marker) => {
+          this.locationMarker = marker
+        });
     }
+  }
+
+  usePointerLocation() {
+    this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
+      (address) => {
+        this.defaultPickoffLocation = address;
+      },
+      (error) => {
+        this.translate.get(error).subscribe((res) => {
+          alert(res)
+        });
+      }
+    );
+  }
+
+  useEnteredLocation() {
+    let formattedAddress: string =
+      this.defaultPickoffLocation.street + " " +
+      this.defaultPickoffLocation.number + ", " +
+      this.defaultPickoffLocation.zip + " " +
+      this.defaultPickoffLocation.city;
+
+    this._maps.getLocation(formattedAddress).then(
+      (location) => {
+        this._maps.setMarkerPosition(this.locationMarker, location);
+      },
+      (error) => {
+        this.translate.get(error).subscribe((res) => {
+          alert(res)
+        });
+      }
+    );
   }
 }
