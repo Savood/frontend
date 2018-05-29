@@ -11,24 +11,38 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class AuthProvider {
 
-  public authTokenStale: string = 'stale_auth_token';
-  public authTokenNew: string = 'new_auth_token';
-  public currentToken: string;
+  refresh_token: string;
+  id_token :string;
 
   constructor(public _http: HttpClient) {
-
+    this.loadToken()
   }
 
   getAuthToken() {
-    return this.currentToken;
+    return localStorage.getItem('refresh_token');
   }
 
-  refreshToken(): Observable<string> {
+  login(username:string, password:string){
+    this._http.post('/oauth2/token', {username,password})
+      .subscribe(token=> this.saveToken(token));
+  }
 
-    //TODO Add refreshtoken
-    this.currentToken = this.authTokenNew;
+  register(email:string, username:string, password:string) {
+    this._http.post('/register', {email,username,password})
+      .subscribe(data =>{console.log(data)}, err=>{console.log(err)});
+  }
 
-    return Observable.of(this.authTokenNew).delay(200)
+  logout(){
+    console.log("Du bist jetzt raus");
+  }
 
+  loadToken(){
+    id_token = localStorage.getItem('id_token');
+    refresh_token = localStorage.getItem('refresh_token');
+  }
+
+  saveToken(token){
+    localStorage.setItem('id_token', token.id_token);
+    localStorage.setItem('refresh_token', token.refresh_token);
   }
 }

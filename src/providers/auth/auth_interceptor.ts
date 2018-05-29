@@ -12,7 +12,7 @@ import {AuthProvider} from "./auth";
  */
 
 @Injectable()
-export class RequestInterceptorService implements HttpInterceptor {
+export class AuthInterceptorService implements HttpInterceptor {
 
   isRefreshingToken: boolean = false;
   tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
@@ -76,6 +76,9 @@ export class RequestInterceptorService implements HttpInterceptor {
     }
   }
 
+  handle400Error(req:HttpRequest<any>, next: HttpHandler){
+
+  }
 
   logoutUser() {
     // Route to the login page (implementation up to you)
