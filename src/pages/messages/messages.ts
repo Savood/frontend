@@ -6,10 +6,10 @@ import { Items } from '../../providers';
 
 @IonicPage()
 @Component({
-  selector: 'page-list-master',
-  templateUrl: 'list-master.html'
+  selector: 'page-messages',
+  templateUrl: 'messages.html'
 })
-export class ListMasterPage {
+export class MessagesPage {
   currentItems: Item[];
 
   constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController) {
