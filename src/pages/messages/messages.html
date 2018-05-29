@@ -16,7 +16,7 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let item of currentItems">
-      <button ion-item (click)="openItem(item)">
+      <button ion-item (click)="openMessage(item)">
         <ion-avatar item-start>
           <img [src]="item.profilePic" />
         </ion-avatar>
@@ -26,7 +26,7 @@
       </button>
 
       <ion-item-options>
-        <button ion-button color="danger" (click)="deleteItem(item)">
+        <button ion-button color="danger" (click)="deleteMessage(item)">
           {{'DELETE_BUTTON' | translate}}
         </button>
       </ion-item-options>

@@ -39,16 +39,24 @@ export class MessagesPage {
   /**
    * Delete an item from the list of items.
    */
-  deleteItem(item) {
-    this.items.delete(item);
+  deleteMessage(message) {
+    this.items.delete(message);
   }
 
   /**
    * Navigate to the detail page for this item.
    */
-  openItem(item: Item) {
-    this.navCtrl.push('OfferingDetailPage', {
-      item: item
+  openMessage() {
+    this.navCtrl.push('MessageDetailPage', {
+      message: {
+        id: 2,
+        fromId: 2,
+        toId: 3,
+        offeringId: 15,
+        content: "Hallo Markus!",
+        time: Date,
+        important: true,
+      }
     });
 }
 }
