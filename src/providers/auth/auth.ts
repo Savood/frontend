@@ -37,8 +37,8 @@ export class AuthProvider {
   }
 
   loadToken(){
-    id_token = localStorage.getItem('id_token');
-    refresh_token = localStorage.getItem('refresh_token');
+    this.id_token = localStorage.getItem('id_token');
+    this.refresh_token = localStorage.getItem('refresh_token');
   }
 
   saveToken(token){

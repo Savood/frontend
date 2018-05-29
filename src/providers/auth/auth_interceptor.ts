@@ -21,7 +21,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   }
 
   addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
-    header = {setHeaders: {Authorization: 'Bearer ' + token}}
+    let header = {setHeaders: {Authorization: 'Bearer ' + token}}
     return req.clone(header)
   }
 
@@ -31,7 +31,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         if (error instanceof HttpErrorResponse) {
           switch ((<HttpErrorResponse>error).status) {
             case 400:
-              return this.handle400Error(error);
+              return this.handle400Error(error, next);
             case 401:
               return this.handle401Error(req, next);
           }
@@ -77,7 +77,6 @@ export class AuthInterceptorService implements HttpInterceptor {
   }
 
   handle400Error(req:HttpRequest<any>, next: HttpHandler){
-
   }
 
   logoutUser() {
