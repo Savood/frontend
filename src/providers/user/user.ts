@@ -27,7 +27,9 @@ import { Api } from '../api/api';
 export class User {
   _user: any;
 
-  constructor(public api: Api) { }
+  constructor(
+    public api: Api
+  ) { }
 
   /**
    * Send a POST request to our login endpoint with the data

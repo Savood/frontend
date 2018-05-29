@@ -11,7 +11,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { Geolocation} from "@ionic-native/geolocation";
 
 import { Items } from '../mocks/providers/items';
-import { Settings, User, Api } from '../providers';
+import { Settings, User, APIS } from '../providers';
 import { MyApp } from './app.component';
 import { MapsService } from '../providers/maps/maps';
 
@@ -58,7 +58,7 @@ export function provideSettings(storage: Storage) {
     MyApp
   ],
   providers: [
-    Api,
+    APIS,
     Items,
     User,
     Camera,
