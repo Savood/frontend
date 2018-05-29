@@ -172,7 +172,27 @@ export class SettingsPage {
   usePointerLocation() {
     this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
       (address) => {
+        this.locationForm.setValue(address);
         this.user.address = address;
+      },
+      (error) => {
+        this.translate.get(error).subscribe((res) => {
+          alert(res)
+        });
+      }
+    );
+  }
+
+  useEnteredLocation() {
+    let formattedAddress: string =
+      this.user.address.street + " " +
+      this.user.address.number + ", " +
+      this.user.address.zip + " " +
+      this.user.address.city;
+
+    this._maps.getLocation(formattedAddress).then(
+      (location) => {
+        this._maps.setMarkerPosition(this.locationMarker, location);
       },
       (error) => {
         this.translate.get(error).subscribe((res) => {
@@ -216,24 +236,5 @@ export class SettingsPage {
     } else {
       this.navCtrl.pop()
     }
-  }
-
-  useEnteredLocation() {
-    let formattedAddress: string =
-      this.user.address.street + " " +
-      this.user.address.number + ", " +
-      this.user.address.zip + " " +
-      this.user.address.city;
-
-    this._maps.getLocation(formattedAddress).then(
-      (location) => {
-        this._maps.setMarkerPosition(this.locationMarker, location);
-      },
-      (error) => {
-        this.translate.get(error).subscribe((res) => {
-          alert(res)
-        });
-      }
-    );
   }
 }

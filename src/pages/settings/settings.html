@@ -15,54 +15,53 @@
       <h2>{{user.firstname}} {{user.lastname}}</h2>
       <p class="profile-description">{{user.description}}</p>
       <hr>
+      <h3>{{'PROFILE_BADGES'|translate}}</h3>
+      <ion-grid class="badges">
+        <ion-row>
+          <ion-col *ngFor="let gotBadge of user.badges" col-3>
+            <ion-icon name="alarm" [color]="gotBadge ? 'primary' : 'dark'"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
-        <h3>{{'PROFILE_BADGES'|translate}}</h3>
-        <ion-grid class="badges">
-          <ion-row>
-            <ion-col *ngFor="let gotBadge of user.badges" col-3>
-              <ion-icon name="alarm" [color]="gotBadge ? 'primary' : 'dark'"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+      <hr>
+      <ion-list no-lines>
+        <button ion-button block [navPush]="subSettings" [navParams]="notificationsSettings">
+          {{'SETTINGS_NOTIFICATIONS'|translate|uppercase}}
+        </button>
+        <button ion-button block [navPush]="subSettings" [navParams]="profileSettings">
+          {{'SETTINGS_PROFILE'|translate|uppercase}}
+        </button>
+        <button ion-button block [navPush]="subSettings" [navParams]="locationSettings">
+          {{'SETTINGS_LOCATION'|translate|uppercase}}
+        </button>
+        <button ion-button block color="danger">
+          {{'SETTINGS_LOGOUT'|translate|uppercase}}
+        </button>
+      </ion-list>
+    </div>
 
-        <hr>
-        <ion-list no-lines>
-          <button ion-button block [navPush]="subSettings" [navParams]="notificationsSettings">
-            {{'SETTINGS_NOTIFICATIONS'|translate|uppercase}}
-          </button>
-          <button ion-button block [navPush]="subSettings" [navParams]="profileSettings">
-            {{'SETTINGS_PROFILE'|translate|uppercase}}
-          </button>
-          <button ion-button block [navPush]="subSettings" [navParams]="locationSettings">
-            {{'SETTINGS_LOCATION'|translate|uppercase}}
-          </button>
-          <button ion-button block color="danger">
-            {{'SETTINGS_LOGOUT'|translate|uppercase}}
-          </button>
-        </ion-list>
-      </div>
-
-      <div *ngIf="page == 'notifications'" class="content-notifications" text-wrap text-center>
-        <ion-list no-lines>
-          <ion-item>
-            <ion-label>{{'NOTIFICATIONS_FRIEND'|translate}}</ion-label>
-            <ion-checkbox></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label>{{'NOTIFICATIONS_FOOD'|translate}}</ion-label>
-            <ion-checkbox></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label>{{'NOTIFICATIONS_MESSAGE'|translate}}</ion-label>
-            <ion-checkbox></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label>{{'NOTIFICATIONS_RECIPE'|translate}}</ion-label>
-            <ion-checkbox></ion-checkbox>
-          </ion-item>
-          <button ion-button block color="secondary" navPop>{{'SAVE'|translate|uppercase}}</button>
-        </ion-list>
-      </div>
+    <div *ngIf="page == 'notifications'" class="content-notifications" text-wrap text-center>
+      <ion-list no-lines>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_FRIEND'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_FOOD'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_MESSAGE'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'NOTIFICATIONS_RECIPE'|translate}}</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <button ion-button block color="secondary" navPop>{{'SAVE'|translate|uppercase}}</button>
+      </ion-list>
+    </div>
 
     <div *ngIf="page == 'profile'" class="content-profile" text-wrap text-center>
       <form [formGroup]="profileForm">
