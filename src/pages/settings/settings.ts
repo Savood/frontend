@@ -34,16 +34,17 @@ export class SettingsPage {
 
   settingsReady = false;
 
-  profileForm: FormGroup;
+  emailForm: FormGroup;
+  phoneForm: FormGroup;
   locationForm: FormGroup;
 
   page: string = 'main';
   pageTitleKey: string = 'SETTINGS_TITLE';
   pageTitle: string;
 
-  profileSettings = {
-    page: 'profile',
-    pageTitleKey: 'SETTINGS_PROFILE',
+  emailSettings = {
+    page: 'email',
+    pageTitleKey: 'SETTINGS_EMAIL',
     user: this.user,
     userChanged: this.userChanged
   };
@@ -55,9 +56,9 @@ export class SettingsPage {
     userChanged: this.userChanged
   };
 
-  notificationsSettings = {
-    page: 'notifications',
-    pageTitleKey: 'SETTINGS_NOTIFICATIONS',
+  phoneSettings = {
+    page: 'phone',
+    pageTitleKey: 'SETTINGS_PHONE',
     user: this.user,
     userChanged: this.userChanged
   };
@@ -83,13 +84,15 @@ export class SettingsPage {
     this.user = this.navParams.get('user') || this.user;
     this.userChanged = this.navParams.get('userChanged') || this.userChanged;
 
-    if(this.navParams.get('page') == 'profile'){
-      this.profileForm = this.formBuilder.group({
-        firstname: [this.user.firstname],
-        lastname: [this.user.lastname],
-        email: [this.user.email],
-        phone: [this.user.phone],
-        description: [this.user.description],
+    if(this.navParams.get('page') == 'email'){
+      this.emailForm = this.formBuilder.group({
+        email: [this.user.email]
+      });
+    }
+
+    if(this.navParams.get('page') == 'phone'){
+      this.phoneForm = this.formBuilder.group({
+        phone: [this.user.phone]
       });
     }
 
@@ -102,17 +105,17 @@ export class SettingsPage {
       });
     }
 
-    this.notificationsSettings.user
+    this.emailSettings.user
       = this.locationSettings.user
-      = this.profileSettings.user
-      = this.user;
+      = this.phoneSettings.user
+      = this.user
 
     if(!this.user && this.page == "main"){
       this._user.getProfileById("7").subscribe(
         (profile) => {
-          this.notificationsSettings.user
+          this.emailSettings.user
             = this.locationSettings.user
-            = this.profileSettings.user
+            = this.phoneSettings.user
             = this.user
             = profile
         }
@@ -202,32 +205,11 @@ export class SettingsPage {
     );
   }
 
-  saveProfileData(){
-    if(this.profileForm.dirty){
-      let newSettings: Profile = this.profileForm.value;
-      newSettings.address = this.user.address;
-      newSettings.avatarId = this.user.avatarId;
-      newSettings.backgroundId = this.user.backgroundId;
-      newSettings.badges = this.user.badges;
-      newSettings.id = this.user.id;
-
-      this._user.updateProfileById(this.user.id, this.profileForm.value).subscribe(
-        () => {
-          this.userChanged(newSettings);
-          this.navCtrl.pop().then()
-        }
-      )
-    } else {
-      this.navCtrl.pop()
-    }
-  }
-
-  saveLocationData(){
-    if(this.locationForm.dirty) {
-      let newSettings: Profile = this.user;
-      newSettings.address = this.locationForm.value;
-
-      this._user.updateProfileById(this.user.id,this.locationForm.value).subscribe(
+  saveData(form: FormGroup){
+    let newSettings = {};
+    Object.assign(newSettings,this.user,form.value);
+    if(form.dirty) {
+      this._user.updateProfileById(this.user.id,form.value).subscribe(
         () => {
           this.userChanged(newSettings);
           this.navCtrl.pop().then()
