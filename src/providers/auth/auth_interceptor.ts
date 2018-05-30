@@ -21,12 +21,13 @@ export class AuthInterceptorService implements HttpInterceptor {
   }
 
   addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
+    console.log(token)
     let header = {setHeaders: {Authorization: 'Bearer ' + token}};
     return req.clone(header)
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-    return next.handle(this.addToken(req, this.authService.getAuthToken()))
+    return next.handle(this.addToken(req, this.authService.getRefreshToken()))
       .catch(error => {
         if (error instanceof HttpErrorResponse) {
           switch ((<HttpErrorResponse>error).status) {
@@ -49,7 +50,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       // comes back from the refreshToken call.
       this.tokenSubject.next(null);
 
-      return this.authService.refreshToken()
+      return this.authService.getRefreshToken()()
         .switchMap((newToken: string) => {
           if (newToken) {
             this.tokenSubject.next(newToken);

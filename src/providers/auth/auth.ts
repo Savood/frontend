@@ -19,8 +19,8 @@ export class AuthProvider {
     this.loadToken()
   }
 
-  getAuthToken() {
-    return localStorage.getItem('refresh_token');
+  getRefreshToken() {
+    return this.refresh_token || localStorage.getItem('refresh_token') || null;
   }
 
   login(username:string, password:string){
@@ -29,8 +29,7 @@ export class AuthProvider {
   }
 
   register(email:string, username:string, password:string) {
-    this._http.post(env.auth_endpoint +'/register', {email,username,password})
-      .subscribe(data =>{console.log(data)}, err=>{console.log(err)});
+    return this._http.post(env.auth_endpoint +'/register', {email, username, password})
   }
 
   logout(){

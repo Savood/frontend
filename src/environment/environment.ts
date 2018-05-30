@@ -3,5 +3,5 @@
  */
 export const env = {
   api_endpoint: 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0',
-  auth_endpoint: 'https://savood.app.chd.cx/v2/'
+  auth_endpoint: 'https://savood.app.chd.cx/'
 }
