@@ -1,7 +1,15 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {
+  ActionSheetController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+  Platform,
+  ToastController
+} from 'ionic-angular';
 
 import {MapsService} from "../../providers/maps/maps";
 import {Geolocation} from "@ionic-native/geolocation";
@@ -73,7 +81,10 @@ export class SettingsPage {
               public translate: TranslateService,
               public _user: ProfileService,
               public _maps: MapsService,
-              public geolocation: Geolocation) {
+              public geolocation: Geolocation,
+              public loadingCtrl: LoadingController,
+              public actionSheetCtrl: ActionSheetController,
+              public platform: Platform) {
   }
 
   ionViewDidLoad() {
@@ -241,5 +252,120 @@ export class SettingsPage {
         }).present();
       });
     }
+  }
+
+  changeHeader() {
+    if (this.platform.is('cordova')){
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Upload Picture from',
+        buttons: [
+          {
+            text: 'Gallery',
+            handler: () => {
+              this.getImage()
+            }
+          }, {
+            text: 'Camera',
+            handler: () => {
+              this.getCamera()
+            }
+          }, {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      actionSheet.present();
+    } else {
+      console.log("Cordova not available")
+      // this.navCtrl.push(WebUploadHeaderPage)
+    }
+  }
+
+  changeAvatar() {
+    if (this.platform.is('cordova')){
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Upload Picture from',
+        buttons: [
+          {
+            text: 'Gallery',
+            handler: () => {
+              this.getImage()
+            }
+          }, {
+            text: 'Camera',
+            handler: () => {
+              this.getCamera()
+            }
+          }, {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      actionSheet.present();
+
+    } else {
+      console.log("Cordova not available")
+      // this.navCtrl.push(WebUploadAvatarPage)
+    }
+  }
+
+  // uploadFile() {
+  //   let loader = this.loadingCtrl.create({
+  //     content: "Uploading..."
+  //   });
+  //   loader.present();
+  //
+  //   this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+  //
+  //   this.uploadPic.uploadFile(this.imageURI, this.imageFileName)
+  //     .then((data) => {
+  //       loader.dismiss();
+  //       this.presentToast("Image uploaded successfully");
+  //     }, (err) => {
+  //       loader.dismiss();
+  //       this.presentToast(err);
+  //     });
+  // }
+
+  getImage() {
+  //   this.uploadPic.getImage()
+  //     .then(
+  //       (imageData) => {
+  //         let alert = this.alertCtrl.create({
+  //           title: 'Picture',
+  //           subTitle: imageData,
+  //           buttons: ['OK']
+  //         });
+  //         alert.present()
+  //         // this.imageURI = imageData;
+  //       },
+  //       (err) => {
+  //         this.presentToast(err);
+  //       }
+  //     );
+  }
+  //
+  //
+  getCamera() {
+  //   this.uploadPic.getCamera()
+  //     .then((imageData) => {
+  //       let alert = this.alertCtrl.create({
+  //         title: 'Picture',
+  //         subTitle: imageData,
+  //         buttons: ['OK']
+  //       });
+  //       alert.present()
+  //
+  //     }, (err) => {
+  //       this.presentToast(err);
+  //     });
   }
 }

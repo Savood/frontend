@@ -6,11 +6,11 @@
 
 <ion-content>
   <div *ngIf="user">
-    <img *ngIf="page == 'main'" class="header-image" src="assets/img/queen-live.png">
+    <img *ngIf="page == 'main'" class="header-image" src="assets/img/queen-live.png" (click)="changeHeader()">
 
     <div *ngIf="page == 'main'" class="content-main" text-wrap>
       <div class="circular">
-        <img src="assets/img/marty-avatar.png">
+        <img src="assets/img/marty-avatar.png" (click)="changeAvatar()">
       </div>
       <h2 text-center>{{user.firstname}} {{user.lastname}}</h2>
       <p class="profile-description" text-center>{{user.description}}</p>
