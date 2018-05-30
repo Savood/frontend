@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
+import {env} from '../../environment/environment';
 
 /*
   Generated class for the AuthProvider provider.
@@ -23,12 +24,12 @@ export class AuthProvider {
   }
 
   login(username:string, password:string){
-    this._http.post('/oauth2/token', {username,password})
+    this._http.post(env.auth_endpoint + '/oauth2/token', {username,password})
       .subscribe(token=> this.saveToken(token));
   }
 
   register(email:string, username:string, password:string) {
-    this._http.post('/register', {email,username,password})
+    this._http.post(env.auth_endpoint +'/register', {email,username,password})
       .subscribe(data =>{console.log(data)}, err=>{console.log(err)});
   }
 
