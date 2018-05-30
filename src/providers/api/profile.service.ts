@@ -24,13 +24,12 @@ import { Profile } from '../../models/profile';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
-import {env} from "../../environment/environment";
 
 
 @Injectable()
 export class ProfileService {
 
-    protected basePath = env.api_endpoint;
+    protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -60,13 +59,52 @@ export class ProfileService {
 
 
     /**
-     * Delete an profile
+     * Add a new profile
+     *
+     * @param body Profile that needs to be added
+     */
+    public createNewProfile(body: Profile): Observable<Profile> {
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createNewProfile.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+        let httpContentTypeSelected:string = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set("Content-Type", httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.basePath}/profile`,
+            body,
+            {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
+     * Delete a profile
      *
      * @param id
      */
-    public profileIdDelete(id: number): Observable<{}> {
+    public deleteProfileById(id: string): Observable<{}> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling profileIdDelete.');
+            throw new Error('Required parameter id was null or undefined when calling deleteProfileById.');
         }
 
         let headers = this.defaultHeaders;
@@ -98,9 +136,9 @@ export class ProfileService {
      *
      * @param id
      */
-    public profileIdGet(id: number): Observable<Profile> {
+    public getProfileById(id: string): Observable<Profile> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling profileIdGet.');
+            throw new Error('Required parameter id was null or undefined when calling getProfileById.');
         }
 
         let headers = this.defaultHeaders;
@@ -131,45 +169,14 @@ export class ProfileService {
      * Update a profile
      *
      * @param id
+     * @param body New parameters of the profile
      */
-    public profileIdPut(id: number): Observable<{}> {
+    public updateProfileById(id: string, body: Profile): Observable<{}> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling profileIdPut.');
+            throw new Error('Required parameter id was null or undefined when calling updateProfileById.');
         }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json'
-        ];
-
-        return this.httpClient.put<any>(`${this.basePath}/profile/${encodeURIComponent(String(id))}`,
-            null,
-            {
-                headers: headers,
-                withCredentials: this.configuration.withCredentials,
-            }
-        );
-    }
-
-    /**
-     * Add a new profile
-     *
-     * @param body Offering that needs to be added
-     */
-    public profilePost(body: Profile): Observable<Profile> {
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling profilePost.');
+            throw new Error('Required parameter body was null or undefined when calling updateProfileById.');
         }
 
         let headers = this.defaultHeaders;
@@ -192,7 +199,7 @@ export class ProfileService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/profile`,
+        return this.httpClient.patch<any>(`${this.basePath}/profile/${encodeURIComponent(String(id))}`,
             body,
             {
                 headers: headers,

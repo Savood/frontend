@@ -12,12 +12,9 @@
 
 
 
-export interface Message {
+export interface Comment {
     id?: string;
-    fromId?: number;
-    toId?: number;
-    offeringId?: number;
+    creatorId?: number;
     content?: string;
     time?: Date;
-    important?: boolean;
 }

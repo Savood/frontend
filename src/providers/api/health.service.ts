@@ -18,10 +18,7 @@ import { HttpClient, HttpHeaders, HttpParams }               from '@angular/comm
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
 
-import { Feed } from '../../models/feed';
-import { InvalidParameterInput } from '../../models/invalidParameterInput';
-
-
+import { ErrorModel } from '../../models/errorModel';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -29,7 +26,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 
 @Injectable()
-export class FeedService {
+export class HealthService {
 
     protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
     public defaultHeaders = new HttpHeaders();
@@ -61,19 +58,10 @@ export class FeedService {
 
 
     /**
-     * Display a feed
+     * Check Server status
      *
-     * @param location
      */
-    public getFeed(location: string): Observable<Feed> {
-        if (location === null || location === undefined) {
-            throw new Error('Required parameter location was null or undefined when calling getFeed.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (location !== undefined) {
-            queryParameters = queryParameters.set('location', <any>location);
-        }
+    public healthcheckGet(): Observable<{}> {
 
         let headers = this.defaultHeaders;
 
@@ -88,12 +76,10 @@ export class FeedService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/feed`,
+        return this.httpClient.get<any>(`${this.basePath}/healthcheck`,
             {
-                params: queryParameters,
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
             }
