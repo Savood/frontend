@@ -108,7 +108,7 @@ export class SettingsPage {
       = this.user;
 
     if(!this.user && this.page == "main"){
-      this._user.profileIdGet(7).subscribe(
+      this._user.getProfileById("7").subscribe(
         (profile) => {
           this.notificationsSettings.user
             = this.locationSettings.user
@@ -211,7 +211,7 @@ export class SettingsPage {
       newSettings.badges = this.user.badges;
       newSettings.id = this.user.id;
 
-      this._user.profileIdPut(this.user.id).subscribe(
+      this._user.updateProfileById(this.user.id, this.profileForm.value).subscribe(
         () => {
           this.userChanged(newSettings);
           this.navCtrl.pop().then()
@@ -227,7 +227,7 @@ export class SettingsPage {
       let newSettings: Profile = this.user;
       newSettings.address = this.locationForm.value;
 
-      this._user.profileIdPut(this.user.id).subscribe(
+      this._user.updateProfileById(this.user.id,this.locationForm.value).subscribe(
         () => {
           this.userChanged(newSettings);
           this.navCtrl.pop().then()
