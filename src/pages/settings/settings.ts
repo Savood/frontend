@@ -1,7 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 
 import {MapsService} from "../../providers/maps/maps";
 import {Geolocation} from "@ionic-native/geolocation";
@@ -66,13 +66,14 @@ export class SettingsPage {
   subSettings: any = SettingsPage;
 
   constructor(public navCtrl: NavController,
-    public settings: Settings,
-    public formBuilder: FormBuilder,
-    public navParams: NavParams,
-    public translate: TranslateService,
-    public _user: ProfileService,
-    public _maps: MapsService,
-    public geolocation: Geolocation) {
+              public toastCtrl: ToastController,
+              public settings: Settings,
+              public formBuilder: FormBuilder,
+              public navParams: NavParams,
+              public translate: TranslateService,
+              public _user: ProfileService,
+              public _maps: MapsService,
+              public geolocation: Geolocation) {
   }
 
   ionViewDidLoad() {
@@ -84,19 +85,19 @@ export class SettingsPage {
     this.user = this.navParams.get('user') || this.user;
     this.userChanged = this.navParams.get('userChanged') || this.userChanged;
 
-    if(this.navParams.get('page') == 'email'){
+    if (this.navParams.get('page') == 'email') {
       this.emailForm = this.formBuilder.group({
         email: [this.user.email]
       });
     }
 
-    if(this.navParams.get('page') == 'phone'){
+    if (this.navParams.get('page') == 'phone') {
       this.phoneForm = this.formBuilder.group({
         phone: [this.user.phone]
       });
     }
 
-    if(this.navParams.get('page') == 'location'){
+    if (this.navParams.get('page') == 'location') {
       this.locationForm = this.formBuilder.group({
         street: [this.user.address.street],
         number: [this.user.address.number],
@@ -110,7 +111,7 @@ export class SettingsPage {
       = this.phoneSettings.user
       = this.user
 
-    if(!this.user && this.page == "main"){
+    if (!this.user && this.page == "main") {
       this._user.getProfileById("7").subscribe(
         (profile) => {
           this.emailSettings.user
@@ -205,18 +206,40 @@ export class SettingsPage {
     );
   }
 
-  saveData(form: FormGroup){
+  saveData(form: FormGroup) {
     let newSettings = {};
-    Object.assign(newSettings,this.user,form.value);
-    if(form.dirty) {
-      this._user.updateProfileById(this.user.id,form.value).subscribe(
+    Object.assign(newSettings, this.user, form.value);
+    if (form.dirty) {
+      this._user.updateProfileById(this.user.id, form.value).subscribe(
         () => {
           this.userChanged(newSettings);
-          this.navCtrl.pop().then()
-        }
-      )
+          this.navCtrl.pop().then();
+          this.translate.get("SAVE_SUCCESSFUL").subscribe((message) => {
+            this.toastCtrl.create({
+              position: 'top',
+              message: message,
+              duration: 3000
+            }).present();
+          });
+        },
+        () => {
+          this.translate.get("SAVE_SERVER_ERROR").subscribe((message) => {
+            this.toastCtrl.create({
+              position: 'top',
+              message: message,
+              duration: 3000
+            }).present();
+          });
+        });
     } else {
-      this.navCtrl.pop()
+      this.navCtrl.pop();
+      this.translate.get("SAVE_NO_CHANGE").subscribe((message) => {
+        this.toastCtrl.create({
+          position: 'top',
+          message: message,
+          duration: 3000
+        }).present();
+      });
     }
   }
 }
