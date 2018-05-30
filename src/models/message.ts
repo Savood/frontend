@@ -13,7 +13,7 @@
 
 
 export interface Message {
-    id?: number;
+    id?: string;
     fromId?: number;
     toId?: number;
     offeringId?: number;

@@ -18,19 +18,20 @@ import { HttpClient, HttpHeaders, HttpParams }               from '@angular/comm
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
 
+import { Feed } from '../../models/feed';
 import { InvalidParameterInput } from '../../models/invalidParameterInput';
-import { Message } from '../../models/message';
+
+
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
-import {env} from "../../environment/environment";
 
 
 @Injectable()
 export class FeedService {
 
-    protected basePath = env.api_endpoint;
+    protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -64,9 +65,9 @@ export class FeedService {
      *
      * @param location
      */
-    public feedGet(location: string): Observable<Message> {
+    public getFeed(location: string): Observable<Feed> {
         if (location === null || location === undefined) {
-            throw new Error('Required parameter location was null or undefined when calling feedGet.');
+            throw new Error('Required parameter location was null or undefined when calling getFeed.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
