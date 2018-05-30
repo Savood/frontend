@@ -21,7 +21,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   }
 
   addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
-    let header = {setHeaders: {Authorization: 'Bearer ' + token}}
+    let header = {setHeaders: {Authorization: 'Bearer ' + token}};
     return req.clone(header)
   }
 
@@ -53,7 +53,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         .switchMap((newToken: string) => {
           if (newToken) {
             this.tokenSubject.next(newToken);
-            return next.handle(this.addToken(this.getNewRequest(req), newToken));
+            return next.handle(this.addToken(req, newToken));
           }
 
           // If we don't get a new token, we are in trouble so logout.
