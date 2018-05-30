@@ -14,12 +14,14 @@ import { ProfileAddress } from './profileAddress';
 
 
 export interface Profile {
-    id?: number;
+    id?: string;
     firstname?: string;
     lastname?: string;
     email?: string;
-    telefon?: string;
+    phone?: string;
     address?: ProfileAddress;
     avatarId?: string;
-    badges?: any;
+    backgroundId?: string;
+    description?: string;
+    badges?: Array<string>;
 }

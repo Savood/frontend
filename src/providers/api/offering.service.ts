@@ -24,13 +24,12 @@ import { Offering } from '../../models/offering';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
-import {env} from "../../environment/environment";
 
 
 @Injectable()
 export class OfferingService {
 
-    protected basePath = env.api_endpoint;
+    protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -60,13 +59,52 @@ export class OfferingService {
 
 
     /**
+     * Add a new offering
+     *
+     * @param body Offering that needs to be added
+     */
+    public createNewOffering(body: Offering): Observable<Offering> {
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createNewOffering.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+        let httpContentTypeSelected:string = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set("Content-Type", httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.basePath}/offering`,
+            body,
+            {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
      * Delete an offering
      *
      * @param id
      */
-    public offeringIdDelete(id: number): Observable<{}> {
+    public deleteOfferingById(id: string): Observable<{}> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling offeringIdDelete.');
+            throw new Error('Required parameter id was null or undefined when calling deleteOfferingById.');
         }
 
         let headers = this.defaultHeaders;
@@ -98,9 +136,9 @@ export class OfferingService {
      *
      * @param id
      */
-    public offeringIdGet(id: number): Observable<Offering> {
+    public getOfferingById(id: string): Observable<Offering> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling offeringIdGet.');
+            throw new Error('Required parameter id was null or undefined when calling getOfferingById.');
         }
 
         let headers = this.defaultHeaders;
@@ -131,45 +169,14 @@ export class OfferingService {
      * Update an offering
      *
      * @param id
+     * @param body New parameters of the offering
      */
-    public offeringIdPut(id: number): Observable<{}> {
+    public updateOfferingById(id: string, body: Offering): Observable<{}> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling offeringIdPut.');
+            throw new Error('Required parameter id was null or undefined when calling updateOfferingById.');
         }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json'
-        ];
-
-        return this.httpClient.put<any>(`${this.basePath}/offering/${encodeURIComponent(String(id))}`,
-            null,
-            {
-                headers: headers,
-                withCredentials: this.configuration.withCredentials,
-            }
-        );
-    }
-
-    /**
-     * Add a new offering
-     *
-     * @param body Offering that needs to be added
-     */
-    public offeringPost(body: Offering): Observable<Offering> {
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling offeringPost.');
+            throw new Error('Required parameter body was null or undefined when calling updateOfferingById.');
         }
 
         let headers = this.defaultHeaders;
@@ -192,7 +199,7 @@ export class OfferingService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/offering`,
+        return this.httpClient.patch<any>(`${this.basePath}/offering/${encodeURIComponent(String(id))}`,
             body,
             {
                 headers: headers,

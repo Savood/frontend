@@ -14,7 +14,7 @@
 
 export interface ProfileAddress {
     street?: string;
-    number?: number;
+    number?: string;
     zip?: number;
     city?: string;
 }
