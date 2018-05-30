@@ -45,6 +45,7 @@ export class SettingsPage {
   emailForm: FormGroup;
   phoneForm: FormGroup;
   locationForm: FormGroup;
+  nameDescForm: FormGroup;
 
   page: string = 'main';
   pageTitleKey: string = 'SETTINGS_TITLE';
@@ -67,6 +68,13 @@ export class SettingsPage {
   phoneSettings = {
     page: 'phone',
     pageTitleKey: 'SETTINGS_PHONE',
+    user: this.user,
+    userChanged: this.userChanged
+  };
+
+  nameDescSettings = {
+    page: 'nameDesc',
+    pageTitleKey: 'SETTINGS_NAME_DESC',
     user: this.user,
     userChanged: this.userChanged
   };
@@ -108,6 +116,14 @@ export class SettingsPage {
       });
     }
 
+    if (this.navParams.get('page') == 'nameDesc') {
+      this.nameDescForm = this.formBuilder.group({
+        firstname: [this.user.firstname],
+        lastname: [this.user.lastname],
+        description: [this.user.description],
+      });
+    }
+
     if (this.navParams.get('page') == 'location') {
       this.locationForm = this.formBuilder.group({
         street: [this.user.address.street],
@@ -120,6 +136,7 @@ export class SettingsPage {
     this.emailSettings.user
       = this.locationSettings.user
       = this.phoneSettings.user
+      = this.nameDescSettings.user
       = this.user
 
     if (!this.user && this.page == "main") {
@@ -128,6 +145,7 @@ export class SettingsPage {
           this.emailSettings.user
             = this.locationSettings.user
             = this.phoneSettings.user
+            = this.nameDescSettings.user
             = this.user
             = profile
         }
@@ -317,7 +335,7 @@ export class SettingsPage {
     }
   }
 
-  // uploadFile() {
+  uploadFile() {
   //   let loader = this.loadingCtrl.create({
   //     content: "Uploading..."
   //   });
@@ -333,7 +351,7 @@ export class SettingsPage {
   //       loader.dismiss();
   //       this.presentToast(err);
   //     });
-  // }
+  }
 
   getImage() {
   //   this.uploadPic.getImage()
@@ -352,8 +370,7 @@ export class SettingsPage {
   //       }
   //     );
   }
-  //
-  //
+
   getCamera() {
   //   this.uploadPic.getCamera()
   //     .then((imageData) => {
