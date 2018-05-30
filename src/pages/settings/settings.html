@@ -1,115 +1,79 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="secondary">
     <ion-title>{{ pageTitle }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <div *ngIf="user">
-    <img *ngIf="page == 'main'"  class="header-image" src="assets/img/queen-live.png" >
+    <img *ngIf="page == 'main'" class="header-image" src="assets/img/queen-live.png" (click)="changeHeader()">
 
-    <div *ngIf="page == 'main'" class="content-main" text-wrap text-center>
+    <div *ngIf="page == 'main'" class="content-main" text-wrap>
       <div class="circular">
-        <img src="assets/img/marty-avatar.png">
+        <img src="assets/img/marty-avatar.png" (click)="changeAvatar()">
       </div>
-      <h2>{{user.firstname}} {{user.lastname}}</h2>
-      <p class="profile-description">{{user.description}}</p>
-      <hr>
-      <h3>{{'PROFILE_BADGES'|translate}}</h3>
-      <ion-grid class="badges">
-        <ion-row>
-          <ion-col *ngFor="let gotBadge of user.badges" col-3>
-            <ion-icon name="alarm" [color]="gotBadge ? 'primary' : 'dark'"></ion-icon>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-      <hr>
-      <ion-list no-lines>
-        <button ion-button block [navPush]="subSettings" [navParams]="notificationsSettings">
-          {{'SETTINGS_NOTIFICATIONS'|translate|uppercase}}
-        </button>
-        <button ion-button block [navPush]="subSettings" [navParams]="profileSettings">
-          {{'SETTINGS_PROFILE'|translate|uppercase}}
-        </button>
-        <button ion-button block [navPush]="subSettings" [navParams]="locationSettings">
-          {{'SETTINGS_LOCATION'|translate|uppercase}}
-        </button>
-        <button ion-button block color="danger">
-          {{'SETTINGS_LOGOUT'|translate|uppercase}}
-        </button>
-      </ion-list>
-    </div>
-
-    <div *ngIf="page == 'notifications'" class="content-notifications" text-wrap text-center>
-      <ion-list no-lines>
-        <ion-item>
-          <ion-label>{{'NOTIFICATIONS_FRIEND'|translate}}</ion-label>
-          <ion-checkbox></ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-label>{{'NOTIFICATIONS_FOOD'|translate}}</ion-label>
-          <ion-checkbox></ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-label>{{'NOTIFICATIONS_MESSAGE'|translate}}</ion-label>
-          <ion-checkbox></ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-label>{{'NOTIFICATIONS_RECIPE'|translate}}</ion-label>
-          <ion-checkbox></ion-checkbox>
-        </ion-item>
-        <button ion-button block color="secondary" navPop>{{'SAVE'|translate|uppercase}}</button>
-      </ion-list>
-    </div>
-
-    <div *ngIf="page == 'profile'" class="content-profile" text-wrap text-center>
-      <form [formGroup]="profileForm">
-        <ion-list no-lines>
-          <ion-item>
-            <ion-icon name="person" item-start></ion-icon>
-            <ion-input
-              placeholder="{{'PROFILE_FIRSTNAME'|translate|uppercase}}"
-              formControlName="firstname"></ion-input>
-            <ion-input
-              placeholder="{{'PROFILE_LASTNAME'|translate|uppercase}}"
-              formControlName="lastname"></ion-input>
-          </ion-item>
-          <hr>
-          <ion-item>
+      <div text-center [navPush]="subSettings" [navParams]="nameDescSettings">
+        <h2>{{user.firstname}} {{user.lastname}}</h2>
+        <p class="profile-description" text-center>{{user.description}}</p>
+      </div>
+      <ion-card>
+        <ion-card-header>{{'PROFILE_BADGES'|translate}}</ion-card-header>
+        <ion-grid text-center class="badges">
+          <ion-row>
+            <ion-col *ngFor="let gotBadge of user.badges" col-3>
+              <ion-icon name="alarm" [color]="gotBadge ? 'primary' : 'dark'"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>{{'SETTINGS_PROFILE'|translate}}</ion-card-header>
+        <ion-item-group>
+          <button ion-item [navPush]="subSettings" [navParams]="emailSettings">
             <ion-icon name="mail" item-start></ion-icon>
-            <ion-input
-              placeholder="{{'PROFILE_EMAIL'|translate|uppercase}}"
-              formControlName="email"></ion-input>
-          </ion-item>
-          <hr>
-          <ion-item>
+            {{user.email}}
+          </button>
+          <button ion-item [navPush]="subSettings" [navParams]="phoneSettings">
             <ion-icon name="call" item-start></ion-icon>
-            <ion-input
-              placeholder="{{'PROFILE_PHONE'|translate|uppercase}}"
-              formControlName="phone"></ion-input>
-          </ion-item>
-          <hr>
-          <button ion-item>
-            <ion-icon name="contact" item-start></ion-icon>
-            Profilbild
+            {{user.phone}}
           </button>
-          <hr>
-          <button ion-item>
-            <ion-icon name="image" item-start></ion-icon>
-            Hintergrundbild
+          <button ion-item [navPush]="subSettings" [navParams]="locationSettings">
+            <ion-icon name="map" item-start></ion-icon>
+            {{'SETTINGS_LOCATION'|translate}}
           </button>
-          <hr>
-          <ion-item>
-            <ion-icon name="book" item-start></ion-icon>
-            <ion-textarea rows="4"
-                          placeholder="{{'PROFILE_DESCRIPTION'|translate|uppercase}}"
-                          formControlName="description"></ion-textarea>
-          </ion-item>
+        </ion-item-group>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>{{'SETTINGS_NOTIFICATIONS'|translate}}</ion-card-header>
+        <ion-item-group>
+          <button ion-item detail-none>
+            <ion-label>{{'NOTIFICATIONS_FRIEND'|translate}}</ion-label>
+            <ion-toggle></ion-toggle>
+          </button>
+          <button ion-item detail-none>
+            <ion-label>{{'NOTIFICATIONS_FOOD'|translate}}</ion-label>
+            <ion-toggle></ion-toggle>
+          </button>
+          <button ion-item detail-none>
+            <ion-label>{{'NOTIFICATIONS_MESSAGE'|translate}}</ion-label>
+            <ion-toggle></ion-toggle>
+          </button>
+          <button ion-item detail-none>
+            <ion-label>{{'NOTIFICATIONS_RECIPE'|translate}}</ion-label>
+            <ion-toggle></ion-toggle>
+          </button>
+        </ion-item-group>
+      </ion-card>
+      <ion-card>
+        <ion-list>
+          <button ion-item color="danger">
+            {{'SETTINGS_LOGOUT'|translate|uppercase}}
+          </button>
+          <button ion-item color="danger">
+            {{'PROFILE_DELETE_ACCOUNT'|translate|uppercase}}
+          </button>
         </ion-list>
-      </form>
-      <button ion-button block (click)="saveProfileData()">{{'SAVE'|translate|uppercase}}</button>
-      <button ion-button block color="danger">{{'PROFILE_DELETE_ACCOUNT'|translate|uppercase}}</button>
+      </ion-card>
     </div>
 
     <div *ngIf="page == 'location'" class="content-location" text-wrap text-center>
@@ -136,7 +100,65 @@
         </ion-list>
         <button ion-button block (click)="usePointerLocation()">{{'USE_POINTER_LOCATION'|translate}}</button>
         <button ion-button block (click)="useEnteredLocation()">{{'USE_ENTERED_LOCATION'|translate}}</button>
-        <button ion-button block color="secondary"  (click)="saveLocationData()">{{'SAVE'|translate}}</button>
+        <button ion-button block color="secondary" (click)="saveData(this.locationForm)">{{'SAVE'|translate}}</button>
+      </form>
+    </div>
+
+    <div *ngIf="page == 'email'" class="content-location" text-wrap text-center>
+      <form [formGroup]="emailForm" class="text-location">
+        <ion-item>
+          <ion-label>
+            <ion-icon name="mail" item-start></ion-icon>
+          </ion-label>
+          <ion-input
+            placeholder="{{'EMAIL'|translate|uppercase}}"
+            formControlName="email"></ion-input>
+        </ion-item>
+        <button ion-button block color="secondary" (click)="saveData(this.emailForm)">{{'SAVE'|translate}}</button>
+      </form>
+    </div>
+
+    <div *ngIf="page == 'phone'" class="content-location" text-wrap text-center>
+      <form [formGroup]="phoneForm" class="text-location">
+        <ion-item>
+          <ion-label>
+            <ion-icon name="call" item-start></ion-icon>
+          </ion-label>
+          <ion-input
+            placeholder="{{'PHONE'|translate|uppercase}}"
+            formControlName="phone"></ion-input>
+        </ion-item>
+        <button ion-button block color="secondary" (click)="saveData(this.phoneForm)">{{'SAVE'|translate}}</button>
+      </form>
+    </div>
+
+    <div *ngIf="page == 'nameDesc'" class="content-location" text-wrap text-center>
+      <form [formGroup]="nameDescForm" class="text-location">
+        <ion-item>
+          <ion-label>
+            <ion-icon name="person" item-start></ion-icon>
+          </ion-label>
+          <ion-input
+            placeholder="{{'FIRSTNAME'|translate|uppercase}}"
+            formControlName="firstname"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="person" item-start></ion-icon>
+          </ion-label>
+          <ion-input
+            placeholder="{{'LASTNAME'|translate|uppercase}}"
+            formControlName="lastname"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="browsers" item-start></ion-icon>
+          </ion-label>
+          <ion-textarea
+            placeholder="{{'DESCRIPTION'|translate|uppercase}}"
+            formControlName="description"></ion-textarea>
+        </ion-item>
+        <button ion-button block color="secondary" (click)="saveData(this.nameDescForm)">{{'SAVE'|translate}}</button>
       </form>
     </div>
   </div>

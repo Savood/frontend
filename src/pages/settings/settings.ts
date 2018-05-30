@@ -1,7 +1,15 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {
+  ActionSheetController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+  Platform,
+  ToastController
+} from 'ionic-angular';
 
 import {MapsService} from "../../providers/maps/maps";
 import {Geolocation} from "@ionic-native/geolocation";
@@ -34,16 +42,18 @@ export class SettingsPage {
 
   settingsReady = false;
 
-  profileForm: FormGroup;
+  emailForm: FormGroup;
+  phoneForm: FormGroup;
   locationForm: FormGroup;
+  nameDescForm: FormGroup;
 
   page: string = 'main';
   pageTitleKey: string = 'SETTINGS_TITLE';
   pageTitle: string;
 
-  profileSettings = {
-    page: 'profile',
-    pageTitleKey: 'SETTINGS_PROFILE',
+  emailSettings = {
+    page: 'email',
+    pageTitleKey: 'SETTINGS_EMAIL',
     user: this.user,
     userChanged: this.userChanged
   };
@@ -55,9 +65,16 @@ export class SettingsPage {
     userChanged: this.userChanged
   };
 
-  notificationsSettings = {
-    page: 'notifications',
-    pageTitleKey: 'SETTINGS_NOTIFICATIONS',
+  phoneSettings = {
+    page: 'phone',
+    pageTitleKey: 'SETTINGS_PHONE',
+    user: this.user,
+    userChanged: this.userChanged
+  };
+
+  nameDescSettings = {
+    page: 'nameDesc',
+    pageTitleKey: 'SETTINGS_NAME_DESC',
     user: this.user,
     userChanged: this.userChanged
   };
@@ -65,13 +82,17 @@ export class SettingsPage {
   subSettings: any = SettingsPage;
 
   constructor(public navCtrl: NavController,
-    public settings: Settings,
-    public formBuilder: FormBuilder,
-    public navParams: NavParams,
-    public translate: TranslateService,
-    public _user: ProfileService,
-    public _maps: MapsService,
-    public geolocation: Geolocation) {
+              public toastCtrl: ToastController,
+              public settings: Settings,
+              public formBuilder: FormBuilder,
+              public navParams: NavParams,
+              public translate: TranslateService,
+              public _user: ProfileService,
+              public _maps: MapsService,
+              public geolocation: Geolocation,
+              public loadingCtrl: LoadingController,
+              public actionSheetCtrl: ActionSheetController,
+              public platform: Platform) {
   }
 
   ionViewDidLoad() {
@@ -83,17 +104,27 @@ export class SettingsPage {
     this.user = this.navParams.get('user') || this.user;
     this.userChanged = this.navParams.get('userChanged') || this.userChanged;
 
-    if(this.navParams.get('page') == 'profile'){
-      this.profileForm = this.formBuilder.group({
+    if (this.navParams.get('page') == 'email') {
+      this.emailForm = this.formBuilder.group({
+        email: [this.user.email]
+      });
+    }
+
+    if (this.navParams.get('page') == 'phone') {
+      this.phoneForm = this.formBuilder.group({
+        phone: [this.user.phone]
+      });
+    }
+
+    if (this.navParams.get('page') == 'nameDesc') {
+      this.nameDescForm = this.formBuilder.group({
         firstname: [this.user.firstname],
         lastname: [this.user.lastname],
-        email: [this.user.email],
-        phone: [this.user.phone],
         description: [this.user.description],
       });
     }
 
-    if(this.navParams.get('page') == 'location'){
+    if (this.navParams.get('page') == 'location') {
       this.locationForm = this.formBuilder.group({
         street: [this.user.address.street],
         number: [this.user.address.number],
@@ -102,17 +133,19 @@ export class SettingsPage {
       });
     }
 
-    this.notificationsSettings.user
+    this.emailSettings.user
       = this.locationSettings.user
-      = this.profileSettings.user
-      = this.user;
+      = this.phoneSettings.user
+      = this.nameDescSettings.user
+      = this.user
 
-    if(!this.user && this.page == "main"){
+    if (!this.user && this.page == "main") {
       this._user.getProfileById("7").subscribe(
         (profile) => {
-          this.notificationsSettings.user
+          this.emailSettings.user
             = this.locationSettings.user
-            = this.profileSettings.user
+            = this.phoneSettings.user
+            = this.nameDescSettings.user
             = this.user
             = profile
         }
@@ -202,39 +235,154 @@ export class SettingsPage {
     );
   }
 
-  saveProfileData(){
-    if(this.profileForm.dirty){
-      let newSettings: Profile = this.profileForm.value;
-      newSettings.address = this.user.address;
-      newSettings.avatarId = this.user.avatarId;
-      newSettings.backgroundId = this.user.backgroundId;
-      newSettings.badges = this.user.badges;
-      newSettings.id = this.user.id;
-
-      this._user.updateProfileById(this.user.id, this.profileForm.value).subscribe(
+  saveData(form: FormGroup) {
+    let newSettings = {};
+    Object.assign(newSettings, this.user, form.value);
+    if (form.dirty) {
+      this._user.updateProfileById(this.user.id, form.value).subscribe(
         () => {
           this.userChanged(newSettings);
-          this.navCtrl.pop().then()
-        }
-      )
+          this.navCtrl.pop().then();
+          this.translate.get("SAVE_SUCCESSFUL").subscribe((message) => {
+            this.toastCtrl.create({
+              position: 'top',
+              message: message,
+              duration: 3000
+            }).present();
+          });
+        },
+        () => {
+          this.translate.get("SAVE_SERVER_ERROR").subscribe((message) => {
+            this.toastCtrl.create({
+              position: 'top',
+              message: message,
+              duration: 3000
+            }).present();
+          });
+        });
     } else {
-      this.navCtrl.pop()
+      this.navCtrl.pop();
+      this.translate.get("SAVE_NO_CHANGE").subscribe((message) => {
+        this.toastCtrl.create({
+          position: 'top',
+          message: message,
+          duration: 3000
+        }).present();
+      });
     }
   }
 
-  saveLocationData(){
-    if(this.locationForm.dirty) {
-      let newSettings: Profile = this.user;
-      newSettings.address = this.locationForm.value;
-
-      this._user.updateProfileById(this.user.id,this.locationForm.value).subscribe(
-        () => {
-          this.userChanged(newSettings);
-          this.navCtrl.pop().then()
-        }
-      )
+  changeHeader() {
+    if (this.platform.is('cordova')){
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Upload Picture from',
+        buttons: [
+          {
+            text: 'Gallery',
+            handler: () => {
+              this.getImage()
+            }
+          }, {
+            text: 'Camera',
+            handler: () => {
+              this.getCamera()
+            }
+          }, {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      actionSheet.present();
     } else {
-      this.navCtrl.pop()
+      console.log("Cordova not available")
+      // this.navCtrl.push(WebUploadHeaderPage)
     }
+  }
+
+  changeAvatar() {
+    if (this.platform.is('cordova')){
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Upload Picture from',
+        buttons: [
+          {
+            text: 'Gallery',
+            handler: () => {
+              this.getImage()
+            }
+          }, {
+            text: 'Camera',
+            handler: () => {
+              this.getCamera()
+            }
+          }, {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      actionSheet.present();
+
+    } else {
+      console.log("Cordova not available")
+      // this.navCtrl.push(WebUploadAvatarPage)
+    }
+  }
+
+  uploadFile() {
+  //   let loader = this.loadingCtrl.create({
+  //     content: "Uploading..."
+  //   });
+  //   loader.present();
+  //
+  //   this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+  //
+  //   this.uploadPic.uploadFile(this.imageURI, this.imageFileName)
+  //     .then((data) => {
+  //       loader.dismiss();
+  //       this.presentToast("Image uploaded successfully");
+  //     }, (err) => {
+  //       loader.dismiss();
+  //       this.presentToast(err);
+  //     });
+  }
+
+  getImage() {
+  //   this.uploadPic.getImage()
+  //     .then(
+  //       (imageData) => {
+  //         let alert = this.alertCtrl.create({
+  //           title: 'Picture',
+  //           subTitle: imageData,
+  //           buttons: ['OK']
+  //         });
+  //         alert.present()
+  //         // this.imageURI = imageData;
+  //       },
+  //       (err) => {
+  //         this.presentToast(err);
+  //       }
+  //     );
+  }
+
+  getCamera() {
+  //   this.uploadPic.getCamera()
+  //     .then((imageData) => {
+  //       let alert = this.alertCtrl.create({
+  //         title: 'Picture',
+  //         subTitle: imageData,
+  //         buttons: ['OK']
+  //       });
+  //       alert.present()
+  //
+  //     }, (err) => {
+  //       this.presentToast(err);
+  //     });
   }
 }
