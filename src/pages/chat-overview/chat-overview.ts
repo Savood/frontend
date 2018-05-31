@@ -9,10 +9,10 @@ import {Offerings} from "../../models/offerings";
 
 @IonicPage()
 @Component({
-  selector: 'page-messages',
-  templateUrl: 'messages.html'
+  selector: 'page-chat-overview',
+  templateUrl: 'chat-overview.html'
 })
-export class MessagesPage {
+export class ChatOverviewPage {
   currentItems: Item[];
 
   page: string = 'offerings';
@@ -36,12 +36,16 @@ export class MessagesPage {
   ];
   currentOffering: string;
 
-  chats: Chats = [
+  chats: any = [
     {
       id: "1",
-      user1Id: "1",
-      user2Id: "2",
-      offeringId: [
+      partner: {
+        userId:	"1",
+        firstname:	"Benke",
+        lastname:	"Schneider",
+        avatarId:	"/assets/img/sarah-avatar.png.jpeg"
+      },
+      offeringIds: [
         "1",
         "2",
         "3"
@@ -49,9 +53,13 @@ export class MessagesPage {
     },
     {
       id: "2",
-      user1Id: "1",
-      user2Id: "3",
-      offeringId: [
+      partner: {
+        userId:	"1",
+        firstname:	"Johann",
+        lastname:	"Johannson",
+        avatarId:	"assets/img/marty-avatar.png"
+      },
+      offeringIds: [
         "1",
         "2",
         "3"
@@ -59,9 +67,13 @@ export class MessagesPage {
     },
     {
       id: "23",
-      user1Id: "5",
-      user2Id: "1",
-      offeringId: [
+      partner: {
+        userId:	"1",
+        firstname:	"Dragon",
+        lastname:	"Rexhepi",
+        avatarId:	"assets/img/speakers/bear.jpg"
+      },
+      offeringIds: [
         "1",
         "2",
       ]
@@ -117,7 +129,7 @@ export class MessagesPage {
   }
 
   openChatOverview(offeringId: string) {
-    this.navCtrl.push('MessagesPage',
+    this.navCtrl.push('ChatOverviewPage',
       {
         page: "chats",
         pageTitleKey: "MESSAGES_PERSONAL_TITLE",

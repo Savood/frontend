@@ -29,7 +29,7 @@
   "SETTINGS_PHONE": "Telefon",
   "SAVE": "Speichern",
 
-  "MESSAGES_OFFERINGS_TITLE": "Aktuelle Angebotschats",
+  "MESSAGES_OFFERINGS_TITLE": "Aktuelle Savoodchats",
   "MESSAGES_PERSONAL_TITLE": "Chats zu",
 
   "PROFILE_BADGES": "Abzeichen",
@@ -75,6 +75,8 @@
   "SEARCH_PLACEHOLDER": "Suche in der Artikel-Liste, z.B. \"Donald Duck\"",
 
   "OFFERINGS_TITLE": "Alle Savoods",
+  "OFFERING": "Savood",
+  "OFFERINGS": "Savoods",
   "COMMENTS": "Kommentare",
   "LIKES": "Hochwähls"
 }
