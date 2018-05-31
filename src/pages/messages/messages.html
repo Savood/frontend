@@ -1,35 +1,38 @@
 <ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title>{{ 'MESSAGES_TITLE' | translate }}</ion-title>
-
-    <ion-buttons end>
-      <button ion-button icon-only (click)="addItem()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-buttons>
+  <ion-navbar color="secondary">
+    <ion-title>{{ pageTitle }}<span *ngIf="page == 'chats'"> {{currentOffering}}</span></ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content>
+  <!--<ion-list>-->
+    <!--<ion-item-sliding *ngFor="let item of currentItems">-->
+      <!--<button ion-item (click)="openMessage(item)">-->
+        <!--<ion-avatar item-start>-->
+          <!--<img [src]="item.profilePic" />-->
+        <!--</ion-avatar>-->
+        <!--<h2>{{item.name}}</h2>-->
+        <!--<p>{{item.about}}</p>-->
+        <!--<ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>-->
+      <!--</button>-->
 
-  <ion-list>
-    <ion-item-sliding *ngFor="let item of currentItems">
-      <button ion-item (click)="openMessage(item)">
-        <ion-avatar item-start>
-          <img [src]="item.profilePic" />
-        </ion-avatar>
-        <h2>{{item.name}}</h2>
-        <p>{{item.about}}</p>
-        <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>
-      </button>
+      <!--<ion-item-options>-->
+        <!--<button ion-button color="danger" (click)="deleteMessage(item)">-->
+          <!--{{'DELETE_BUTTON' | translate}}-->
+        <!--</button>-->
+      <!--</ion-item-options>-->
+    <!--</ion-item-sliding>-->
+  <!--</ion-list>-->
 
-      <ion-item-options>
-        <button ion-button color="danger" (click)="deleteMessage(item)">
-          {{'DELETE_BUTTON' | translate}}
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
+  <ion-list *ngIf="page == 'offerings'">
+    <button *ngFor="let offering of offerings" ion-item (click)="openChatOverview(offering.id)">
+      <h1>{{offering.name}}</h1>
+    </button>
+  </ion-list>
+
+  <ion-list *ngIf="page == 'chats'">
+    <button *ngFor="let chat of chats" ion-item (click)="openChat(chat.id)">
+      <h1>{{chat.user1Id}}</h1>
+    </button>
   </ion-list>
 </ion-content>

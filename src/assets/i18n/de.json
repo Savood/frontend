@@ -22,9 +22,15 @@
 
   "SETTINGS_NOTIFICATIONS": "Benachrichtigungen",
   "SETTINGS_PROFILE": "Profil ändern",
-  "SETTINGS_LOCATION": "Standort",
+  "SETTINGS_LOCATION": "Standardstandort",
   "SETTINGS_LOGOUT": "Abmelden",
+  "SETTINGS_NAME_DESC": "Name & Beschreibung",
+  "SETTINGS_EMAIL": "Email",
+  "SETTINGS_PHONE": "Telefon",
   "SAVE": "Speichern",
+
+  "MESSAGES_OFFERINGS_TITLE": "Aktuelle Angebotschats",
+  "MESSAGES_PERSONAL_TITLE": "Chats zu",
 
   "PROFILE_BADGES": "Abzeichen",
   "PROFILE_FIRSTNAME": "Vorname",
@@ -59,8 +65,6 @@
   "SIGNUP_TITLE": "Registrieren",
   "SIGNUP_ERROR": "Fehler beim Registrieren, bitte überprüfe deine Informationen und versuche es erneut.",
   "SIGNUP_BUTTON": "Registrieren",
-
-  "LIST_MASTER_TITLE": "Artikel",
 
   "ITEM_CREATE_TITLE": "Neuer Artikel",
   "ITEM_CREATE_CHOOSE_IMAGE": "Artikel hinzufügen",
