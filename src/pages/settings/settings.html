@@ -12,10 +12,14 @@
       <div class="circular">
         <img src="assets/img/marty-avatar.png" (click)="changeAvatar()">
       </div>
-      <div text-center [navPush]="subSettings" [navParams]="nameDescSettings">
-        <h2>{{user.firstname}} {{user.lastname}}</h2>
-        <p class="profile-description" text-center>{{user.description}}</p>
-      </div>
+      <ion-card text-center [navPush]="subSettings" [navParams]="nameDescSettings">
+        <ion-card-header>
+          <h1>{{user.firstname}} {{user.lastname}}</h1>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="profile-description">{{user.description}}</p>
+        </ion-card-content>
+      </ion-card>
       <ion-card>
         <ion-card-header>{{'PROFILE_BADGES'|translate}}</ion-card-header>
         <ion-grid text-center class="badges">
