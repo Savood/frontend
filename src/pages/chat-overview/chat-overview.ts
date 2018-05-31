@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 
 import {Item} from '../../models/item';
-import {Items} from '../../providers';
+import {Items, OfferingsService} from '../../providers';
 import {Chats} from "../../models/chats";
 import {TranslateService} from "@ngx-translate/core";
 import {Offerings} from "../../models/offerings";
@@ -19,31 +19,17 @@ export class ChatOverviewPage {
   pageTitleKey: string = 'MESSAGES_OFFERINGS_TITLE';
   pageTitle: string;
 
-  offerings: Offerings = [
-    {
-      id: "1",
-      name: "banana"
-    },
-    {
-      id: "2",
-      name: "potato"
-    },
-    {
-      id: "3",
-      name: "bier"
-    },
-
-  ];
+  offerings: Offerings = [];
   currentOffering: string;
 
   chats: any = [
     {
       id: "1",
       partner: {
-        userId:	"1",
-        firstname:	"Benke",
-        lastname:	"Schneider",
-        avatarId:	"/assets/img/sarah-avatar.png.jpeg"
+        userId: "1",
+        firstname: "Benke",
+        lastname: "Schneider",
+        avatarId: "/assets/img/sarah-avatar.png.jpeg"
       },
       offeringIds: [
         "1",
@@ -54,10 +40,10 @@ export class ChatOverviewPage {
     {
       id: "2",
       partner: {
-        userId:	"1",
-        firstname:	"Johann",
-        lastname:	"Johannson",
-        avatarId:	"assets/img/marty-avatar.png"
+        userId: "1",
+        firstname: "Johann",
+        lastname: "Johannson",
+        avatarId: "assets/img/marty-avatar.png"
       },
       offeringIds: [
         "1",
@@ -68,10 +54,10 @@ export class ChatOverviewPage {
     {
       id: "23",
       partner: {
-        userId:	"1",
-        firstname:	"Dragon",
-        lastname:	"Rexhepi",
-        avatarId:	"assets/img/speakers/bear.jpg"
+        userId: "1",
+        firstname: "Dragon",
+        lastname: "Rexhepi",
+        avatarId: "assets/img/speakers/bear.jpg"
       },
       offeringIds: [
         "1",
@@ -84,7 +70,13 @@ export class ChatOverviewPage {
               public navParams: NavParams,
               public translate: TranslateService,
               public items: Items,
+              public _offerings: OfferingsService,
               public modalCtrl: ModalController) {
+    this._offerings.getOfferings().subscribe(
+      (offerings) => {
+        this.offerings = offerings;
+      }
+    );
   }
 
   ionViewDidLoad() {
@@ -95,35 +87,11 @@ export class ChatOverviewPage {
       this.pageTitle = res;
     });
 
-    if(this.page == "chats"){
+    if (this.page == "chats") {
       this.currentOffering = this.navParams.get('offering');
     }
   }
 
-  /**
-   * Prompt the user to add a new item. This shows our ItemCreatePage in a
-   * modal and then adds the new item to our date source if the user created one.
-   */
-  addItem() {
-    let addModal = this.modalCtrl.create('ItemCreatePage');
-    addModal.onDidDismiss(item => {
-      if (item) {
-        this.items.add(item);
-      }
-    })
-    addModal.present();
-  }
-
-  /**
-   * Delete an item from the list of items.
-   */
-  deleteMessage(message) {
-    this.items.delete(message);
-  }
-
-  /**
-   * Navigate to the detail page for this item.
-   */
   openChat(chatId: string) {
     this.navCtrl.push('ChatPage', chatId);
   }
