@@ -18,8 +18,10 @@ import { HttpClient, HttpHeaders, HttpParams }               from '@angular/comm
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
 
+import { Chats } from '../../models/chats';
 import { InvalidParameterInput } from '../../models/invalidParameterInput';
 import { Message } from '../../models/message';
+import { Messages } from '../../models/messages';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -27,7 +29,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 
 @Injectable()
-export class MessageService {
+export class MessagesService {
 
     protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
     public defaultHeaders = new HttpHeaders();
@@ -61,14 +63,23 @@ export class MessageService {
     /**
      * Add a new message
      *
+     * @param chatID
      * @param body Message that needs to be added
      */
-    public createNewMessage(body: Message): Observable<Message> {
+    public createNewMessage(chatID: string, body: Message): Observable<Message> {
+        if (chatID === null || chatID === undefined) {
+            throw new Error('Required parameter chatID was null or undefined when calling createNewMessage.');
+        }
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createNewMessage.');
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -88,7 +99,7 @@ export class MessageService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/message`,
+        return this.httpClient.post<any>(`${this.basePath}/chats/${encodeURIComponent(String(chatID))}/messages`,
             body,
             {
                 headers: headers,
@@ -100,14 +111,23 @@ export class MessageService {
     /**
      * Delete a message
      *
+     * @param chatID
      * @param id
      */
-    public deleteMessageById(id: string): Observable<{}> {
+    public deleteMessageById(chatID: string, id: string): Observable<{}> {
+        if (chatID === null || chatID === undefined) {
+            throw new Error('Required parameter chatID was null or undefined when calling deleteMessageById.');
+        }
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling deleteMessageById.');
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -123,7 +143,118 @@ export class MessageService {
             'application/json'
         ];
 
-        return this.httpClient.delete<any>(`${this.basePath}/message/${encodeURIComponent(String(id))}`,
+        return this.httpClient.delete<any>(`${this.basePath}/chats/${encodeURIComponent(String(chatID))}/messages/${encodeURIComponent(String(id))}`,
+            {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
+     * Get all Chats
+     *
+     */
+    public getAllChats(): Observable<Chats> {
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/chats/`,
+            {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
+     * Display a user
+     *
+     * @param id
+     */
+    public getAllChatsForOffering(id: string): Observable<Chats> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getAllChatsForOffering.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}/chats`,
+            {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
+     * Add a new message
+     *
+     * @param chatID
+     */
+    public getAllMessagesForChat(chatID: string): Observable<Messages> {
+        if (chatID === null || chatID === undefined) {
+            throw new Error('Required parameter chatID was null or undefined when calling getAllMessagesForChat.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/chats/${encodeURIComponent(String(chatID))}/messages`,
             {
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
@@ -134,14 +265,23 @@ export class MessageService {
     /**
      * Display a message
      *
+     * @param chatID
      * @param id
      */
-    public getMessageById(id: string): Observable<Message> {
+    public getMessageById(chatID: string, id: string): Observable<Message> {
+        if (chatID === null || chatID === undefined) {
+            throw new Error('Required parameter chatID was null or undefined when calling getMessageById.');
+        }
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getMessageById.');
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -157,7 +297,7 @@ export class MessageService {
             'application/json'
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/message/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<any>(`${this.basePath}/chats/${encodeURIComponent(String(chatID))}/messages/${encodeURIComponent(String(id))}`,
             {
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
@@ -168,10 +308,14 @@ export class MessageService {
     /**
      * Update a message
      *
+     * @param chatID
      * @param id
      * @param body New parameters of the message
      */
-    public updateMessageById(id: string, body: Message): Observable<{}> {
+    public updateMessageById(chatID: string, id: string, body: Message): Observable<{}> {
+        if (chatID === null || chatID === undefined) {
+            throw new Error('Required parameter chatID was null or undefined when calling updateMessageById.');
+        }
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling updateMessageById.');
         }
@@ -180,6 +324,11 @@ export class MessageService {
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -199,7 +348,7 @@ export class MessageService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.patch<any>(`${this.basePath}/message/${encodeURIComponent(String(id))}`,
+        return this.httpClient.patch<any>(`${this.basePath}/chats/${encodeURIComponent(String(chatID))}/messages/${encodeURIComponent(String(id))}`,
             body,
             {
                 headers: headers,

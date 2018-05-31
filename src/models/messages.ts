@@ -10,10 +10,8 @@
  * Do not edit the class manually.
  */
 
+import { Message } from './message';
 
 
-export interface Message {
-    fromId?: number;
-    content?: string;
-    time?: Date;
+export interface Messages extends Array<Message> {
 }

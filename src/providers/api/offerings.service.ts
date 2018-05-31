@@ -18,8 +18,10 @@ import { HttpClient, HttpHeaders, HttpParams }               from '@angular/comm
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
 
+import { Chats } from '../../models/chats';
 import { InvalidParameterInput } from '../../models/invalidParameterInput';
 import { Offering } from '../../models/offering';
+import { Offerings } from '../../models/offerings';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -27,7 +29,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 
 @Injectable()
-export class OfferingService {
+export class OfferingsService {
 
     protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
     public defaultHeaders = new HttpHeaders();
@@ -70,6 +72,11 @@ export class OfferingService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -88,7 +95,7 @@ export class OfferingService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/offering`,
+        return this.httpClient.post<any>(`${this.basePath}/offerings`,
             body,
             {
                 headers: headers,
@@ -109,6 +116,11 @@ export class OfferingService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -120,11 +132,99 @@ export class OfferingService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
-        return this.httpClient.delete<any>(`${this.basePath}/offering/${encodeURIComponent(String(id))}`,
+        return this.httpClient.delete<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}`,
             {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
+     * Display a user
+     *
+     * @param id
+     */
+    public getAllChatsForOffering(id: string): Observable<Chats> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getAllChatsForOffering.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}/chats`,
+            {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
+     * Display a feed of nearby offerings
+     *
+     * @param location
+     * @param distance Distance in Meters
+     */
+    public getFeed(location: string, distance: number): Observable<Offerings> {
+        if (location === null || location === undefined) {
+            throw new Error('Required parameter location was null or undefined when calling getFeed.');
+        }
+        if (distance === null || distance === undefined) {
+            throw new Error('Required parameter distance was null or undefined when calling getFeed.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (location !== undefined) {
+            queryParameters = queryParameters.set('location', <any>location);
+        }
+        if (distance !== undefined) {
+            queryParameters = queryParameters.set('distance', <any>distance);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/feed`,
+            {
+                params: queryParameters,
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
             }
@@ -143,6 +243,11 @@ export class OfferingService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -154,11 +259,51 @@ export class OfferingService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/offering/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}`,
             {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
+     * Display a feed of nearby offerings
+     *
+     * @param filter Filteres offerings by owned or requested
+     */
+    public getOfferings(filter?: string): Observable<Offerings> {
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (filter !== undefined) {
+            queryParameters = queryParameters.set('filter', <any>filter);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/offerings`,
+            {
+                params: queryParameters,
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
             }
@@ -181,6 +326,11 @@ export class OfferingService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
@@ -199,7 +349,7 @@ export class OfferingService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.patch<any>(`${this.basePath}/offering/${encodeURIComponent(String(id))}`,
+        return this.httpClient.patch<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}`,
             body,
             {
                 headers: headers,
