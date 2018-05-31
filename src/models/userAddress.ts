@@ -12,8 +12,9 @@
 
 
 
-export interface Message {
-    fromId?: number;
-    content?: string;
-    time?: Date;
+export interface UserAddress {
+    street?: string;
+    number?: string;
+    zip?: number;
+    city?: string;
 }

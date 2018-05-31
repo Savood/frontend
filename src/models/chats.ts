@@ -10,10 +10,8 @@
  * Do not edit the class manually.
  */
 
+import { Chat } from './chat';
 
 
-export interface Message {
-    fromId?: number;
-    content?: string;
-    time?: Date;
+export interface Chats extends Array<Chat> {
 }

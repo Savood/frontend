@@ -22,9 +22,7 @@ export interface Offering {
     location?: string;
     avatarUrl?: string;
     requestedBy?: number;
-    totalLikes?: string;
     totalSavoods?: string;
-    totalComments?: string;
     comments?: Array<Comment>;
     time?: Date;
 }
