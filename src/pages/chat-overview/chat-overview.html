@@ -34,7 +34,7 @@
   <ion-list *ngIf="page == 'chats'">
     <button *ngFor="let chat of chats" ion-item (click)="openChat(chat.id)">
       <ion-avatar item-start>
-        <img [src]="getImage(chat.partner.avatarId)">
+        <img [src]="chat.partner.avatarId">
         <!--<img src="/assets/img/sarah-avatar.png.jpeg">-->
       </ion-avatar>
       <h2>{{chat.partner.firstname}} {{chat.partner.lastname}}</h2>
