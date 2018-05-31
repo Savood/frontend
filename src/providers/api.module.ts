@@ -3,20 +3,18 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Configuration } from './configuration';
 
-import { FeedService } from './api/feed.service';
-import { MessageService } from './api/message.service';
-import { OfferingService } from './api/offering.service';
-import { ProfileService } from './api/profile.service';
+import { MessagesService } from './api/messages.service';
+import { OfferingsService } from './api/offerings.service';
+import { UsersService } from './api/users.service';
 
 @NgModule({
   imports:      [ CommonModule, HttpClientModule ],
   declarations: [],
   exports:      [],
   providers: [
-    FeedService,
-    MessageService,
-    OfferingService,
-    ProfileService ]
+    MessagesService,
+    OfferingsService,
+    UsersService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {
