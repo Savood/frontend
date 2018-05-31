@@ -9,7 +9,7 @@ page-chat {
     padding: 0 !important;;
   }
 
-  ion-item{
-    padding: 0 !important;
+  .message-time{
+    color: color($colors,dark);
   }
 }

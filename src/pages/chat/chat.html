@@ -8,10 +8,10 @@
   <ion-card *ngFor="let message of messages">
     <ion-item>
       <ion-avatar item-start>
-        <img src="assets/img/marty-avatar.png">
+        <img [src]="message.from.avatarId">
       </ion-avatar>
-      <h2>{{message.sender}}</h2>
-      <p>{{ message.timestamp | date:'short'}}</p>
+      <h2>{{message.from.firstname}} {{message.from.lastname | slice:0:1}}.</h2>
+      <h4 item-end class="message-time">{{ message.timestamp | date:'short'}}</h4>
     </ion-item>
     <ion-card-content>
       <p>{{message.content}}</p>
@@ -20,7 +20,7 @@
 
   <ion-footer>
     <ion-item>
-      <ion-input placeholder="Schreibe ihm oder ihr jetzt eine Nachricht">
+      <ion-input placeholder="Schreibe ihm oder ihr jetzt eine Nachricht" [(ngModel)]="newMessage">
       </ion-input>
       <button item-right ion-button icon-only (click)="sendMessage()">
         <ion-icon name="send"></ion-icon>
