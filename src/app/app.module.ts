@@ -12,7 +12,7 @@ import { Geolocation} from "@ionic-native/geolocation";
 import {DatePicker} from "@ionic-native/date-picker";
 
 import { Items } from '../mocks/providers/items';
-import { Settings, User, APIS } from '../providers';
+import {Settings, User, APIS, Api} from '../providers';
 import { MyApp } from './app.component';
 import { MapsService } from '../providers/maps/maps';
 import { AuthProvider } from '../providers/auth/auth';
@@ -66,6 +66,7 @@ export function provideSettings(storage: Storage) {
   ],
   providers: [
     APIS,
+    Api,
     Items,
     User,
     Camera,
