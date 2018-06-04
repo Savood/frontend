@@ -11,13 +11,14 @@ import { MainPage } from '../';
   templateUrl: 'login.html'
 })
 export class LoginPage {
-  // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
+
   account: { email: string, password: string } = {
-    email: 'test@example.com',
-    password: 'test'
+    email: null,
+    password: null
   };
+
+  emailPlaceholder: string;
+  passwordPlaceholder: string;
 
   // Our translated text strings
   private loginErrorString: string;
@@ -27,8 +28,10 @@ export class LoginPage {
     public toastCtrl: ToastController,
     public translateService: TranslateService) {
 
-    this.translateService.get('LOGIN_ERROR').subscribe((value) => {
-      this.loginErrorString = value;
+    this.translateService.get(['LOGIN_ERROR','EMAIL','PASSWORD']).subscribe((value) => {
+      this.loginErrorString = value[0];
+      this.emailPlaceholder = value[1];
+      this.passwordPlaceholder = value[2];
     })
   }
 
