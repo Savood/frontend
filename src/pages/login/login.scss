@@ -1,2 +1,33 @@
 page-login {
+
+  video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  .title{
+    font-size: 5em;
+    text-align: center;
+    color: color($colors, light);
+  }
+
+  .subtitle{
+    color: color($colors, light);
+  }
+
+  .login-form{
+    height: 100%;
+  }
+
+  ion-list{
+    margin: 0 !important;
+  }
+
 }
