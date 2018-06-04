@@ -17,8 +17,8 @@ export class LoginPage {
     password: null
   };
 
-  emailPlaceholder: string;
-  passwordPlaceholder: string;
+  emailPlaceholder: string = null;
+  passwordPlaceholder: string = null;
 
   // Our translated text strings
   private loginErrorString: string;
@@ -29,9 +29,9 @@ export class LoginPage {
     public translateService: TranslateService) {
 
     this.translateService.get(['LOGIN_ERROR','EMAIL','PASSWORD']).subscribe((value) => {
-      this.loginErrorString = value[0];
-      this.emailPlaceholder = value[1];
-      this.passwordPlaceholder = value[2];
+      this.loginErrorString = value.LOGIN_ERROR;
+      this.emailPlaceholder = value.EMAIL;
+      this.passwordPlaceholder = value.PASSWORD;
     })
   }
 
