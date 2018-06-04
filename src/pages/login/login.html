@@ -1,6 +1,8 @@
-<ion-content>
+<ion-content text-center>
+  <div class="grey-out"></div>
   <video autoplay loop src="assets/img/vegetables.mp4"></video>
-  <h1 class="title">savood</h1>
+  <!--<h1 class="title">savood</h1>-->
+  <img class="logo" style="height: 33vh; margin-top:10vh" src="assets/img/logo.png">
 </ion-content>
 
 <ion-footer>
@@ -18,9 +20,7 @@
         <ion-label fixed class="fixed-label"><ion-icon name="lock"></ion-icon></ion-label>
         <ion-input type="password" [(ngModel)]="account.password" name="password" placeholder="{{this.passwordPlaceholder}}"></ion-input>
       </ion-item>
-
-      <button ion-button large full color="primary" block>{{ 'LOGIN_BUTTON' | translate }}</button>
-
     </ion-list>
   </form>
+  <button class="login-button" ion-button large full color="primary" block>{{ 'LOGIN_BUTTON' | translate }}</button>
 </ion-footer>
