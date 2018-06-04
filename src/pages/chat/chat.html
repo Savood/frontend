@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>{{partner.firstname}} {{partner.lastname | slice:0:1}}.</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let message of messages">
+    <ion-item class="message-header" (click)="console.log('Hello')">
+      <ion-avatar item-start>
+        <img [src]="message.from.avatarId">
+      </ion-avatar>
+      <h2>{{message.from.firstname}} {{message.from.lastname | slice:0:1}}.</h2>
+      <h4 item-end class="message-time">{{ message.timestamp | date:'short'}}</h4>
+    </ion-item>
+    <ion-card-content>
+      <p>{{message.content}}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-footer>
+    <ion-item>
+      <ion-input placeholder="Schreibe ihm oder ihr jetzt eine Nachricht" [(ngModel)]="newMessage">
+      </ion-input>
+      <button item-right ion-button icon-only (click)="sendMessage()">
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-footer>
+</ion-content>

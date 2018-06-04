@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>{{ pageTitle }}<span *ngIf="page == 'chats'"> {{currentOffering}}</span></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <!--<ion-list>-->
+    <!--<ion-item-sliding *ngFor="let item of currentItems">-->
+      <!--<button ion-item (click)="openMessage(item)">-->
+        <!--<ion-avatar item-start>-->
+          <!--<img [src]="item.profilePic" />-->
+        <!--</ion-avatar>-->
+        <!--<h2>{{item.name}}</h2>-->
+        <!--<p>{{item.about}}</p>-->
+        <!--<ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>-->
+      <!--</button>-->
+
+      <!--<ion-item-options>-->
+        <!--<button ion-button color="danger" (click)="deleteMessage(item)">-->
+          <!--{{'DELETE_BUTTON' | translate}}-->
+        <!--</button>-->
+      <!--</ion-item-options>-->
+    <!--</ion-item-sliding>-->
+  <!--</ion-list>-->
+
+  <ion-list *ngIf="page == 'offerings' && offerings">
+    <button *ngFor="let offering of offerings" ion-item (click)="openChatOverview(offering.id)">
+      <ion-avatar item-start>
+        <img [src]="offering.avatarUrl">
+      </ion-avatar>
+      <h1>{{offering.name}}</h1>
+      <h3 class="chat-info" item-end>3 Chats</h3>
+    </button>
+  </ion-list>
+
+  <ion-list *ngIf="page == 'chats' && chats">
+    <button *ngFor="let chat of chats" ion-item (click)="openChat(chat.id, chat.partner)">
+      <ion-avatar item-start>
+        <img [src]="chat.partner.avatarId">
+      </ion-avatar>
+      <h2>{{chat.partner.firstname}} {{chat.partner.lastname}}</h2>
+      <h3 class="chat-info" item-end>{{chat.offeringIds.length}} {{"OFFERING"|translate}}</h3>
+    </button>
+  </ion-list>
+</ion-content>

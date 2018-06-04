@@ -13,7 +13,7 @@ import {
 
 import {MapsService} from "../../providers/maps/maps";
 import {Geolocation} from "@ionic-native/geolocation";
-import {ProfileService, Settings} from '../../providers';
+import {UsersService, Settings} from '../../providers';
 import {} from '@types/googlemaps';
 import {Profile} from "../../models/profile";
 
@@ -87,7 +87,7 @@ export class SettingsPage {
               public formBuilder: FormBuilder,
               public navParams: NavParams,
               public translate: TranslateService,
-              public _user: ProfileService,
+              public _user: UsersService,
               public _maps: MapsService,
               public geolocation: Geolocation,
               public loadingCtrl: LoadingController,
@@ -137,10 +137,10 @@ export class SettingsPage {
       = this.locationSettings.user
       = this.phoneSettings.user
       = this.nameDescSettings.user
-      = this.user
+      = this.user;
 
     if (!this.user && this.page == "main") {
-      this._user.getProfileById("7").subscribe(
+      this._user.getUserById("7").subscribe(
         (profile) => {
           this.emailSettings.user
             = this.locationSettings.user
@@ -239,7 +239,7 @@ export class SettingsPage {
     let newSettings = {};
     Object.assign(newSettings, this.user, form.value);
     if (form.dirty) {
-      this._user.updateProfileById(this.user.id, form.value).subscribe(
+      this._user.updateUserById(this.user.id, form.value).subscribe(
         () => {
           this.userChanged(newSettings);
           this.navCtrl.pop().then();

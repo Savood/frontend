@@ -12,8 +12,9 @@
 
 
 
-export interface Message {
-    fromId?: number;
-    content?: string;
-    time?: Date;
+export interface Chat {
+    id?: string;
+    user1Id?: string;
+    user2Id?: string;
+    offeringId?: Array<string>;
 }

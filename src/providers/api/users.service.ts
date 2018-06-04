@@ -19,7 +19,7 @@ import { Observable }                                        from 'rxjs/Observab
 import '../rxjs-operators';
 
 import { InvalidParameterInput } from '../../models/invalidParameterInput';
-import { Profile } from '../../models/profile';
+import { User } from '../../models/user';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -27,7 +27,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 
 @Injectable()
-export class ProfileService {
+export class UsersService {
 
     protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
     public defaultHeaders = new HttpHeaders();
@@ -59,16 +59,21 @@ export class ProfileService {
 
 
     /**
-     * Add a new profile
+     * Add a new user
      *
-     * @param body Profile that needs to be added
+     * @param body User that needs to be added
      */
-    public createNewProfile(body: Profile): Observable<Profile> {
+    public createNewUser(body: User): Observable<User> {
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling createNewProfile.');
+            throw new Error('Required parameter body was null or undefined when calling createNewUser.');
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -88,7 +93,7 @@ export class ProfileService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/profile`,
+        return this.httpClient.post<any>(`${this.basePath}/users`,
             body,
             {
                 headers: headers,
@@ -98,16 +103,21 @@ export class ProfileService {
     }
 
     /**
-     * Delete a profile
+     * Delete a users
      *
      * @param id
      */
-    public deleteProfileById(id: string): Observable<{}> {
+    public deleteUserById(id: string): Observable<{}> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteProfileById.');
+            throw new Error('Required parameter id was null or undefined when calling deleteUserById.');
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -123,7 +133,7 @@ export class ProfileService {
             'application/json'
         ];
 
-        return this.httpClient.delete<any>(`${this.basePath}/profile/${encodeURIComponent(String(id))}`,
+        return this.httpClient.delete<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}`,
             {
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
@@ -132,16 +142,21 @@ export class ProfileService {
     }
 
     /**
-     * Display a profile
+     * Display a user
      *
      * @param id
      */
-    public getProfileById(id: string): Observable<Profile> {
+    public getUserById(id: string): Observable<User> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getProfileById.');
+            throw new Error('Required parameter id was null or undefined when calling getUserById.');
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        // if (this.configuration.apiKeys["Authorization"]) {
+        //     headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        // }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -157,7 +172,7 @@ export class ProfileService {
             'application/json'
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/profile/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}`,
             {
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
@@ -166,20 +181,25 @@ export class ProfileService {
     }
 
     /**
-     * Update a profile
+     * Update a user
      *
      * @param id
-     * @param body New parameters of the profile
+     * @param body New parameters of the User
      */
-    public updateProfileById(id: string, body: Profile): Observable<{}> {
+    public updateUserById(id: string, body: User): Observable<{}> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling updateProfileById.');
+            throw new Error('Required parameter id was null or undefined when calling updateUserById.');
         }
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling updateProfileById.');
+            throw new Error('Required parameter body was null or undefined when calling updateUserById.');
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -199,7 +219,7 @@ export class ProfileService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.patch<any>(`${this.basePath}/profile/${encodeURIComponent(String(id))}`,
+        return this.httpClient.patch<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}`,
             body,
             {
                 headers: headers,
