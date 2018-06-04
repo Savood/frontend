@@ -2,4 +2,8 @@ page-chat-overview {
   .chat-info{
     color: color($colors,dark);
   }
+
+  .message-header{
+    cursor: pointer;
+  }
 }

@@ -17,6 +17,7 @@ import {MessagesService} from "../../providers";
 export class ChatPage {
 
   chatId: string;
+  partner: any;
   newMessage: string;
 
   messages: any = [
@@ -46,7 +47,8 @@ export class ChatPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public _message: MessagesService) {
-    this.chatId = this.navParams.get("chatId")
+    this.chatId = this.navParams.get("chatId");
+    this.partner = this.navParams.get("partner");
   }
 
   ionViewDidLoad() {

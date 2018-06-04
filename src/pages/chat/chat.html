@@ -1,12 +1,12 @@
 <ion-header>
   <ion-navbar color="secondary">
-    <ion-title>CHAT_TITLE</ion-title>
+    <ion-title>{{partner.firstname}} {{partner.lastname | slice:0:1}}.</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-card *ngFor="let message of messages">
-    <ion-item>
+    <ion-item class="message-header" (click)="console.log('Hello')">
       <ion-avatar item-start>
         <img [src]="message.from.avatarId">
       </ion-avatar>

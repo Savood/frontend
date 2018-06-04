@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 
 import {Item} from '../../models/item';
-import {Items, OfferingsService} from '../../providers';
+import {Items, MessagesService, OfferingsService} from '../../providers';
 import {Chats} from "../../models/chats";
 import {TranslateService} from "@ngx-translate/core";
 import {Offerings} from "../../models/offerings";
@@ -71,6 +71,7 @@ export class ChatOverviewPage {
               public translate: TranslateService,
               public items: Items,
               public _offerings: OfferingsService,
+              public _messages: MessagesService,
               public modalCtrl: ModalController) {
     this._offerings.getOfferings().subscribe(
       (offerings) => {
@@ -90,10 +91,18 @@ export class ChatOverviewPage {
     if (this.page == "chats") {
       this.currentOffering = this.navParams.get('offering');
     }
+
+    if(this.currentOffering){
+      // this._messages.getAllChatsForOffering(this.currentOffering).subscribe(
+      //   (chats) => {
+      //     this.chats = chats;
+      //   }
+      // );
+    }
   }
 
-  openChat(chatId: string) {
-    this.navCtrl.push('ChatPage', chatId);
+  openChat(chatId: string, partner: any) {
+    this.navCtrl.push('ChatPage', {chatId: chatId, partner: partner});
   }
 
   openChatOverview(offeringId: string) {

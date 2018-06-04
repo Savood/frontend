@@ -35,7 +35,7 @@
   </ion-list>
 
   <ion-list *ngIf="page == 'chats' && chats">
-    <button *ngFor="let chat of chats" ion-item (click)="openChat(chat.id)">
+    <button *ngFor="let chat of chats" ion-item (click)="openChat(chat.id, chat.partner)">
       <ion-avatar item-start>
         <img [src]="chat.partner.avatarId">
       </ion-avatar>
