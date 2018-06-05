@@ -15,6 +15,9 @@ import { Settings, User, APIS } from '../providers';
 import { MyApp } from './app.component';
 import { MapsService } from '../providers/maps/maps';
 
+import { IonicImageViewerModule } from 'ionic-img-viewer';
+
+
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
 export function createTranslateLoader(http: HttpClient) {
@@ -41,6 +44,7 @@ export function provideSettings(storage: Storage) {
     MyApp
   ],
   imports: [
+    IonicImageViewerModule,
     BrowserModule,
     HttpClientModule,
     TranslateModule.forRoot({

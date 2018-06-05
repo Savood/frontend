@@ -1,43 +1,42 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-item>
-      <ion-avatar item-start>
-        <img [src]="offering.user?.avatar">
-      </ion-avatar>
-      <h2 text-wrap>"{{offering.header}}"</h2>
-    </ion-item>
+  <ion-navbar color="secondary">
+
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <br />
-  <!--<div class="item-profile" text-center #profilePic [style.background-image]="'url(' + offering.image + ')'">-->
-  <!--</div>-->
-  <img [src]="offering.image" style="width: 100vw">
+  <div>
+    <img style="height: 60vh; width: auto; object-fit: cover" [src]="offering.image" imageViewer >
 
+    <div style="position: relative;">
+
+      <ion-fab right bottom edge>
+        <button ion-fab fab-map color="primary">
+          <ion-icon name='restaurant'></ion-icon>
+        </button>
+      </ion-fab>
+    </div>
+    <ion-item>
+      <h1 ion-text text-wrap>{{offering.header}}</h1>
+      <!--<p>{{item.date}} </p>-->
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="pin"></ion-icon>
+            <div>{{offering.distance}}</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="restaurant"></ion-icon>
+            <div>{{offering.cum_savoods}}</div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </div>
   <!--<h5 padding style="margin: 0 0">{{offering.header}}</h5>-->
-
-  <ion-row>
-    <ion-col>
-      <button ion-button color="primary" clear small icon-start>
-        <ion-icon name='thumbs-up'></ion-icon>
-        12
-      </button>
-    </ion-col>
-    <ion-col>
-      <button ion-button color="primary" clear small icon-start>
-        <ion-icon name='restaurant'></ion-icon>
-        5
-      </button>
-    </ion-col>
-    <ion-col>
-      <button ion-button color="primary" clear small icon-start>
-        <ion-icon name='text'></ion-icon>
-        4
-      </button>
-    </ion-col>
-  </ion-row>
 
   <div class="item-detail" padding>
     <h2>{{offering.name}}</h2>
@@ -54,23 +53,25 @@
       </ion-segment-button>
     </ion-segment>
   </div>
-
   <div [ngSwitch]="whichtab">
     <ion-list *ngSwitchCase="'info'">
-      <ion-item>
-        <ion-avatar item-start>
-          <img [src]="offering.user?.avatar">
-        </ion-avatar>
-        <h2>{{offering.user.name}}</h2>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="time" item-start></ion-icon>
-        <h2>{{offering.date}}</h2>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="text" item-start></ion-icon>
-        <p text-wrap>{{offering.description}}</p>
-      </ion-item>
+      <ion-card>
+        <ion-item>
+          <ion-avatar item-start>
+            <img [src]="offering.user?.avatar">
+          </ion-avatar>
+          <h2>{{offering.user.name}}</h2>
+          <h5>{{offering.date}}</h5>
+        </ion-item>
+
+        <ion-item>
+          <p text-wrap>
+            <ion-icon name="quote"></ion-icon>
+            {{offering.description}}
+            <ion-icon name="quote"></ion-icon>
+          </p>
+        </ion-item>
+      </ion-card>
 
     </ion-list>
 
@@ -85,15 +86,4 @@
     </ion-list>
   </div>
 
-  <!--Comments-->
-  <ion-list-header>
-    Comments
-  </ion-list-header>
-  <ion-item>
-    <ion-avatar item-start>
-      <img [src]="offering.user?.avatar">
-    </ion-avatar>
-    <p text-wrap>{{offering.description}}</p>
-    <p text-wrap><i>{{offering.user.name}}</i> | <i>{{offering.date}}</i></p>
-  </ion-item>
 </ion-content>
