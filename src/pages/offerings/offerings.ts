@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
 import {OfferingService} from "../../providers/api/offering.service";
+import {FeedService} from "../../providers/api/feed.service";
 
 @IonicPage()
 @Component({
@@ -12,11 +13,12 @@ export class OfferingsPage {
   cardItems: any[];
   toggle = false;
 
-  constructor(public navCtrl: NavController, public _auth: AuthProvider, public _offering: OfferingService)
+  constructor(public navCtrl: NavController,public _auth: AuthProvider, public _feed: FeedService, public _offering: OfferingService)
   {
-    this._auth.register("markus.boebel1@gmail.com","Markus B","happ").subscribe(data =>{console.log(data)}, err =>{console.log(err)});
 
-    this._offering.createNewOffering({'header':'hallo'});
+    this._auth.refreshToken().subscribe(data=>console.log(data));
+    // this._offering.getOfferingById("1").subscribe((data)=>console.log(data), (err)=>console.log(err));
+
 
 
     this.cardItems = [
