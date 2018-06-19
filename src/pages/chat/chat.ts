@@ -20,6 +20,12 @@ export class ChatPage {
   partner: any;
   newMessage: string;
 
+  user = {
+    id: '5',
+    pic: 'assets/img/avatar/marty-avatar.png',
+    username: 'Marty',
+  };
+
   messages: any = [
     {
       from: {

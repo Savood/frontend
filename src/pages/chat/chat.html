@@ -5,26 +5,53 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor="let message of messages">
-    <ion-item class="message-header" (click)="console.log('Hello')">
-      <ion-avatar item-start>
-        <img [src]="message.from.avatarId">
-      </ion-avatar>
-      <h2>{{message.from.firstname}} {{message.from.lastname | slice:0:1}}.</h2>
-      <h4 item-end class="message-time">{{ message.timestamp | date:'short'}}</h4>
-    </ion-item>
-    <ion-card-content>
-      <p>{{message.content}}</p>
-    </ion-card-content>
-  </ion-card>
+  <!--<ion-card *ngFor="let message of messages">-->
+  <!--<ion-item class="message-header" (click)="console.log('Hello')">-->
+  <!--<ion-avatar item-start>-->
+  <!--<img [src]="message.from.avatarId">-->
+  <!--</ion-avatar>-->
+  <!--<h2>{{message.from.firstname}} {{message.from.lastname | slice:0:1}}.</h2>-->
+  <!--<h4 item-end class="message-time">{{ message.timestamp | date:'short'}}</h4>-->
+  <!--</ion-item>-->
+  <!--<ion-card-content>-->
+  <!--<p>{{message.content}}</p>-->
+  <!--</ion-card-content>-->
+  <!--</ion-card>-->
 
-  <ion-footer>
-    <ion-item>
-      <ion-input placeholder="Schreibe ihm oder ihr jetzt eine Nachricht" [(ngModel)]="newMessage">
-      </ion-input>
-      <button item-right ion-button icon-only (click)="sendMessage()">
-        <ion-icon name="send"></ion-icon>
-      </button>
-    </ion-item>
-  </ion-footer>
+  <div *ngFor="let message of messages" class="message-wrapper" on-hold="onMessageHold($event, $index, message)">
+    <div *ngIf="user.id !== message.from.userId">
+      <img class="profile-pic left" [src]="message.from.avatarId"/>
+      <!--  wave-->
+      <div class="chat-bubble left slide-left">
+        <div class="message" [innerHTML]="message.content" autolinker>
+        </div>
+        <div class="message-detail">
+          <span (click)="viewProfile(message)" class="bold">{{message.from.firstname}}</span>,
+          <span>{{message.timestamp | date:'short'}}</span>
+        </div>
+
+      </div>
+    </div>
+    <div *ngIf="user.id === message.from.userId">
+      <img (click)="viewProfile(message)" class="profile-pic right" [src]="message.from.avatarId"/>
+      <div class="chat-bubble right slide-right">
+        <div class="message" [innerHTML]="message.content" autolinker>
+        </div>
+        <div class="message-detail">
+          <span (click)="viewProfile(message)" class="bold">{{message.from.firstname}}</span>,
+          <span>{{message.timestamp | date:'short'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-item>
+    <ion-input placeholder="Schreibe jetzt eine Nachricht" [(ngModel)]="newMessage">
+    </ion-input>
+    <button item-right ion-button clear icon-only (click)="sendMessage()">
+      <ion-icon name="send" class="footer-btn"></ion-icon>
+    </button>
+  </ion-item>
+</ion-footer>
