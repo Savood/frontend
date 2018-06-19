@@ -91,13 +91,13 @@ page-chat {
   }
 
   .chat-bubble.left {
-    background-color: #e6e5eb;
+    background-color: color($colors,light);
     float: left;
     margin-left: 55px;
   }
 
   .chat-bubble.left:before {
-    background-color: #e6e5eb;
+    background-color: color($colors,light);
     left: 10px;
     -webkit-transform: rotate(70deg) skew(5deg);
   }
