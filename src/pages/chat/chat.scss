@@ -1,34 +1,5 @@
 page-chat {
 
-  ion-card{
-    width: 100% !important;
-    margin: 8px 0   !important;
-  }
-
-  .scroll-content{
-    padding: 0 !important;;
-  }
-
-  .message-time{
-    color: color($colors,dark);
-  }
-
-
-  /* Begin of copied stuff*/
-  .bar-footer {
-    overflow: visible !important;
-  }
-
-  .bar-footer textarea {
-    resize: none;
-    height: 25px;
-  }
-
-  /* fixes an ios bug bear */
-  button.ion-android-send {
-    padding-top: 2px;
-  }
-
   img.profile-pic {
     width: 40px;
     height: 40px;
@@ -43,12 +14,6 @@ page-chat {
 
   img.profile-pic.right {
     right: 10px;
-  }
-
-  .ion-email {
-    float: right;
-    font-size: 32px;
-    vertical-align: middle;
   }
 
   .message {
@@ -104,7 +69,7 @@ page-chat {
 
   .chat-bubble.right {
     background-color: color($colors,primary);
-    color: #fff;
+    color:  color($colors,light);
     float: right;
     margin-right: 55px;
   }
@@ -116,7 +81,7 @@ page-chat {
   }
 
   .chat-bubble.right a.autolinker {
-    color: #fff;
+    color: color($colors,light);
     font-weight: bold;
   }
 
@@ -137,7 +102,7 @@ page-chat {
   }
 
   input, textarea, .item-input, .item-input-wrapper {
-    background-color: #f4f4f4 !important;
+    background-color: color($colors,light) !important;
   }
 
   .bold {
@@ -146,10 +111,5 @@ page-chat {
 
   .cf {
     clear: both !important;
-  }
-
-  a.autolinker {
-    color: color($colors,primary);
-    text-decoration: none;
   }
 }
