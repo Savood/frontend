@@ -68,4 +68,8 @@ export class OfferingsPage {
     });
   }
 
+  startCreationModal(){
+    this.navCtrl.push('CreateOfferingPage');
+  }
+
 }
