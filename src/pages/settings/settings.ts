@@ -15,7 +15,7 @@ import {MapsService} from "../../providers/maps/maps";
 import {Geolocation} from "@ionic-native/geolocation";
 import {UsersService, Settings} from '../../providers';
 import {} from '@types/googlemaps';
-import {Profile} from "../../models/profile";
+import {User} from "../../models/user";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -31,7 +31,7 @@ export class SettingsPage {
   @ViewChild('map') mapElement: ElementRef;
 
   // Our local settings object
-  user: Profile;
+  user: User;
   userChanged = (newSettings) => {
     this.user = newSettings;
   };
