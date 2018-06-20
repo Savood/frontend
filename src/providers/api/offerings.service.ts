@@ -18,10 +18,9 @@ import { HttpClient, HttpHeaders, HttpParams }               from '@angular/comm
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
 
-import { Chats } from '../../models/chats';
+import { Chat } from '../../models/chat';
 import { InvalidParameterInput } from '../../models/invalidParameterInput';
 import { Offering } from '../../models/offering';
-import { Offerings } from '../../models/offerings';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -147,7 +146,7 @@ export class OfferingsService {
      *
      * @param id
      */
-    public getAllChatsForOffering(id: string): Observable<Chats> {
+    public getAllChatsForOffering(id: string): Observable<Array<Chat>> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getAllChatsForOffering.');
         }
@@ -186,7 +185,7 @@ export class OfferingsService {
      * @param location
      * @param distance Distance in Meters
      */
-    public getFeed(location: string, distance: number): Observable<Offerings> {
+    public getFeed(location: string, distance: number): Observable<Array<Offering>> {
         if (location === null || location === undefined) {
             throw new Error('Required parameter location was null or undefined when calling getFeed.');
         }
@@ -274,7 +273,7 @@ export class OfferingsService {
      *
      * @param filter Filteres offerings by owned or requested
      */
-    public getOfferings(filter?: string): Observable<Offerings> {
+    public getOfferings(filter?: string): Observable<Array<Offering>> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (filter !== undefined) {

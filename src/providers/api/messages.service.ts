@@ -18,10 +18,9 @@ import { HttpClient, HttpHeaders, HttpParams }               from '@angular/comm
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
 
-import { Chats } from '../../models/chats';
+import { Chat } from '../../models/chat';
 import { InvalidParameterInput } from '../../models/invalidParameterInput';
 import { Message } from '../../models/message';
-import { Messages } from '../../models/messages';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -155,7 +154,7 @@ export class MessagesService {
      * Get all Chats
      *
      */
-    public getAllChats(): Observable<Chats> {
+    public getAllChats(): Observable<Array<Chat>> {
 
         let headers = this.defaultHeaders;
 
@@ -191,7 +190,7 @@ export class MessagesService {
      *
      * @param id
      */
-    public getAllChatsForOffering(id: string): Observable<Chats> {
+    public getAllChatsForOffering(id: string): Observable<Array<Chat>> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getAllChatsForOffering.');
         }
@@ -229,7 +228,7 @@ export class MessagesService {
      *
      * @param chatID
      */
-    public getAllMessagesForChat(chatID: string): Observable<Messages> {
+    public getAllMessagesForChat(chatID: string): Observable<Array<Message>> {
         if (chatID === null || chatID === undefined) {
             throw new Error('Required parameter chatID was null or undefined when calling getAllMessagesForChat.');
         }
