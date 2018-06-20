@@ -274,63 +274,91 @@ export class SettingsPage {
 
   changeHeader() {
     if (this.platform.is('cordova')){
-      let actionSheet = this.actionSheetCtrl.create({
-        title: 'Upload Picture from',
-        buttons: [
-          {
-            text: 'Gallery',
-            handler: () => {
-              this.getImage()
-            }
-          }, {
-            text: 'Camera',
-            handler: () => {
-              this.getCamera()
-            }
-          }, {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          }
-        ]
+      this.translate.get("IMG_CHANGE_WEB_ONLY").subscribe((message) => {
+        this.toastCtrl.create({
+          position: 'top',
+          message: message,
+          duration: 3000
+        }).present();
       });
-      actionSheet.present();
+      // let actionSheet = this.actionSheetCtrl.create({
+      //   title: 'Upload Picture from',
+      //   buttons: [
+      //     {
+      //       text: 'Gallery',
+      //       handler: () => {
+      //         this.getImage()
+      //       }
+      //     }, {
+      //       text: 'Camera',
+      //       handler: () => {
+      //         this.getCamera()
+      //       }
+      //     }, {
+      //       text: 'Cancel',
+      //       role: 'cancel',
+      //       handler: () => {
+      //         console.log('Cancel clicked');
+      //       }
+      //     }
+      //   ]
+      // });
+      // actionSheet.present();
     } else {
       console.log("Cordova not available")
+      this.translate.get("IMG_CHANGE_MOBILE_ONLY").subscribe((message) => {
+        this.toastCtrl.create({
+          position: 'top',
+          message: message,
+          duration: 3000
+        }).present();
+      });
       // this.navCtrl.push(WebUploadHeaderPage)
     }
   }
 
   changeAvatar() {
     if (this.platform.is('cordova')){
-      let actionSheet = this.actionSheetCtrl.create({
-        title: 'Upload Picture from',
-        buttons: [
-          {
-            text: 'Gallery',
-            handler: () => {
-              this.getImage()
-            }
-          }, {
-            text: 'Camera',
-            handler: () => {
-              this.getCamera()
-            }
-          }, {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          }
-        ]
+      this.translate.get("IMG_CHANGE_WEB_ONLY").subscribe((message) => {
+        this.toastCtrl.create({
+          position: 'top',
+          message: message,
+          duration: 3000
+        }).present();
       });
-      actionSheet.present();
+      // let actionSheet = this.actionSheetCtrl.create({
+      //   title: 'Upload Picture from',
+      //   buttons: [
+      //     {
+      //       text: 'Gallery',
+      //       handler: () => {
+      //         this.getImage()
+      //       }
+      //     }, {
+      //       text: 'Camera',
+      //       handler: () => {
+      //         this.getCamera()
+      //       }
+      //     }, {
+      //       text: 'Cancel',
+      //       role: 'cancel',
+      //       handler: () => {
+      //         console.log('Cancel clicked');
+      //       }
+      //     }
+      //   ]
+      // });
+      // actionSheet.present();
 
     } else {
       console.log("Cordova not available")
+      this.translate.get("IMG_CHANGE_MOBILE_ONLY").subscribe((message) => {
+        this.toastCtrl.create({
+          position: 'top',
+          message: message,
+          duration: 3000
+        }).present();
+      });
       // this.navCtrl.push(WebUploadAvatarPage)
     }
   }
