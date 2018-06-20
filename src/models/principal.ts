@@ -10,8 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { Chat } from './chat';
 
 
-export interface Chats extends Array<Chat> {
+export interface Principal {
+    email?: string;
+    userid?: string;
+    username?: string;
 }

@@ -10,19 +10,16 @@
  * Do not edit the class manually.
  */
 
-import { Comment } from './comment';
 
 
 export interface Offering {
     id?: string;
     name?: string;
     header?: string;
-    creatorId?: number;
+    creatorId?: string;
     bestByDate?: string;
     location?: string;
     avatarUrl?: string;
     requestedBy?: number;
-    totalSavoods?: string;
-    comments?: Array<Comment>;
     time?: Date;
 }

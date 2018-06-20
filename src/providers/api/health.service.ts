@@ -65,11 +65,6 @@ export class HealthService {
 
         let headers = this.defaultHeaders;
 
-        // authentication (bearer) required
-        if (this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
-
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
             'application/json'
