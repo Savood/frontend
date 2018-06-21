@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 
+import { UserShort } from './userShort';
 
 
 export interface Chat {
     id?: string;
-    user1Id?: string;
-    user2Id?: string;
+    partner?: UserShort;
     offeringId?: Array<string>;
 }

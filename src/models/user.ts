@@ -23,7 +23,5 @@ export interface User {
     avatarId?: string;
     backgroundId?: string;
     description?: string;
-    savoodedOfferingsId?: Array<string>;
-    createdOfferingsId?: Array<string>;
     badges?: Array<string>;
 }

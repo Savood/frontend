@@ -10,10 +10,11 @@
  * Do not edit the class manually.
  */
 
+import { UserShort } from './userShort';
 
 
 export interface Message {
-    fromId?: number;
+    from?: UserShort;
     content?: string;
     time?: Date;
 }
