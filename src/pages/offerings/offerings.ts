@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import {IonicPage, NavController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
-import {OfferingService} from "../../providers/api/offering.service";
-import {FeedService} from "../../providers/api/feed.service";
+import {OfferingsService} from "../../providers/api/offerings.service";
 
 @IonicPage()
 @Component({
@@ -13,7 +12,7 @@ export class OfferingsPage {
   cardItems: any[];
   toggle = false;
 
-  constructor(public navCtrl: NavController,public _auth: AuthProvider, public _feed: FeedService, public _offering: OfferingService)
+  constructor(public navCtrl: NavController,public _auth: AuthProvider, public _offering: OfferingsService)
   {
 
     this._auth.refreshToken().subscribe(data=>console.log(data));
