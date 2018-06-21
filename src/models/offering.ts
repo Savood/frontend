@@ -19,7 +19,7 @@ export interface Offering {
     creatorId?: string;
     bestByDate?: string;
     location?: string;
-    avatarUrl?: string;
+    avatarId?: string;
     requestedBy?: number;
     time?: Date;
 }
