@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {Content, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {MessagesService} from "../../providers";
 
 /**
@@ -20,10 +20,22 @@ export class ChatPage {
   partner: any;
   newMessage: string;
 
+  toUser = {
+    _id: '534b8e5aaa5e7afc1b23e69b',
+    pic: 'assets/img/speakers/bear.jpg',
+    username: 'Venkman',
+  };
+
+  user = {
+    id: '534b8fb2aa5e7afc1b23e69c',
+    pic: 'assets/img/speakers/iguana.jpg',
+    username: 'Marty',
+  };
+
   messages: any = [
     {
       from: {
-        userId: "2",
+        userId: this.toUser._id,
         firstname: "John",
         lastname: "Johnson",
         avatarId: "assets/img/speakers/bear.jpg"
@@ -34,7 +46,7 @@ export class ChatPage {
     {
       content: "Hallo 2",
       from: {
-        userId: "5",
+        userId: this.user.id,
         firstname: "Bert",
         lastname: "Likerson",
         avatarId: "assets/img/speakers/iguana.jpg"
@@ -43,16 +55,14 @@ export class ChatPage {
     }
   ];
 
+  @ViewChild(Content) content: Content;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public _message: MessagesService) {
     this.chatId = this.navParams.get("chatId");
     this.partner = this.navParams.get("partner");
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatPage');
   }
 
   sendMessage(){

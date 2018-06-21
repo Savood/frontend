@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Camera } from '@ionic-native/camera';
@@ -9,11 +9,17 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { Geolocation} from "@ionic-native/geolocation";
+import {DatePicker} from "@ionic-native/date-picker";
 
 import { Items } from '../mocks/providers/items';
 import { Settings, User, APIS } from '../providers';
 import { MyApp } from './app.component';
 import { MapsService } from '../providers/maps/maps';
+import { AuthProvider } from '../providers/auth/auth';
+import {AuthInterceptorService} from "../providers/auth/auth_interceptor";
+
+import { IonicImageViewerModule } from 'ionic-img-viewer';
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -41,6 +47,7 @@ export function provideSettings(storage: Storage) {
     MyApp
   ],
   imports: [
+    IonicImageViewerModule,
     BrowserModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -64,11 +71,18 @@ export function provideSettings(storage: Storage) {
     Camera,
     SplashScreen,
     StatusBar,
+    DatePicker,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    },
     Geolocation,
-    MapsService
+    MapsService,
+    AuthProvider
   ]
 })
 export class AppModule { }

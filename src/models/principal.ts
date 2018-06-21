@@ -10,8 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { Offering } from './offering';
 
 
-export interface Offerings extends Array<Offering> {
+export interface Principal {
+    email?: string;
+    userid?: string;
+    username?: string;
 }
