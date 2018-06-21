@@ -15,7 +15,7 @@ import {MapsService} from "../../providers/maps/maps";
 import {Geolocation} from "@ionic-native/geolocation";
 import {UsersService, Settings} from '../../providers';
 import {} from '@types/googlemaps';
-import {Profile} from "../../models/profile";
+import {User} from "../../models/user";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -31,7 +31,7 @@ export class SettingsPage {
   @ViewChild('map') mapElement: ElementRef;
 
   // Our local settings object
-  user: Profile;
+  user: User;
   userChanged = (newSettings) => {
     this.user = newSettings;
   };
@@ -299,6 +299,13 @@ export class SettingsPage {
       actionSheet.present();
     } else {
       console.log("Cordova not available")
+      this.translate.get("IMG_CHANGE_MOBILE_ONLY").subscribe((message) => {
+        this.toastCtrl.create({
+          position: 'top',
+          message: message,
+          duration: 3000
+        }).present();
+      });
       // this.navCtrl.push(WebUploadHeaderPage)
     }
   }
@@ -331,6 +338,13 @@ export class SettingsPage {
 
     } else {
       console.log("Cordova not available")
+      this.translate.get("IMG_CHANGE_MOBILE_ONLY").subscribe((message) => {
+        this.toastCtrl.create({
+          position: 'top',
+          message: message,
+          duration: 3000
+        }).present();
+      });
       // this.navCtrl.push(WebUploadAvatarPage)
     }
   }
@@ -354,6 +368,13 @@ export class SettingsPage {
   }
 
   getImage() {
+    this.translate.get("IMG_CHANGE_WEB_ONLY").subscribe((message) => {
+      this.toastCtrl.create({
+        position: 'top',
+        message: message,
+        duration: 3000
+      }).present();
+    });
   //   this.uploadPic.getImage()
   //     .then(
   //       (imageData) => {
@@ -372,6 +393,13 @@ export class SettingsPage {
   }
 
   getCamera() {
+    this.translate.get("IMG_CHANGE_WEB_ONLY").subscribe((message) => {
+      this.toastCtrl.create({
+        position: 'top',
+        message: message,
+        duration: 3000
+      }).present();
+    });
   //   this.uploadPic.getCamera()
   //     .then((imageData) => {
   //       let alert = this.alertCtrl.create({
