@@ -274,36 +274,29 @@ export class SettingsPage {
 
   changeHeader() {
     if (this.platform.is('cordova')){
-      this.translate.get("IMG_CHANGE_WEB_ONLY").subscribe((message) => {
-        this.toastCtrl.create({
-          position: 'top',
-          message: message,
-          duration: 3000
-        }).present();
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Upload Picture from',
+        buttons: [
+          {
+            text: 'Gallery',
+            handler: () => {
+              this.getImage()
+            }
+          }, {
+            text: 'Camera',
+            handler: () => {
+              this.getCamera()
+            }
+          }, {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
       });
-      // let actionSheet = this.actionSheetCtrl.create({
-      //   title: 'Upload Picture from',
-      //   buttons: [
-      //     {
-      //       text: 'Gallery',
-      //       handler: () => {
-      //         this.getImage()
-      //       }
-      //     }, {
-      //       text: 'Camera',
-      //       handler: () => {
-      //         this.getCamera()
-      //       }
-      //     }, {
-      //       text: 'Cancel',
-      //       role: 'cancel',
-      //       handler: () => {
-      //         console.log('Cancel clicked');
-      //       }
-      //     }
-      //   ]
-      // });
-      // actionSheet.present();
+      actionSheet.present();
     } else {
       console.log("Cordova not available")
       this.translate.get("IMG_CHANGE_MOBILE_ONLY").subscribe((message) => {
@@ -319,36 +312,29 @@ export class SettingsPage {
 
   changeAvatar() {
     if (this.platform.is('cordova')){
-      this.translate.get("IMG_CHANGE_WEB_ONLY").subscribe((message) => {
-        this.toastCtrl.create({
-          position: 'top',
-          message: message,
-          duration: 3000
-        }).present();
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Upload Picture from',
+        buttons: [
+          {
+            text: 'Gallery',
+            handler: () => {
+              this.getImage()
+            }
+          }, {
+            text: 'Camera',
+            handler: () => {
+              this.getCamera()
+            }
+          }, {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
       });
-      // let actionSheet = this.actionSheetCtrl.create({
-      //   title: 'Upload Picture from',
-      //   buttons: [
-      //     {
-      //       text: 'Gallery',
-      //       handler: () => {
-      //         this.getImage()
-      //       }
-      //     }, {
-      //       text: 'Camera',
-      //       handler: () => {
-      //         this.getCamera()
-      //       }
-      //     }, {
-      //       text: 'Cancel',
-      //       role: 'cancel',
-      //       handler: () => {
-      //         console.log('Cancel clicked');
-      //       }
-      //     }
-      //   ]
-      // });
-      // actionSheet.present();
+      actionSheet.present();
 
     } else {
       console.log("Cordova not available")
@@ -382,6 +368,13 @@ export class SettingsPage {
   }
 
   getImage() {
+    this.translate.get("IMG_CHANGE_WEB_ONLY").subscribe((message) => {
+      this.toastCtrl.create({
+        position: 'top',
+        message: message,
+        duration: 3000
+      }).present();
+    });
   //   this.uploadPic.getImage()
   //     .then(
   //       (imageData) => {
@@ -400,6 +393,13 @@ export class SettingsPage {
   }
 
   getCamera() {
+    this.translate.get("IMG_CHANGE_WEB_ONLY").subscribe((message) => {
+      this.toastCtrl.create({
+        position: 'top',
+        message: message,
+        duration: 3000
+      }).present();
+    });
   //   this.uploadPic.getCamera()
   //     .then((imageData) => {
   //       let alert = this.alertCtrl.create({
