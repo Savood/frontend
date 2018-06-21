@@ -6,6 +6,7 @@ import {Geolocation} from "@ionic-native/geolocation";
 import {DatePicker} from "@ionic-native/date-picker";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Camera} from "@ionic-native/camera";
+import {TranslateService} from "@ngx-translate/core";
 
 /**
  * Generated class for the CreateOfferingPage page.
@@ -36,7 +37,8 @@ export class CreateOfferingPage {
               public geolocation: Geolocation,
               public datePicker: DatePicker,
               public camera: Camera,
-              public formBuilder: FormBuilder) {
+              public formBuilder: FormBuilder,
+              public translate: TranslateService) {
     this.form = formBuilder.group({
       offeringPic: ['', Validators.required],
       name: ['', Validators.required],
@@ -82,6 +84,7 @@ export class CreateOfferingPage {
             {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
             (marker) => {
               this.locationMarker = marker
+              this.locationMarker.addListener('click', alert("Hello"));
             });
         }
       )
@@ -91,6 +94,7 @@ export class CreateOfferingPage {
       this._maps.newMarker({latitude: 49.4874592, longitude: 8.4660395}, 'userPos', true).then(
         (marker) => {
           this.locationMarker = marker
+          this.locationMarker.addListener('click', alert("Hello"));
         });
     }
   }
@@ -117,45 +121,41 @@ export class CreateOfferingPage {
         });
       }
     );
+  }
 
 
-    itemCreate()
-    {
-      alert("created");
+  itemCreate() {
+    alert("created");
+  }
+
+  getPicture() {
+    if (Camera['installed']()) {
+      this.camera.getPicture({
+        destinationType: this.camera.DestinationType.DATA_URL,
+      }).then((data) => {
+        this.form.patchValue({'offeringPic': 'date:image/jpg;base64,' + data});
+      }, (err) => {
+        alert('Unable to take photo');
+      })
+    } else {
+      this.fileInput.nativeElement.click();
     }
+  }
 
-    getPicture()
-    {
-      if (Camera['installed']()) {
-        this.camera.getPicture({
-          destinationType: this.camera.DestinationType.DATA_URL,
-        }).then((data) => {
-          this.form.patchValue({'offeringPic': 'date:image/jpg;base64,' + data});
-        }, (err) => {
-          alert('Unable to take photo');
-        })
-      } else {
-        this.fileInput.nativeElement.click();
-      }
-    }
+  processWebImage(event) {
+    let reader = new FileReader();
+    reader.onload = (readerEvent) => {
 
-    processWebImage(event)
-    {
-      let reader = new FileReader();
-      reader.onload = (readerEvent) => {
+      let imageData = (readerEvent.target as any).result;
+      this.form.patchValue({'offeringPic': imageData});
+    };
 
-        let imageData = (readerEvent.target as any).result;
-        this.form.patchValue({'offeringPic': imageData});
-      };
+    reader.readAsDataURL(event.target.files[0]);
+  }
 
-      reader.readAsDataURL(event.target.files[0]);
-    }
-
-    createOffering()
-    {
-      alert("Create Offering");
-      this.navCtrl.pop();
-    }
+  createOffering() {
+    alert("Create Offering");
+    this.navCtrl.pop();
   }
 }
 
