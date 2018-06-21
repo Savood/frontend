@@ -6,7 +6,7 @@ import {
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Injectable} from "@angular/core";
 import {AuthProvider} from "./auth";
-import {App, NavController} from "ionic-angular";
+import {App} from "ionic-angular";
 import {Token} from "../../models/token";
 import {Observable} from "rxjs/Rx";
 
