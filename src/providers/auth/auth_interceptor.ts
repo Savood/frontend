@@ -5,10 +5,10 @@ import {
 } from "@angular/common/http";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
 import {AuthProvider} from "./auth";
 import {App, NavController} from "ionic-angular";
 import {Token} from "../../models/token";
+import {Observable} from "rxjs/rx/Observable";
 
 /**
  * Created by boebel on 28.05.2018.
