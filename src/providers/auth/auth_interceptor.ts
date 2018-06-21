@@ -8,6 +8,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {AuthProvider} from "./auth";
 import {App, NavController} from "ionic-angular";
+import {Token} from "../../models/token";
 
 /**
  * Created by boebel on 28.05.2018.
@@ -20,10 +21,10 @@ export class AuthInterceptorService implements HttpInterceptor {
   tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
   constructor(private authService: AuthProvider, public app:App) {
+
   }
 
   addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
-    console.log(token);
     let header = {setHeaders: {Authorization: 'Bearer ' + token}};
     let req_erg = req.clone(header);
     console.log(typeof(req_erg));
@@ -63,7 +64,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           this.tokenSubject.next(null);
 
           return this.authService.refreshToken()
-            .switchMap((newToken) => {
+            .switchMap((newToken:Token) => {
               console.log("new_token", newToken);
               if (newToken) {
                 this.tokenSubject.next(newToken.id_token);
