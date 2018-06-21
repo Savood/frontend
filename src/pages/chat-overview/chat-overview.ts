@@ -2,8 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 
 import {Item} from '../../models/item';
-import {Items, MessagesService, OfferingsService} from '../../providers';
-import {Chat} from "../../models/chat";
+import {Chat, Items, MessagesService, OfferingsService} from '../../providers';
 import {TranslateService} from "@ngx-translate/core";
 import {Offering} from "../../models/offering";
 
@@ -20,51 +19,8 @@ export class ChatOverviewPage {
   pageTitle: string;
 
   offerings: Offering[] = [];
-  currentOffering: string;
-
-  chats: any = [
-    {
-      id: "1",
-      partner: {
-        userId: "1",
-        firstname: "Benke",
-        lastname: "Schneider",
-        avatarId: "/assets/img/sarah-avatar.png.jpeg"
-      },
-      offeringIds: [
-        "1",
-        "2",
-        "3"
-      ]
-    },
-    {
-      id: "2",
-      partner: {
-        userId: "1",
-        firstname: "Johann",
-        lastname: "Johannson",
-        avatarId: "assets/img/marty-avatar.png"
-      },
-      offeringIds: [
-        "1",
-        "2",
-        "3"
-      ]
-    },
-    {
-      id: "23",
-      partner: {
-        userId: "1",
-        firstname: "Dragon",
-        lastname: "Rexhepi",
-        avatarId: "assets/img/speakers/bear.jpg"
-      },
-      offeringIds: [
-        "1",
-        "2",
-      ]
-    }
-  ];
+  currentOffering: Offering;
+  chats: Chat[] = [];
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -75,6 +31,7 @@ export class ChatOverviewPage {
               public modalCtrl: ModalController) {
     this._offerings.getOfferings().subscribe(
       (offerings) => {
+        console.log(offerings);
         this.offerings = offerings;
       }
     );
@@ -93,11 +50,13 @@ export class ChatOverviewPage {
     }
 
     if(this.currentOffering){
-      // this._messages.getAllChatsForOffering(this.currentOffering).subscribe(
-      //   (chats) => {
-      //     this.chats = chats;
-      //   }
-      // );
+      console.log(this.currentOffering);
+      this._messages.getAllChatsForOffering(this.currentOffering._id).subscribe(
+        (chats) => {
+          console.log(chats);
+          this.chats = chats;
+        }
+      );
     }
   }
 
@@ -109,7 +68,7 @@ export class ChatOverviewPage {
     this.navCtrl.push('ChatOverviewPage',
       {
         page: "chats",
-        pageTitleKey: "MESSAGES_PERSONAL_TITLE",
+        pageTitleKey: " ",
         offering: offeringId
       }
     );

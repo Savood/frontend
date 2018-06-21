@@ -239,7 +239,7 @@ export class SettingsPage {
     let newSettings = {};
     Object.assign(newSettings, this.user, form.value);
     if (form.dirty) {
-      this._user.updateUserById(this.user.id, form.value).subscribe(
+      this._user.updateUserById(this.user._id, form.value).subscribe(
         () => {
           this.userChanged(newSettings);
           this.navCtrl.pop().then();
