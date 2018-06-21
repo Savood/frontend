@@ -32,23 +32,24 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
+    //TODO Fix this
     console.log("Intercepting");
     return next.handle(req);
-    let token = this.authService.getToken();
-    return next.handle(this.addToken(req, token))
-      .catch(error => {
-
-        console.log("Error", error);
-
-        if (error instanceof HttpErrorResponse) {
-          switch ((<HttpErrorResponse>error).status) {
-            case 401:
-              return this.handle401Error(req, next);
-          }
-        } else {
-          return next.handle(req);
-        }
-      });
+    // let token = this.authService.getToken();
+    // return next.handle(this.addToken(req, token))
+//       .catch(error => {
+//         console.log("Error", error)
+// ;
+//
+//         if (error instanceof HttpErrorResponse) {
+//           switch ((<HttpErrorResponse>error).status) {
+//             case 401:
+//               return this.handle401Error(req, next);
+//           }
+//         } else {
+//           return next.handle(req);
+//         }
+//       });
   }
 
   handle401Error(req: HttpRequest<any>, next: HttpHandler) {
