@@ -3,9 +3,9 @@ import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angula
 
 import {Item} from '../../models/item';
 import {Items, MessagesService, OfferingsService} from '../../providers';
-import {Chats} from "../../models/chats";
+import {Chat} from "../../models/chat";
 import {TranslateService} from "@ngx-translate/core";
-import {Offerings} from "../../models/offerings";
+import {Offering} from "../../models/offering";
 
 @IonicPage()
 @Component({
@@ -19,7 +19,7 @@ export class ChatOverviewPage {
   pageTitleKey: string = 'MESSAGES_OFFERINGS_TITLE';
   pageTitle: string;
 
-  offerings: Offerings = [];
+  offerings: Offering[] = [];
   currentOffering: string;
 
   chats: any = [
