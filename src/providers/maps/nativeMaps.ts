@@ -90,4 +90,9 @@ export class NativeMapsService {
         });
     });
   }
+  addListener(marker: Marker, event: any, desiredFunction: any){
+    marker.on(event).subscribe(
+      () => desiredFunction
+    )
+  }
 }

@@ -102,4 +102,8 @@ export class JSMapsService {
       });
     });
   }
+
+  addListener(marker: Marker, event: any, desiredFunction: any){
+    marker.addListener(event, desiredFunction);
+  }
 }

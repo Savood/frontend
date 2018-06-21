@@ -100,4 +100,8 @@ export class MapsService {
     });
   }
 
+  addListener(marker: any, event: any, desiredFunction: any){
+    this.map.addListener(marker, event, desiredFunction);
+  }
+
 }
