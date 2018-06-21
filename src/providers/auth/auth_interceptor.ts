@@ -8,7 +8,7 @@ import {Injectable} from "@angular/core";
 import {AuthProvider} from "./auth";
 import {App, NavController} from "ionic-angular";
 import {Token} from "../../models/token";
-import {Observable} from "rxjs/rx/Observable";
+import {Observable} from "rxjs/Rx";
 
 /**
  * Created by boebel on 28.05.2018.
