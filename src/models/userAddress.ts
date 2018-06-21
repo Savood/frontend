@@ -12,7 +12,9 @@
 
 
 
-export interface ModelError {
-    code: number;
-    message: string;
+export interface UserAddress {
+    street?: string;
+    number?: string;
+    zip?: number;
+    city?: string;
 }

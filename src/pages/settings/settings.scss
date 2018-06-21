@@ -39,13 +39,12 @@ page-settings {
     overflow: hidden;
   }
 
-  .content-main {
-    margin-top: -16px;
-    padding: 16px 16px 0 16px;
-    position: relative !important;
+  ion-card{
+    width: 100% !important;
+    margin: 8px 0   !important;
   }
 
-  .content-profile, .content-notifications, .text-location {
+  .text-location {
     padding: 16px;
   }
 

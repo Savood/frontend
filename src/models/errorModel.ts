@@ -10,16 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { ProfileAddress } from './profileAddress';
 
 
-export interface Profile {
-    id?: number;
-    firstname?: string;
-    lastname?: string;
-    email?: string;
-    telefon?: string;
-    address?: ProfileAddress;
-    avatarId?: string;
-    badges?: any;
+export interface ErrorModel {
+    code: number;
+    message: string;
 }

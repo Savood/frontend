@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
 
-import { ListMasterPage } from './list-master';
+import { ChatOverviewPage } from './chat-overview';
 
 @NgModule({
   declarations: [
-    ListMasterPage,
+    ChatOverviewPage,
   ],
   imports: [
-    IonicPageModule.forChild(ListMasterPage),
+    IonicPageModule.forChild(ChatOverviewPage),
     TranslateModule.forChild()
   ],
   exports: [
-    ListMasterPage
+    ChatOverviewPage
   ]
 })
-export class ListMasterPageModule { }
+export class ChatOverviewModule { }

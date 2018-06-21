@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>{{partner.firstname}} {{partner.lastname | slice:0:1}}.</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let message of messages" class="message-wrapper" on-hold="onMessageHold($event, $index, message)">
+    <div *ngIf="user.id !== message.from.userId">
+      <img (click)="viewProfile(message)" class="profile-pic left" [src]="message.from.avatarId"/>
+      <div class="chat-bubble left slide-left">
+        <div class="message">{{message.content}}
+        </div>
+        <div class="message-detail">
+          <span (click)="viewProfile(message)" class="bold">{{message.from.firstname}}</span>,
+          <span>{{message.timestamp | date:'short'}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="user.id === message.from.userId">
+      <img (click)="viewProfile(message)" class="profile-pic right" [src]="message.from.avatarId"/>
+      <div class="chat-bubble right slide-right">
+        <div class="message">{{message.content}}
+        </div>
+        <div class="message-detail">
+          <span (click)="viewProfile(message)" class="bold">{{message.from.firstname}}</span>,
+          <span>{{message.timestamp | date:'short'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="cf"></div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-item>
+    <ion-input placeholder="Schreibe jetzt eine Nachricht" [(ngModel)]="newMessage">
+    </ion-input>
+    <button item-right ion-button clear icon-only (click)="sendMessage()">
+      <ion-icon name="send" class="footer-btn"></ion-icon>
+    </button>
+  </ion-item>
+</ion-footer>

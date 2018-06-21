@@ -18,19 +18,17 @@ import { HttpClient, HttpHeaders, HttpParams }               from '@angular/comm
 import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
 
-import { InvalidParameterInput } from '../../models/invalidParameterInput';
-import { Message } from '../../models/message';
+import { ErrorModel } from '../../models/errorModel';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
-import {env} from "../../environment/environment";
 
 
 @Injectable()
-export class FeedService {
+export class HealthService {
 
-    protected basePath = env.api_endpoint;
+    protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -60,19 +58,10 @@ export class FeedService {
 
 
     /**
-     * Display a feed
+     * Check Server status
      *
-     * @param location
      */
-    public feedGet(location: string): Observable<Message> {
-        if (location === null || location === undefined) {
-            throw new Error('Required parameter location was null or undefined when calling feedGet.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (location !== undefined) {
-            queryParameters = queryParameters.set('location', <any>location);
-        }
+    public healthcheckGet(): Observable<{}> {
 
         let headers = this.defaultHeaders;
 
@@ -87,12 +76,10 @@ export class FeedService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
-            'application/json'
         ];
 
-        return this.httpClient.get<any>(`${this.basePath}/feed`,
+        return this.httpClient.get<any>(`${this.basePath}/healthcheck`,
             {
-                params: queryParameters,
                 headers: headers,
                 withCredentials: this.configuration.withCredentials,
             }

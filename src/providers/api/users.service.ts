@@ -19,18 +19,17 @@ import { Observable }                                        from 'rxjs/Observab
 import '../rxjs-operators';
 
 import { InvalidParameterInput } from '../../models/invalidParameterInput';
-import { Offering } from '../../models/offering';
+import { User } from '../../models/user';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 import { CustomHttpUrlEncodingCodec }                        from '../encoder';
-import {env} from "../../environment/environment";
 
 
 @Injectable()
-export class OfferingService {
+export class UsersService {
 
-    protected basePath = env.api_endpoint;
+    protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -60,119 +59,21 @@ export class OfferingService {
 
 
     /**
-     * Delete an offering
+     * Add a new user
      *
-     * @param id
+     * @param body User that needs to be added
      */
-    public offeringIdDelete(id: number): Observable<{}> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling offeringIdDelete.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json'
-        ];
-
-        return this.httpClient.delete<any>(`${this.basePath}/offering/${encodeURIComponent(String(id))}`,
-            {
-                headers: headers,
-                withCredentials: this.configuration.withCredentials,
-            }
-        );
-    }
-
-    /**
-     * Display an offering
-     *
-     * @param id
-     */
-    public offeringIdGet(id: number): Observable<Offering> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling offeringIdGet.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json'
-        ];
-
-        return this.httpClient.get<any>(`${this.basePath}/offering/${encodeURIComponent(String(id))}`,
-            {
-                headers: headers,
-                withCredentials: this.configuration.withCredentials,
-            }
-        );
-    }
-
-    /**
-     * Update an offering
-     *
-     * @param id
-     */
-    public offeringIdPut(id: number): Observable<{}> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling offeringIdPut.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set("Accept", httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        let consumes: string[] = [
-            'application/json'
-        ];
-
-        return this.httpClient.put<any>(`${this.basePath}/offering/${encodeURIComponent(String(id))}`,
-            null,
-            {
-                headers: headers,
-                withCredentials: this.configuration.withCredentials,
-            }
-        );
-    }
-
-    /**
-     * Add a new offering
-     *
-     * @param body Offering that needs to be added
-     */
-    public offeringPost(body: Offering): Observable<Offering> {
+    public createNewUser(body: User): Observable<User> {
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling offeringPost.');
+            throw new Error('Required parameter body was null or undefined when calling createNewUser.');
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -192,7 +93,133 @@ export class OfferingService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/offering`,
+        return this.httpClient.post<any>(`${this.basePath}/users`,
+            body,
+            {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
+     * Delete a users
+     *
+     * @param id
+     */
+    public deleteUserById(id: string): Observable<{}> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deleteUserById.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        return this.httpClient.delete<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}`,
+            {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
+     * Display a user
+     *
+     * @param id
+     */
+    public getUserById(id: string): Observable<User> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getUserById.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        // if (this.configuration.apiKeys["Authorization"]) {
+        //     headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        // }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        return this.httpClient.get<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}`,
+            {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+    }
+
+    /**
+     * Update a user
+     *
+     * @param id
+     * @param body New parameters of the User
+     */
+    public updateUserById(id: string, body: User): Observable<{}> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling updateUserById.');
+        }
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateUserById.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+        let httpContentTypeSelected:string = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set("Content-Type", httpContentTypeSelected);
+        }
+
+        return this.httpClient.patch<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}`,
             body,
             {
                 headers: headers,

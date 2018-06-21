@@ -12,9 +12,8 @@
 
 
 
-export interface ProfileAddress {
-    street?: string;
-    number?: number;
-    zip?: number;
-    city?: string;
+export interface Principal {
+    email?: string;
+    userid?: string;
+    username?: string;
 }

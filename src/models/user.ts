@@ -10,16 +10,18 @@
  * Do not edit the class manually.
  */
 
+import { UserAddress } from './userAddress';
 
 
-export interface Offering {
+export interface User {
     _id?: string;
-    name?: string;
-    header?: string;
-    creatorId?: string;
-    bestByDate?: string;
-    location?: string;
+    firstname?: string;
+    lastname?: string;
+    email?: string;
+    phone?: string;
+    address?: UserAddress;
     avatarId?: string;
-    requestedBy?: number;
-    time?: Date;
+    backgroundId?: string;
+    description?: string;
+    badges?: Array<string>;
 }
