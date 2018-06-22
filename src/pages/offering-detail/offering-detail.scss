@@ -1,4 +1,9 @@
 page-item-detail {
+
+  $black-overlay: rgba(0,0,0,.3);
+  $banner-text-color: white;
+
+
   .item-profile {
     width: 100%;
     background-position: center center;
@@ -12,6 +17,20 @@ page-item-detail {
     position: absolute;
   }
 
+  .scroll-content {
+    padding-top: 0 !important;
+  }
+
+  /* Header */
+  .toolbar-background {
+    border-color: transparent;
+    background: $black-overlay;
+  }
+
+  .bar-button,
+  .toolbar-title {
+    color: $banner-text-color;
+  }
 
 
 }
