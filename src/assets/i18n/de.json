@@ -74,9 +74,14 @@
   "SEARCH_TITLE": "Suche",
   "SEARCH_PLACEHOLDER": "Suche in der Artikel-Liste, z.B. \"Donald Duck\"",
 
-  "OFFERINGS_TITLE": "Alle Savoods",
+  "OFFERING_TITLE": "Savoods",
   "OFFERING": "Savood",
   "OFFERINGS": "Savoods",
   "COMMENTS": "Kommentare",
-  "LIKES": "Hochwähls"
+  "LIKES": "Hochwähls",
+
+  "IMG_CHANGE_MOBILE_ONLY": "Bild nur auf Mobilgeräten editierbar",
+  "IMG_CHANGE_WEB_ONLY": "Bild nur im Browser editierbar",
+
+  "SEND_A_MESSAGE": "Sende jetzt eine Nachricht!"
 }
