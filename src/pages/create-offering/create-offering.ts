@@ -84,7 +84,7 @@ export class CreateOfferingPage {
             {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
             (marker) => {
               this.locationMarker = marker;
-              this._maps.addListener(this.locationMarker,'click',alert("Hello"));
+              this._maps.addListener(this.locationMarker,'dragend',() => alert('potato'));
             });
         }
       )
@@ -94,7 +94,7 @@ export class CreateOfferingPage {
       this._maps.newMarker({latitude: 49.4874592, longitude: 8.4660395}, 'userPos', true).then(
         (marker) => {
           this.locationMarker = marker;
-          this._maps.addListener(this.locationMarker,'click',alert("Hello"));
+          this._maps.addListener(this.locationMarker,'dragend',() => alert('potato'));
         });
     }
   }
