@@ -90,4 +90,21 @@ export class NativeMapsService {
         });
     });
   }
+  addListener(marker: Marker, event: any, desiredFunction: any){
+    let nativeEvent: string;
+    switch(event){
+      case 'click': nativeEvent = 'MARKER_CLICK'; break;
+      case 'dragend': nativeEvent = 'MARKER_DRAG_END'; break;
+      case 'dragstart': nativeEvent = 'MARKER_DRAG_START'; break;
+      case 'drag': nativeEvent = 'MARKER_DRAG'; break;
+      default: nativeEvent = null;
+    }
+    if(nativeEvent){
+      marker.on(nativeEvent).subscribe(
+        () => desiredFunction
+      )
+    } else {
+      alert("Event not found");
+    }
+  }
 }
