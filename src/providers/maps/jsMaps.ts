@@ -18,7 +18,10 @@ export class JSMapsService {
     this.map = new google.maps.Map(element.nativeElement,
       {
         center: latLng,
-        zoom: zoom
+        zoom: zoom,
+        clickableIcons: false,
+        streetViewControl: false,
+        mapTypeControl: false,
       });
   }
 
