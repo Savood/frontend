@@ -73,7 +73,7 @@ export class CreateOfferingPage {
           {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
           (marker) => {
             this.locationMarker = marker;
-            this._maps.addListener(this.locationMarker, 'dragend', () => alert('potato'));
+            this._maps.addListener(this.locationMarker, 'dragend', () => this.usePointerLocation());
           });
       }
     )
@@ -93,6 +93,9 @@ export class CreateOfferingPage {
   usePointerLocation() {
     this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
       (address) => {
+        this.form.controls['street'].setValue(address.street);
+        this.form.controls['number'].setValue(address.number);
+        this.form.controls['city'].setValue(address.city);
         console.log(address);
       },
       (error) => {
