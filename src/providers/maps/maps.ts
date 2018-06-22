@@ -5,6 +5,7 @@ import {GoogleMaps} from "@ionic-native/google-maps";
 import {JSMapsService} from "./jsMaps";
 import {NativeMapsService} from "./nativeMaps";
 import {Location} from "../../models/location";
+import {Geolocation} from "@ionic-native/geolocation";
 
 /*
   Generated class for the MapsService provider.
@@ -18,7 +19,8 @@ export class MapsService {
   map: any;
 
   constructor(public http: HttpClient,
-              public plt: Platform) {
+              public plt: Platform,
+              public geolocation: Geolocation) {
     if (this.plt.is('cordova') &&
       (this.plt.is('ios') || this.plt.is('android'))) {
       this.map = new NativeMapsService(GoogleMaps);
@@ -62,7 +64,7 @@ export class MapsService {
    * @param marker Marker which location needs to be returned
    * @param location new Location of the Marker
    */
-  setMarkerPosition(marker: any, location: Location){
+  setMarkerPosition(marker: any, location: Location) {
     this.map.setMarkerPosition(marker, location);
   }
 
@@ -88,7 +90,7 @@ export class MapsService {
    * @param address Common postal address which needs to be located
    * @returns Promise<Location> Location of the address
    */
-  async getLocation(address: string): Promise<Location>{
+  async getLocation(address: string): Promise<Location> {
     return new Promise<any>((resolve, reject) => {
       return this.map.getLocation(address).then(
         (results) => {
@@ -100,8 +102,26 @@ export class MapsService {
     });
   }
 
-  addListener(marker: any, event: any, desiredFunction: any){
+  addListener(marker: any, event: any, desiredFunction: any) {
     this.map.addListener(marker, event, desiredFunction);
   }
 
+  getGPS(): Promise<Location> {
+    return new Promise<any>((resolve, reject) => {
+      if (this.geolocation) {
+        this.geolocation.getCurrentPosition().then(
+          (position) => {
+            resolve({latitude: position.coords.latitude, longitude: position.coords.longitude});
+          },
+          (error) => {
+            alert('ERROR: ' + error.message);
+            resolve({latitude: 49.4874592, longitude: 8.4660395});
+          }
+        )
+      } else {
+        alert('ERROR: Location Service not available');
+        resolve({latitude: 49.4874592, longitude: 8.4660395});
+      }
+    });
+  }
 }

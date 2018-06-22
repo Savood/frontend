@@ -12,7 +12,6 @@ import {
 } from 'ionic-angular';
 
 import {MapsService} from "../../providers/maps/maps";
-import {Geolocation} from "@ionic-native/geolocation";
 import {UsersService, Settings} from '../../providers';
 import {} from '@types/googlemaps';
 import {User} from "../../models/user";
@@ -89,7 +88,6 @@ export class SettingsPage {
               public translate: TranslateService,
               public _user: UsersService,
               public _maps: MapsService,
-              public geolocation: Geolocation,
               public loadingCtrl: LoadingController,
               public actionSheetCtrl: ActionSheetController,
               public platform: Platform) {
@@ -173,37 +171,18 @@ export class SettingsPage {
   }
 
   initMap() {
-    if (this.geolocation) {
-      this.geolocation.getCurrentPosition().then(
-        (position) => {
-          return {latitude: position.coords.latitude, longitude: position.coords.longitude};
-        },
-        (error) => {
-          alert('ERROR: ' + error.message);
-          return {latitude: 49.4874592, longitude: 8.4660395};
-        }
-      ).then(
-        (position) => {
-          this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
-          this._maps.newMarker(
-            {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
-            (marker) => {
-              this.locationMarker = marker;
-              this.usePointerLocation();
-              this._maps.addListener(this.locationMarker,'dragend',() => this.usePointerLocation());
-            });
-        }
-      )
-    } else {
-      alert('ERROR: Location Service not available');
-      this._maps.initMap(this.mapElement, {latitude: 49.4874592, longitude: 8.4660395});
-      this._maps.newMarker({latitude: 49.4874592, longitude: 8.4660395}, 'userPos', true).then(
-        (marker) => {
-          this.locationMarker = marker;
-          this.usePointerLocation();
-          this._maps.addListener(this.locationMarker,'dragend',() => this.usePointerLocation());
-        });
-    }
+    this._maps.getGPS().then(
+      (position) => {
+        this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
+        this._maps.newMarker(
+          {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
+          (marker) => {
+            this.locationMarker = marker;
+            this.usePointerLocation();
+            this._maps.addListener(this.locationMarker, 'dragend', () => this.usePointerLocation());
+          });
+      }
+    )
   }
 
   usePointerLocation() {
@@ -277,7 +256,7 @@ export class SettingsPage {
   }
 
   changeHeader() {
-    if (this.platform.is('cordova')){
+    if (this.platform.is('cordova')) {
       let actionSheet = this.actionSheetCtrl.create({
         title: 'Upload Picture from',
         buttons: [
@@ -315,7 +294,7 @@ export class SettingsPage {
   }
 
   changeAvatar() {
-    if (this.platform.is('cordova')){
+    if (this.platform.is('cordova')) {
       let actionSheet = this.actionSheetCtrl.create({
         title: 'Upload Picture from',
         buttons: [
@@ -354,21 +333,21 @@ export class SettingsPage {
   }
 
   uploadFile() {
-  //   let loader = this.loadingCtrl.create({
-  //     content: "Uploading..."
-  //   });
-  //   loader.present();
-  //
-  //   this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
-  //
-  //   this.uploadPic.uploadFile(this.imageURI, this.imageFileName)
-  //     .then((data) => {
-  //       loader.dismiss();
-  //       this.presentToast("Image uploaded successfully");
-  //     }, (err) => {
-  //       loader.dismiss();
-  //       this.presentToast(err);
-  //     });
+    //   let loader = this.loadingCtrl.create({
+    //     content: "Uploading..."
+    //   });
+    //   loader.present();
+    //
+    //   this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+    //
+    //   this.uploadPic.uploadFile(this.imageURI, this.imageFileName)
+    //     .then((data) => {
+    //       loader.dismiss();
+    //       this.presentToast("Image uploaded successfully");
+    //     }, (err) => {
+    //       loader.dismiss();
+    //       this.presentToast(err);
+    //     });
   }
 
   getImage() {
@@ -379,21 +358,21 @@ export class SettingsPage {
         duration: 3000
       }).present();
     });
-  //   this.uploadPic.getImage()
-  //     .then(
-  //       (imageData) => {
-  //         let alert = this.alertCtrl.create({
-  //           title: 'Picture',
-  //           subTitle: imageData,
-  //           buttons: ['OK']
-  //         });
-  //         alert.present()
-  //         // this.imageURI = imageData;
-  //       },
-  //       (err) => {
-  //         this.presentToast(err);
-  //       }
-  //     );
+    //   this.uploadPic.getImage()
+    //     .then(
+    //       (imageData) => {
+    //         let alert = this.alertCtrl.create({
+    //           title: 'Picture',
+    //           subTitle: imageData,
+    //           buttons: ['OK']
+    //         });
+    //         alert.present()
+    //         // this.imageURI = imageData;
+    //       },
+    //       (err) => {
+    //         this.presentToast(err);
+    //       }
+    //     );
   }
 
   getCamera() {
@@ -404,17 +383,17 @@ export class SettingsPage {
         duration: 3000
       }).present();
     });
-  //   this.uploadPic.getCamera()
-  //     .then((imageData) => {
-  //       let alert = this.alertCtrl.create({
-  //         title: 'Picture',
-  //         subTitle: imageData,
-  //         buttons: ['OK']
-  //       });
-  //       alert.present()
-  //
-  //     }, (err) => {
-  //       this.presentToast(err);
-  //     });
+    //   this.uploadPic.getCamera()
+    //     .then((imageData) => {
+    //       let alert = this.alertCtrl.create({
+    //         title: 'Picture',
+    //         subTitle: imageData,
+    //         buttons: ['OK']
+    //       });
+    //       alert.present()
+    //
+    //     }, (err) => {
+    //       this.presentToast(err);
+    //     });
   }
 }
