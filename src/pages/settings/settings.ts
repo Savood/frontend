@@ -188,7 +188,9 @@ export class SettingsPage {
           this._maps.newMarker(
             {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
             (marker) => {
-              this.locationMarker = marker
+              this.locationMarker = marker;
+              this.usePointerLocation();
+              this._maps.addListener(this.locationMarker,'dragend',() => this.usePointerLocation());
             });
         }
       )
@@ -197,7 +199,9 @@ export class SettingsPage {
       this._maps.initMap(this.mapElement, {latitude: 49.4874592, longitude: 8.4660395});
       this._maps.newMarker({latitude: 49.4874592, longitude: 8.4660395}, 'userPos', true).then(
         (marker) => {
-          this.locationMarker = marker
+          this.locationMarker = marker;
+          this.usePointerLocation();
+          this._maps.addListener(this.locationMarker,'dragend',() => this.usePointerLocation());
         });
     }
   }
