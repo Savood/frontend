@@ -31,7 +31,6 @@ export class ChatOverviewPage {
               public modalCtrl: ModalController) {
     this._offerings.getOfferings().subscribe(
       (offerings) => {
-        console.log(offerings);
         this.offerings = offerings;
       }
     );
@@ -47,16 +46,7 @@ export class ChatOverviewPage {
 
     if (this.page == "chats") {
       this.currentOffering = this.navParams.get('offering');
-    }
-
-    if(this.currentOffering){
-      console.log(this.currentOffering);
-      this._messages.getAllChatsForOffering(this.currentOffering._id).subscribe(
-        (chats) => {
-          console.log(chats);
-          this.chats = chats;
-        }
-      );
+      this.chats = this.navParams.get('chats');
     }
   }
 
@@ -65,11 +55,16 @@ export class ChatOverviewPage {
   }
 
   openChatOverview(offeringId: string) {
-    this.navCtrl.push('ChatOverviewPage',
-      {
-        page: "chats",
-        pageTitleKey: " ",
-        offering: offeringId
+    this._messages.getAllChatsForOffering(offeringId).subscribe(
+      (chats) => {
+        this.navCtrl.push('ChatOverviewPage',
+          {
+            page: "chats",
+            pageTitleKey: " ",
+            offering: offeringId,
+            chats: chats
+          }
+        );
       }
     );
   }
