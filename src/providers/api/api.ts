@@ -1,15 +1,19 @@
 export * from './health.service';
-import { HealthService } from './health.service';
+import {HealthService} from './health.service';
+
 export * from './messages.service';
-import { MessagesService } from './messages.service';
+import {MessagesService} from './messages.service';
+
 export * from './offerings.service';
-import { OfferingsService } from './offerings.service';
+import {OfferingsService} from './offerings.service';
+
 export * from './users.service';
-import { UsersService } from './users.service';
+import {UsersService} from './users.service';
+
 export const APIS = [HealthService, MessagesService, OfferingsService, UsersService];
 
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
