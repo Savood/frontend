@@ -1,11 +1,12 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {MapsService} from "../../providers/maps/maps";
 
 import {DatePicker} from "@ionic-native/date-picker";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Camera} from "@ionic-native/camera";
 import {TranslateService} from "@ngx-translate/core";
+import {Offering, OfferingsService} from "../../providers";
 
 /**
  * Generated class for the CreateOfferingPage page.
@@ -33,8 +34,10 @@ export class CreateOfferingPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public _maps: MapsService,
+              public _offerings: OfferingsService,
               public datePicker: DatePicker,
               public camera: Camera,
+              public toastCtrl: ToastController,
               public formBuilder: FormBuilder,
               public translate: TranslateService) {
     this.form = formBuilder.group({
@@ -44,6 +47,7 @@ export class CreateOfferingPage {
       bestbefore: [''],
       street: [''],
       number: [''],
+      zip: [''],
       city: ['']
     });
 
@@ -73,8 +77,10 @@ export class CreateOfferingPage {
           {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
           (marker) => {
             this.locationMarker = marker;
+            this.usePointerLocation()
             this._maps.addListener(this.locationMarker, 'dragend', () => this.usePointerLocation());
-          });
+          }
+        )
       }
     )
   }
@@ -96,7 +102,7 @@ export class CreateOfferingPage {
         this.form.controls['street'].setValue(address.street);
         this.form.controls['number'].setValue(address.number);
         this.form.controls['city'].setValue(address.city);
-        console.log(address);
+        this.form.controls['zip'].setValue(address.zip);
       },
       (error) => {
         this.translate.get(error).subscribe((res) => {
@@ -137,8 +143,24 @@ export class CreateOfferingPage {
   }
 
   createOffering() {
-    alert("Create Offering");
-    this.navCtrl.pop();
+    let newOffering: Offering = {
+      name: this.form.controls['name'].value,
+      header: this.form.controls['description'].value,
+      bestByDate: this.form.controls['bestByDate'].value,
+    };
+    console.log(newOffering);
+    this._offerings.createNewOffering(newOffering).subscribe(
+      (success) => {
+        this.translate.get("SAVE_SUCCESSFUL").subscribe((message) => {
+          this.toastCtrl.create({
+            position: 'top',
+            message: message,
+            duration: 3000
+          }).present();
+        });
+        this.navCtrl.pop();
+      }
+    );
   }
 }
 

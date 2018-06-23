@@ -43,6 +43,7 @@
   "NUMBER": "Hausnummer",
   "ZIP": "Postleitzahl",
   "CITY": "Stadt",
+  "ADDRESS": "Adresse",
 
   "NO_ADDRESS_FOUND": "Keine Adresse gefunden",
   "GEOCODE_ERROR": "Fehler bei der Positionsbestimmung",
