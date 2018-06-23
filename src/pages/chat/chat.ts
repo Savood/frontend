@@ -66,6 +66,6 @@ export class ChatPage {
   }
 
   sendMessage(){
-    // this._message.createNewMessage(this.chatId,this.newMessage);
+    this._message.createNewMessage(this.chatId,{content: this.newMessage, time: new Date()});
   }
 }
