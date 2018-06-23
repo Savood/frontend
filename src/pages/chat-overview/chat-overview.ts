@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 
 import {Item} from '../../models/item';
 import {Chat, Items, MessagesService, OfferingsService} from '../../providers';
@@ -14,12 +14,14 @@ import {Offering} from "../../models/offering";
 export class ChatOverviewPage {
   currentItems: Item[];
 
-  page: string = 'offerings';
+  page: string = 'startOverview';
   pageTitleKey: string = 'MESSAGES_OFFERINGS_TITLE';
   pageTitle: string;
+  tab: string = "offerings";
 
   offerings: Offering[] = [];
   currentOffering: Offering;
+  offeringChats: Chat[] = [];
   chats: Chat[] = [];
 
   constructor(public navCtrl: NavController,
@@ -28,10 +30,15 @@ export class ChatOverviewPage {
               public items: Items,
               public _offerings: OfferingsService,
               public _messages: MessagesService,
-              public modalCtrl: ModalController) {
+              public toastCtrl: ToastController) {
     this._offerings.getOfferings().subscribe(
       (offerings) => {
         this.offerings = offerings;
+      }
+    );
+    this._messages.getAllChats().subscribe(
+      (chats) => {
+        this.chats = chats;
       }
     );
   }
@@ -46,25 +53,45 @@ export class ChatOverviewPage {
 
     if (this.page == "chats") {
       this.currentOffering = this.navParams.get('offering');
-      this.chats = this.navParams.get('chats');
+      this.offeringChats = this.navParams.get('chats');
     }
   }
 
   openChat(chatId: string, partner: any) {
-    this.navCtrl.push('ChatPage', {chatId: chatId, partner: partner});
+    this.navCtrl.push('ChatPage',
+      {
+        chatId: chatId,
+        partner: partner
+      });
   }
 
   openChatOverview(offeringId: string) {
     this._messages.getAllChatsForOffering(offeringId).subscribe(
       (chats) => {
-        this.navCtrl.push('ChatOverviewPage',
-          {
-            page: "chats",
-            pageTitleKey: " ",
-            offering: offeringId,
-            chats: chats
-          }
-        );
+        console.log(chats);
+        if (chats.length == 1) {
+          this.translate.get("OPENED_ONLY_CHAT").subscribe((message) => {
+            this.toastCtrl.create({
+              position: 'top',
+              message: message,
+              duration: 2000
+            }).present();
+          });
+          this.navCtrl.push('ChatPage',
+            {
+              chatId: chats[0]._id,
+              partner: chats[0].partner
+            });
+        } else {
+          this.navCtrl.push('ChatOverviewPage',
+            {
+              page: "chats",
+              pageTitleKey: " ",
+              offering: offeringId,
+              chats: chats
+            }
+          );
+        }
       }
     );
   }

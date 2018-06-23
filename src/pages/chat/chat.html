@@ -6,25 +6,23 @@
 
 <ion-content>
   <div *ngFor="let message of messages" class="message-wrapper" on-hold="onMessageHold($event, $index, message)">
-    <div *ngIf="user.id !== message.from.userId">
-      <img (click)="viewProfile(message)" class="profile-pic left" [src]="message.from.avatarId"/>
+    <div *ngIf="user._id !== message.from._id">
+      <img (click)="viewProfile(message.from._id)" class="profile-pic left" [src]="message.from.avatarId"/>
       <div class="chat-bubble left slide-left">
         <div class="message">{{message.content}}
         </div>
         <div class="message-detail">
-          <span (click)="viewProfile(message)" class="bold">{{message.from.firstname}}</span>,
           <span>{{message.timestamp | date:'short'}}</span>
         </div>
       </div>
     </div>
 
-    <div *ngIf="user.id === message.from.userId">
-      <img (click)="viewProfile(message)" class="profile-pic right" [src]="message.from.avatarId"/>
+    <div *ngIf="user._id === message.from._id">
+      <img (click)="viewProfile(message.from._id)" class="profile-pic right" [src]="message.from.avatarId"/>
       <div class="chat-bubble right slide-right">
         <div class="message">{{message.content}}
         </div>
         <div class="message-detail">
-          <span (click)="viewProfile(message)" class="bold">{{message.from.firstname}}</span>,
           <span>{{message.timestamp | date:'short'}}</span>
         </div>
       </div>

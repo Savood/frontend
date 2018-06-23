@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {Content, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {MessagesService} from "../../providers";
 import {TranslateService} from "@ngx-translate/core";
+import {SettingsPage} from "../settings/settings";
 
 /**
  * Generated class for the ChatPage page.
@@ -28,7 +29,7 @@ export class ChatPage {
   };
 
   user = {
-    id: '534b8fb2aa5e7afc1b23e69c',
+    _id: '534b8fb2aa5e7afc1b23e69c',
     pic: 'assets/img/speakers/iguana.jpg',
     username: 'Marty',
   };
@@ -38,7 +39,7 @@ export class ChatPage {
   messages: any = [
     {
       from: {
-        userId: this.toUser._id,
+        _id: this.toUser._id,
         firstname: "John",
         lastname: "Johnson",
         avatarId: "assets/img/speakers/bear.jpg"
@@ -49,7 +50,7 @@ export class ChatPage {
     {
       content: "Hallo 2",
       from: {
-        userId: this.user.id,
+        _id: this.user._id,
         firstname: "Bert",
         lastname: "Likerson",
         avatarId: "assets/img/speakers/iguana.jpg"
@@ -72,7 +73,11 @@ export class ChatPage {
     this.partner = this.navParams.get("partner");
   }
 
-  sendMessage(){
-    this._message.createNewMessage(this.chatId,{content: this.newMessage, time: new Date()});
+  sendMessage() {
+    this._message.createNewMessage(this.chatId, {content: this.newMessage, time: new Date()});
+  }
+
+  viewProfile(id: string) {
+    this.navCtrl.push('SettingsPage');
   }
 }

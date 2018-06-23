@@ -1,12 +1,25 @@
 <ion-header>
   <ion-navbar color="secondary">
-    <ion-title *ngIf="page == 'offerings'">{{ pageTitle }}</ion-title>
+    <ion-title *ngIf="page == 'startOverview'">{{ pageTitle }}</ion-title>
     <ion-title *ngIf="page == 'chats'"> {{currentOffering.name}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="page == 'offerings' && offerings">
+  <!-- Segments: Displayed when intially loaded, no further action taken -->
+  <div *ngIf="page == 'startOverview'">
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="offerings">
+        Savoods
+      </ion-segment-button>
+      <ion-segment-button value="chats">
+        Chats
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- OfferingOverview: See all offerings related to the user -->
+  <ion-list *ngIf="page == 'startOverview' && offerings && tab == 'offerings'">
     <button *ngFor="let offering of offerings" ion-item (click)="openChatOverview(offering)">
       <ion-avatar item-start>
         <img [src]="offering.avatarId">
@@ -16,8 +29,20 @@
     </button>
   </ion-list>
 
-  <ion-list *ngIf="page == 'chats' && chats">
+  <!-- ChatOverview: See all chats related to the user -->
+  <ion-list *ngIf="page == 'startOverview' && tab == 'chats' && chats">
     <button *ngFor="let chat of chats" ion-item (click)="openChat(chat._id, chat.partner)">
+      <ion-avatar item-start>
+        <img [src]="chat.partner.avatarId">
+      </ion-avatar>
+      <h2>{{chat.partner.firstname}} {{chat.partner.lastname}}</h2>
+      <h3 class="chat-info" item-end>{{chat.offeringId.length}} {{"OFFERING"|translate}}</h3>
+    </button>
+  </ion-list>
+
+  <!-- OfferingChatOverview: See all chats related to an offering related to you -->
+  <ion-list *ngIf="page == 'chats' && offeringChats">
+    <button *ngFor="let chat of offeringChats" ion-item (click)="openChat(chat._id, chat.partner)">
       <ion-avatar item-start>
         <img [src]="chat.partner.avatarId">
       </ion-avatar>
