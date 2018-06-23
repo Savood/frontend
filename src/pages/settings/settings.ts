@@ -15,6 +15,8 @@ import {MapsService} from "../../providers/maps/maps";
 import {UsersService, Settings} from '../../providers';
 import {} from '@types/googlemaps';
 import {User} from "../../models/user";
+import {AuthProvider} from "../../providers/auth/auth";
+import {LoginPage} from "../login/login";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -90,7 +92,8 @@ export class SettingsPage {
               public _maps: MapsService,
               public loadingCtrl: LoadingController,
               public actionSheetCtrl: ActionSheetController,
-              public platform: Platform) {
+              public platform: Platform,
+              public _auth:AuthProvider) {
   }
 
   ionViewDidLoad() {
@@ -373,6 +376,11 @@ export class SettingsPage {
     //         this.presentToast(err);
     //       }
     //     );
+  }
+
+  logout(){
+    this._auth.logout();
+    this.navCtrl.setRoot(LoginPage);
   }
 
   getCamera() {

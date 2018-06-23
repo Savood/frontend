@@ -2,7 +2,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {env} from '../../environment/environment';
-
+import {JwtHelper} from 'angular2-jwt';
+import {User} from "../../models/user";
 /*
   Generated class for the AuthProvider provider.
 
@@ -14,9 +15,21 @@ export class AuthProvider {
 
   refresh_token: string;
   id_token :string;
+  helper: JwtHelper;
 
   constructor(public _http: HttpClient) {
-    this.loadToken()
+    this.loadToken();
+
+    this.helper = new JwtHelper();
+
+  }
+
+  getActiveUserId():string {
+    return this.helper.decodeToken(this.getToken()).userid;
+  }
+
+  isActiveUser(user:User):boolean{
+    return this.getActiveUserId() === user._id;
   }
 
   getRefreshToken() {
@@ -44,6 +57,11 @@ export class AuthProvider {
     }
   }
 
+  isLoggedIn(){
+    let token = this.getToken();
+    return token && !this.helper.isTokenExpired(this.getToken());
+  }
+
   login(username:string, password:string){
 
     let body = new URLSearchParams();
@@ -56,7 +74,7 @@ export class AuthProvider {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     };
 
-    this._http.post(env.auth_endpoint + 'oauth2/token', body.toString(), options).subscribe(token=> this.saveToken(token));
+    return this._http.post(env.auth_endpoint + 'oauth2/token', body.toString(), options);
   }
 
   register(email:string, username:string, password:string) {
@@ -73,7 +91,7 @@ export class AuthProvider {
   }
 
   logout(){
-    console.log("Du bist jetzt raus");
+    localStorage.clear();
   }
 
   loadToken(){
