@@ -15,7 +15,7 @@
 export interface Offering {
     _id?: string;
     name?: string;
-    header?: string;
+    description?: string;
     creatorId?: string;
     bestByDate?: string;
     location?: string;
