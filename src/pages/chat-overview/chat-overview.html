@@ -25,7 +25,11 @@
         <img [src]="offering.avatarId">
       </ion-avatar>
       <h2>{{offering.name | slice:0:20}}<span *ngIf="offering.name.length > 20">...</span></h2>
-      <h3 class="chat-info" item-end>3 Chats</h3>
+      <h3 class="chat-info" item-end [ngPlural]="3">
+        <ng-template ngPluralCase="=0">keine {{"CHATS"|translate}}</ng-template>
+        <ng-template ngPluralCase="=1">1 {{"CHAT"|translate}}</ng-template>
+        <ng-template ngPluralCase="other">3 {{"CHATS"|translate}}</ng-template>
+      </h3>
     </button>
   </ion-list>
 
@@ -36,7 +40,11 @@
         <img [src]="chat.partner.avatarId">
       </ion-avatar>
       <h2>{{chat.partner.firstname}} {{chat.partner.lastname}}</h2>
-      <h3 class="chat-info" item-end>{{chat.offeringId.length}} {{"OFFERING"|translate}}</h3>
+      <h3 class="chat-info" item-end [ngPlural]="chat.offeringId.length">
+        <ng-template ngPluralCase="=0">keine {{"OFFERINGS"|translate}}</ng-template>
+        <ng-template ngPluralCase="=1">{{chat.offeringId.length}} {{"OFFERING"|translate}}</ng-template>
+        <ng-template ngPluralCase="other">{{chat.offeringId.length}} {{"OFFERINGS"|translate}}</ng-template>
+      </h3>
     </button>
   </ion-list>
 
@@ -47,7 +55,11 @@
         <img [src]="chat.partner.avatarId">
       </ion-avatar>
       <h2>{{chat.partner.firstname}} {{chat.partner.lastname}}</h2>
-      <h3 class="chat-info" item-end>{{chat.offeringId.length}} {{"OFFERING"|translate}}</h3>
+      <h3 class="chat-info" item-end [ngPlural]="chat.offeringId.length">
+        <ng-template ngPluralCase="=0">keine {{"OFFERINGS"|translate}}</ng-template>
+        <ng-template ngPluralCase="=1">{{chat.offeringId.length}} {{"OFFERING"|translate}}</ng-template>
+        <ng-template ngPluralCase="other">{{chat.offeringId.length}} {{"OFFERINGS"|translate}}</ng-template>
+      </h3>
     </button>
   </ion-list>
 </ion-content>
