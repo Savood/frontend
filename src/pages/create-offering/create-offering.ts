@@ -2,7 +2,6 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {MapsService} from "../../providers/maps/maps";
 
-import {Geolocation} from "@ionic-native/geolocation";
 import {DatePicker} from "@ionic-native/date-picker";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Camera} from "@ionic-native/camera";
@@ -34,7 +33,6 @@ export class CreateOfferingPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public _maps: MapsService,
-              public geolocation: Geolocation,
               public datePicker: DatePicker,
               public camera: Camera,
               public formBuilder: FormBuilder,
@@ -68,35 +66,17 @@ export class CreateOfferingPage {
   }
 
   initMap() {
-    if (this.geolocation) {
-      this.geolocation.getCurrentPosition().then(
-        (position) => {
-          return {latitude: position.coords.latitude, longitude: position.coords.longitude};
-        },
-        (error) => {
-          alert('ERROR: ' + error.message);
-          return {latitude: 49.4874592, longitude: 8.4660395};
-        }
-      ).then(
-        (position) => {
-          this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
-          this._maps.newMarker(
-            {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
-            (marker) => {
-              this.locationMarker = marker
-              this.locationMarker.addListener('click', alert("Hello"));
-            });
-        }
-      )
-    } else {
-      alert('ERROR: Location Service not available');
-      this._maps.initMap(this.mapElement, {latitude: 49.4874592, longitude: 8.4660395});
-      this._maps.newMarker({latitude: 49.4874592, longitude: 8.4660395}, 'userPos', true).then(
-        (marker) => {
-          this.locationMarker = marker
-          this.locationMarker.addListener('click', alert("Hello"));
-        });
-    }
+    this._maps.getGPS().then(
+      (position) => {
+        this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
+        this._maps.newMarker(
+          {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
+          (marker) => {
+            this.locationMarker = marker;
+            this._maps.addListener(this.locationMarker, 'dragend', () => this.usePointerLocation());
+          });
+      }
+    )
   }
 
   openDatePicker() {
@@ -113,6 +93,9 @@ export class CreateOfferingPage {
   usePointerLocation() {
     this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
       (address) => {
+        this.form.controls['street'].setValue(address.street);
+        this.form.controls['number'].setValue(address.number);
+        this.form.controls['city'].setValue(address.city);
         console.log(address);
       },
       (error) => {

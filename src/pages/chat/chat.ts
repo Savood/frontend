@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {Content, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {MessagesService} from "../../providers";
+import {TranslateService} from "@ngx-translate/core";
 
 /**
  * Generated class for the ChatPage page.
@@ -32,6 +33,8 @@ export class ChatPage {
     username: 'Marty',
   };
 
+  sendMessagePlaceholder: string = "";
+
   messages: any = [
     {
       from: {
@@ -60,7 +63,11 @@ export class ChatPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public _message: MessagesService) {
+    public _message: MessagesService,
+    public translate: TranslateService) {
+    translate.get('SEND_A_MESSAGE').subscribe(
+      (trans) => this.sendMessagePlaceholder = trans
+    );
     this.chatId = this.navParams.get("chatId");
     this.partner = this.navParams.get("partner");
   }

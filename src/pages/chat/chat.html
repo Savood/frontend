@@ -35,7 +35,7 @@
 
 <ion-footer>
   <ion-item>
-    <ion-input placeholder="Schreibe jetzt eine Nachricht" [(ngModel)]="newMessage">
+    <ion-input placeholder="{{sendMessagePlaceholder}}" [(ngModel)]="newMessage">
     </ion-input>
     <button item-right ion-button clear icon-only (click)="sendMessage()">
       <ion-icon name="send" class="footer-btn"></ion-icon>
