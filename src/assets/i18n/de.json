@@ -68,6 +68,13 @@
   "SIGNUP_ERROR": "Fehler beim Registrieren, bitte überprüfe deine Informationen und versuche es erneut.",
   "SIGNUP_BUTTON": "Registrieren",
 
+  "REGISTER_LABEL": "Noch kein Savooder? Tritt jetzt bei uns rette die Welt!",
+  "REGISTER_BUTTON": "Registrieren",
+  "REGISTER_ERROR": "Oh nein! Da ist wohl was schief gelaufen, probiere es am besten gleich nochmal.",
+  "SUCCESSFUL_REGISTER": "Es hat geklappt! Wir haben dir einen Link per Email geschickt mit dem du dein Account aktivieren kannst. Danach bist du bereit diese Welt ein kleines bisschen besser zu machen !",
+
+  "USERNAME": "Nutzername",
+
   "ITEM_CREATE_TITLE": "Neuer Artikel",
   "ITEM_CREATE_CHOOSE_IMAGE": "Artikel hinzufügen",
 

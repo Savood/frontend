@@ -35,7 +35,7 @@ export class SignupPage {
               public translateService: TranslateService,
               public _auth:AuthProvider) {
 
-    this.translateService.get(['LOGIN_ERROR','EMAIL','PASSWORD']).subscribe((value) => {
+    this.translateService.get(['REGISTER_ERROR','SUCCESSFUL_REGISTER','USERNAME','LOGIN_ERROR','EMAIL','PASSWORD']).subscribe((value) => {
       this.registerErrorString = value.REGISTER_ERROR;
       this.successfulRegister = value.SUCCESSFUL_REGISTER;
       this.namePlaceholder = value.USERNAME;
