@@ -2,7 +2,6 @@ import {Component, ViewChild} from '@angular/core';
 import {Content, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {MessagesService} from "../../providers";
 import {TranslateService} from "@ngx-translate/core";
-import {SettingsPage} from "../settings/settings";
 
 /**
  * Generated class for the ChatPage page.
@@ -78,6 +77,7 @@ export class ChatPage {
   }
 
   viewProfile(id: string) {
-    this.navCtrl.push('SettingsPage', {profile: id, pageTitleKey: 'PROFILE_TITLE'});
+    console.log(id)
+    this.navCtrl.push('SettingsPage', {profileId: id, pageTitleKey: 'PROFILE_TITLE'});
   }
 }
