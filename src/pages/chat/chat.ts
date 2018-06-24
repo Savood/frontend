@@ -74,10 +74,10 @@ export class ChatPage {
   }
 
   sendMessage() {
-    this._message.createNewMessage(this.chatId, {content: this.newMessage, time: new Date()});
+    this._message.createNewMessage(this.chatId, {content: this.newMessage});
   }
 
   viewProfile(id: string) {
-    this.navCtrl.push('SettingsPage');
+    this.navCtrl.push('SettingsPage', {profile: id, pageTitleKey: 'PROFILE_TITLE'});
   }
 }

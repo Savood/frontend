@@ -30,6 +30,7 @@ export class SettingsPage {
   @ViewChild('map') mapElement: ElementRef;
 
   // Our local settings object
+  ownProfile: boolean = false;
   user: User;
   userChanged = (newSettings) => {
     this.user = newSettings;
@@ -102,52 +103,60 @@ export class SettingsPage {
     this.user = this.navParams.get('user') || this.user;
     this.userChanged = this.navParams.get('userChanged') || this.userChanged;
 
-    if (this.navParams.get('page') == 'email') {
-      this.emailForm = this.formBuilder.group({
-        email: [this.user.email]
-      });
-    }
+    if (this.navParams.get('profile')) {
+      this.ownProfile = false;
+      this._user.getUserById(this.navParams.get('profile')).subscribe(
+        (profile) => this.user = profile
+      )
+    } else {
+      this.ownProfile = true;
+      if (this.navParams.get('page') == 'email') {
+        this.emailForm = this.formBuilder.group({
+          email: [this.user.email]
+        });
+      }
 
-    if (this.navParams.get('page') == 'phone') {
-      this.phoneForm = this.formBuilder.group({
-        phone: [this.user.phone]
-      });
-    }
+      if (this.navParams.get('page') == 'phone') {
+        this.phoneForm = this.formBuilder.group({
+          phone: [this.user.phone]
+        });
+      }
 
-    if (this.navParams.get('page') == 'nameDesc') {
-      this.nameDescForm = this.formBuilder.group({
-        firstname: [this.user.firstname],
-        lastname: [this.user.lastname],
-        description: [this.user.description],
-      });
-    }
+      if (this.navParams.get('page') == 'nameDesc') {
+        this.nameDescForm = this.formBuilder.group({
+          firstname: [this.user.firstname],
+          lastname: [this.user.lastname],
+          description: [this.user.description],
+        });
+      }
 
-    if (this.navParams.get('page') == 'location') {
-      this.locationForm = this.formBuilder.group({
-        street: [this.user.address.street],
-        number: [this.user.address.number],
-        zip: [this.user.address.zip],
-        city: [this.user.address.city],
-      });
-    }
+      if (this.navParams.get('page') == 'location') {
+        this.locationForm = this.formBuilder.group({
+          street: [this.user.address.street],
+          number: [this.user.address.number],
+          zip: [this.user.address.zip],
+          city: [this.user.address.city],
+        });
+      }
 
-    this.emailSettings.user
-      = this.locationSettings.user
-      = this.phoneSettings.user
-      = this.nameDescSettings.user
-      = this.user;
+      this.emailSettings.user
+        = this.locationSettings.user
+        = this.phoneSettings.user
+        = this.nameDescSettings.user
+        = this.user;
 
-    if (!this.user && this.page == "main") {
-      this._user.getUserById("7").subscribe(
-        (profile) => {
-          this.emailSettings.user
-            = this.locationSettings.user
-            = this.phoneSettings.user
-            = this.nameDescSettings.user
-            = this.user
-            = profile
-        }
-      );
+      if (!this.user && this.page == "main") {
+        this._user.getUserById("7").subscribe(
+          (profile) => {
+            this.emailSettings.user
+              = this.locationSettings.user
+              = this.phoneSettings.user
+              = this.nameDescSettings.user
+              = this.user
+              = profile
+          }
+        );
+      }
     }
 
     this.translate.get(this.pageTitleKey).subscribe((res) => {

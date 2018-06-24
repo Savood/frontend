@@ -30,7 +30,7 @@
           </ion-row>
         </ion-grid>
       </ion-card>
-      <ion-card>
+      <ion-card *ngIf="ownProfile">
         <ion-card-header>{{'SETTINGS_PROFILE'|translate}}</ion-card-header>
         <ion-item-group>
           <button ion-item [navPush]="subSettings" [navParams]="emailSettings">
@@ -47,7 +47,7 @@
           </button>
         </ion-item-group>
       </ion-card>
-      <ion-card>
+      <ion-card *ngIf="ownProfile">
         <ion-card-header>{{'SETTINGS_NOTIFICATIONS'|translate}}</ion-card-header>
         <ion-item-group>
           <button ion-item detail-none>
@@ -68,7 +68,7 @@
           </button>
         </ion-item-group>
       </ion-card>
-      <ion-card>
+      <ion-card *ngIf="ownProfile">
         <ion-list>
           <button ion-item color="secondary">
             {{'SETTINGS_LOGOUT'|translate|uppercase}}
