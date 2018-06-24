@@ -51,7 +51,7 @@ export class SignupPage {
 
   doRegister() {
 
-    this._auth.register(this.account.email, this.account.user, this.account.password).subscribe(data=>
+    this._auth.register(this.account.email, this.account.user, this.account.password).subscribe((data:{success:string})=>
     {
       console.log(data);
       if(data.success) {
