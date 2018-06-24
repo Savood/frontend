@@ -1,3 +1,51 @@
 page-signup {
+  $black-overlay: rgba(0,0,0,.3);
+  $banner-text-color: white;
 
+    video {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -100;
+      transform: translateX(-50%) translateY(-50%);
+    }
+
+
+  /* Header */
+  .toolbar-background {
+    border-color: transparent;
+    background: $black-overlay;
+  }
+
+  .bar-button,
+  .toolbar-title {
+    color: $banner-text-color;
+  }
+
+    .title{
+      font-size: 5em;
+      text-align: center;
+      color: color($colors, light);
+    }
+
+    .subtitle{
+      color: color($colors, light);
+    }
+
+    .login-form{
+      height: 100%;
+    }
+
+    ion-list{
+      margin: 0 !important;
+    }
+
+    .fixed-label {
+      min-width: 10% !important;
+      max-width: 10% !important;
+    }
 }

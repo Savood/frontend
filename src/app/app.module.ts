@@ -19,6 +19,8 @@ import { AuthProvider } from '../providers/auth/auth';
 import {AuthInterceptorService} from "../providers/auth/auth_interceptor";
 
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import {SignupPage} from "../pages/signup/signup";
+import {SignupPageModule} from "../pages/signup/signup.module";
 
 
 // The translate loader needs to know where to load i18n files
