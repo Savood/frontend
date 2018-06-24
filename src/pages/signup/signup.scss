@@ -15,16 +15,16 @@ page-signup {
     }
 
 
-  /* Header */
-  .toolbar-background {
-    border-color: transparent;
-    background: $black-overlay;
-  }
+    /* Header */
+    .toolbar-background {
+      border-color: transparent;
+      background: $black-overlay;
+    }
 
-  .bar-button,
-  .toolbar-title {
-    color: $banner-text-color;
-  }
+    .bar-button,
+    .toolbar-title {
+      color: $banner-text-color;
+    }
 
     .title{
       font-size: 5em;

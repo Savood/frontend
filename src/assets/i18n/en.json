@@ -54,9 +54,8 @@
   "REGISTER_ERROR": "Ooops there was an error, please try again",
   "SUCCESSFUL_REGISTER": "We sent you an email to welcome you in our community. Use the Link in the email to activate your account and then it is time to share the food!",
 
+  "PASSWORDREPEAT":"Password Repetition",
   "USERNAME": "Username",
-
-
 
 
   "LIST_MASTER_TITLE": "Items",

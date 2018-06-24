@@ -37,6 +37,7 @@ export class CreateOfferingPage {
               public camera: Camera,
               public formBuilder: FormBuilder,
               public translate: TranslateService) {
+
     this.form = formBuilder.group({
       offeringPic: ['', Validators.required],
       name: ['', Validators.required],
