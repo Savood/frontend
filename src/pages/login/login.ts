@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import {IonicPage, ModalController, NavController, ToastController} from 'ionic-angular';
 
 import { User } from '../../providers';
 import { MainPage } from '../';
 import {AuthProvider} from "../../providers/auth/auth";
 import {TabsPage} from "../tabs/tabs";
+import {RegisterPage} from "../register/register";
+import {SignupPage} from "../signup/signup";
 
 @IonicPage()
 @Component({
@@ -29,7 +31,7 @@ export class LoginPage {
     public user: User,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
-    public _auth:AuthProvider) {
+    public _auth:AuthProvider, public modalCtrl: ModalController) {
 
     this.translateService.get(['LOGIN_ERROR','EMAIL','PASSWORD']).subscribe((value) => {
       this.loginErrorString = value.LOGIN_ERROR;
@@ -40,8 +42,8 @@ export class LoginPage {
     if(this._auth.isLoggedIn()){
       navCtrl.setRoot(MainPage);
     }
-  }
 
+  }
 
   // Attempt to login in through our User service
   doLogin() {
@@ -50,11 +52,16 @@ export class LoginPage {
       this.navCtrl.setRoot(MainPage);
     }, err =>{
       let toast = this.toastCtrl.create({
-          message: this.loginErrorString,
+          // message: this.loginErrorString,
+          message: "hallo",
           duration: 3000,
           position: 'top'
         });
         toast.present();
     })
+  }
+
+  doRegister(){
+    this.navCtrl.push("SignupPage");
   }
 }
