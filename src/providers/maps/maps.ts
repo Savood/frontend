@@ -124,4 +124,20 @@ export class MapsService {
       }
     });
   }
+
+  getDistance(start: Location, end: Location): number {
+    let rad = function (x) {
+      return x * Math.PI / 180;
+    };
+
+    let R = 6378137;
+    let dLat = rad(end.latitude - start.latitude);
+    let dLong = rad(end.longitude - start.longitude);
+    let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(rad(start.latitude)) * Math.cos(rad(end.latitude)) *
+      Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    let d = R * c;
+    return d;
+  }
 }
