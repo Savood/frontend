@@ -1,13 +1,12 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {IonicPage, ModalController, NavController, ToastController} from 'ionic-angular';
+import {IonicPage, NavController, ToastController} from 'ionic-angular';
 
 import {User} from '../../providers';
 import {MainPage} from '../';
 import {AuthProvider} from "../../providers/auth/auth";
 import {SignupPage} from "../signup/signup";
 import {SettingsPage} from "../settings/settings";
-import {ChatOverviewPage} from "../chat-overview/chat-overview";
 import {Deeplinks} from "@ionic-native/deeplinks";
 
 @IonicPage()
@@ -24,6 +23,7 @@ export class LoginPage {
 
   emailPlaceholder: string = null;
   passwordPlaceholder: string = null;
+  wrongPasswordString: string = null;
 
   // Our translated text strings
   private loginErrorString: string;
@@ -32,14 +32,15 @@ export class LoginPage {
               public user: User,
               public toastCtrl: ToastController,
               public translateService: TranslateService,
-              public _auth: AuthProvider, public modalCtrl: ModalController,
-              private _deeplinks: Deeplinks) {
+              public _auth: AuthProvider,
+              public _deeplinks: Deeplinks) {
 
-    this.translateService.get(['LOGIN_ERROR', 'EMAIL', 'PASSWORD']).subscribe((value) => {
+    this.translateService.get(['LOGIN_ERROR', 'EMAIL', 'WRONG_PASSWORD', 'PASSWORD']).subscribe((value) => {
       this.loginErrorString = value.LOGIN_ERROR;
+      this.wrongPasswordString = value.WRONG_PASSWORD;
       this.emailPlaceholder = value.EMAIL;
       this.passwordPlaceholder = value.PASSWORD;
-    })
+    });
 
     if (this._auth.isLoggedIn()) {
       navCtrl.setRoot(MainPage);
@@ -51,7 +52,7 @@ export class LoginPage {
     }).subscribe(
       (match) => {
         if (this._auth.isLoggedIn()) {
-          navCtrl.push(match.$route,match.$args);
+          navCtrl.push(match.$route, match.$args);
         }
       },
       (nomatch) => {
@@ -72,13 +73,27 @@ export class LoginPage {
       this._auth.saveToken(token);
       this.navCtrl.setRoot(MainPage);
     }, err => {
-      let toast = this.toastCtrl.create({
-        message: this.loginErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+      if (err.error.short_error == "WRONG_PASSWORD") {
+        let toast = this.toastCtrl.create({
+          message: this.wrongPasswordString,
+          duration: 3000,
+          position: 'top'
+        });
+        toast.present();
+      } else {
+        console.log("Error:", err);
+        let toast = this.toastCtrl.create({
+          message: this.loginErrorString,
+          duration: 3000,
+          position: 'top'
+        });
+        toast.present();
+      }
     })
+  }
+
+  forgotPassword() {
+    this.navCtrl.push("ForgotPasswortPage", {email: this.account.email});
   }
 
   doRegister() {

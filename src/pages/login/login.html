@@ -22,7 +22,11 @@
       <ion-item>
         <ion-label fixed class="fixed-label"><ion-icon name="lock"></ion-icon></ion-label>
         <ion-input type="password" [(ngModel)]="account.password" name="password" placeholder="{{this.passwordPlaceholder}}"></ion-input>
+        <button ion-button clear color="dark" (click)="forgotPassword()"  type="button" item-right>
+          <ion-icon name="alert"> </ion-icon>
+        </button>
       </ion-item>
+
     </ion-list>
     <button class="login-button" type="submit" ion-button large full color="primary" block>{{ 'LOGIN_BUTTON' | translate }}</button>
   </form>

@@ -1,4 +1,4 @@
-page-signup {
+page-forgot-passwort {
   $black-overlay: rgba(0,0,0,.3);
   $banner-text-color: white;
 
@@ -14,13 +14,6 @@ page-signup {
       transform: translateX(-50%) translateY(-50%);
     }
 
-    .error{
-      background: $black-overlay;
-      border-color: transparent;
-      color: $banner-text-color;
-    }
-
-
     /* Header */
     .toolbar-background {
       border-color: transparent;
@@ -32,7 +25,8 @@ page-signup {
       color: $banner-text-color;
     }
 
-    .title{
+
+  .title{
       font-size: 5em;
       text-align: center;
       color: color($colors, light);
@@ -54,4 +48,5 @@ page-signup {
       min-width: 10% !important;
       max-width: 10% !important;
     }
+
 }

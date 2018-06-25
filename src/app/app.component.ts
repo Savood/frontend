@@ -3,11 +3,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import {Config, Nav, Platform} from 'ionic-angular';
-import { Deeplinks } from '@ionic-native/deeplinks';
 
 import { FirstRunPage } from '../pages';
-import {SettingsPage} from "../pages/settings/settings";
-import {ChatOverviewPage} from "../pages/chat-overview/chat-overview";
 
 @Component({
   template: `<ion-nav #content [root]="rootPage"></ion-nav>`

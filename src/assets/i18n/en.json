@@ -7,6 +7,7 @@
   "PASSWORD": "Password",
   "LOGIN": "Sign in",
   "SIGNUP": "Sign up",
+  "SLOGAN":"only survived food is good"
 
   "TAB1_TITLE": "Items",
   "TAB2_TITLE": "Search",
@@ -43,9 +44,12 @@
 
   "WELCOME_TITLE": "Welcome",
 
+  "FORGOT_PASSWORD_BUTTON": "Request a new Password",
+
   "LOGIN_TITLE": "Sign in",
   "LOGIN_ERROR": "Unable to sign in. Please check your account information and try again.",
   "LOGIN_BUTTON": "Sign in",
+  "WRONG_PASSWORD": "Oh No!, It seems like you used a wrong password for the login.",
   "SIGNUP_TITLE": "Sign up",
   "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
   "SIGNUP_BUTTON": "Sign up",
@@ -54,9 +58,16 @@
   "REGISTER_ERROR": "Ooops there was an error, please try again",
   "SUCCESSFUL_REGISTER": "We sent you an email to welcome you in our community. Use the Link in the email to activate your account and then it is time to share the food!",
 
-  "USERNAME": "Username",
+  "ALREADY_IN_USE": "Oh It looks like your email is already registered as an active Savooder",
 
+  "PASSWORDREPEAT":"Password Repetition",
 
+  "EMAILREQ":"We need your email address to reach you concerning the world's status",
+  "EMAILINVALID":"Your email address needs to be in a valid format. Otherwise we can't reach you, when the world needs you!",
+  "CONFIRMPASS":"To get rid of annoying typos, we need you to confirm your new password.",
+  "AREEQUAL":"Ooops, your passwords do not match eachother. But don't panic, you can give it another try.",
+  "PASSREQ":"We need you to have password, because otherwise people will come and your career as an hero will suffer.",
+  "PASSMINLEN":"To be sure about your heroism we need you to have an password with more than 4 letters.",
 
 
   "LIST_MASTER_TITLE": "Items",

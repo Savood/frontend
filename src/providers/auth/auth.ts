@@ -71,10 +71,21 @@ export class AuthProvider {
     return token && !this.helper.isTokenExpired(this.getToken());
   }
 
-  login(username:string, password:string){
+  forgotPassword(email:string){
+    let body = new URLSearchParams();
+    body.set('email', email);
+
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+
+    return this._http.post(env.auth_endpoint + 'forgot', body.toString(), options);
+  }
+
+  login(email:string, password:string){
 
     let body = new URLSearchParams();
-    body.set('username', username);
+    body.set('username', email);
     body.set('password', password);
     body.set('grant_type', 'password');
 
@@ -86,10 +97,9 @@ export class AuthProvider {
     return this._http.post(env.auth_endpoint + 'oauth2/token', body.toString(), options);
   }
 
-  register(email:string, username:string, password:string){
+  register(email:string, password:string){
 
     let body = new URLSearchParams();
-    body.set('username', username);
     body.set('password', password);
     body.set('email', email);
 
