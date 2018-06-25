@@ -25,11 +25,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
-      _deeplinks.routeWithNavController(this.nav, {
-        'profile/:profileId': SettingsPage,
-        'hello': ChatOverviewPage
-      })
     });
     this.initTranslate();
   }

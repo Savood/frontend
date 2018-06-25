@@ -26,6 +26,7 @@ import {LoginPage} from "../login/login";
 @IonicPage(
   {
     segment: 'profile/:profileId',
+    defaultHistory: ['tabs']
   }
 )
 @Component({
