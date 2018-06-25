@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="user">
+  <div *ngIf="profile">
     <img *ngIf="page == 'main'" class="header-image" src="assets/img/queen-live.png" (click)="changeHeader()">
 
     <div *ngIf="page == 'main'" class="content-main" text-wrap>
@@ -14,17 +14,17 @@
       </div>
       <ion-card text-center [navPush]="subSettings" [navParams]="nameDescSettings">
         <ion-card-header>
-          <h1>{{user.firstname}} {{user.lastname}}</h1>
+          <h1>{{profile.firstname}} {{profile.lastname}}</h1>
         </ion-card-header>
         <ion-card-content>
-          <p class="profile-description">{{user.description}}</p>
+          <p class="profile-description">{{profile.description}}</p>
         </ion-card-content>
       </ion-card>
       <ion-card>
         <ion-card-header>{{'PROFILE_BADGES'|translate}}</ion-card-header>
         <ion-grid text-center class="badges">
           <ion-row>
-            <ion-col *ngFor="let gotBadge of user.badges" col-3>
+            <ion-col *ngFor="let gotBadge of profile.badges" col-3>
               <ion-icon name="alarm" [color]="gotBadge ? 'primary' : 'dark'"></ion-icon>
             </ion-col>
           </ion-row>
@@ -35,11 +35,11 @@
         <ion-item-group>
           <button ion-item [navPush]="subSettings" [navParams]="emailSettings">
             <ion-icon name="mail" item-start></ion-icon>
-            {{user.email}}
+            {{profile.email}}
           </button>
           <button ion-item [navPush]="subSettings" [navParams]="phoneSettings">
             <ion-icon name="call" item-start></ion-icon>
-            {{user.phone}}
+            {{profile.phone}}
           </button>
           <button ion-item [navPush]="subSettings" [navParams]="locationSettings">
             <ion-icon name="map" item-start></ion-icon>

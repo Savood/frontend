@@ -23,7 +23,11 @@ import {LoginPage} from "../login/login";
  * to enable the user to customize settings for the app.
  *
  */
-@IonicPage()
+@IonicPage(
+  {
+    segment: 'profile/:profileId',
+  }
+)
 @Component({
   selector: 'page-settings',
   templateUrl: 'settings.html'
@@ -33,9 +37,14 @@ export class SettingsPage {
 
   // Our local settings object
   ownProfile: boolean = false;
-  user: User;
-  userChanged = (newSettings) => {
-    this.user = newSettings;
+  myUserInfo = {
+    _id: '534b8fb2aa5e7afc1b23e69c',
+    pic: 'assets/img/speakers/iguana.jpg',
+    username: 'Marty',
+  };
+  profile: User;
+  profileChanged = (newSettings) => {
+    this.profile = newSettings;
   };
 
   locationMarker: any;
@@ -56,36 +65,35 @@ export class SettingsPage {
   emailSettings = {
     page: 'email',
     pageTitleKey: 'SETTINGS_EMAIL',
-    user: this.user,
-    userChanged: this.userChanged
+    profile: this.profile,
+    profileChanged: this.profileChanged
   };
 
   locationSettings = {
     page: 'location',
     pageTitleKey: 'SETTINGS_LOCATION',
-    user: this.user,
-    userChanged: this.userChanged
+    profile: this.profile,
+    profileChanged: this.profileChanged
   };
 
   phoneSettings = {
     page: 'phone',
     pageTitleKey: 'SETTINGS_PHONE',
-    user: this.user,
-    userChanged: this.userChanged
+    profile: this.profile,
+    profileChanged: this.profileChanged
   };
 
   nameDescSettings = {
     page: 'nameDesc',
     pageTitleKey: 'SETTINGS_NAME_DESC',
-    user: this.user,
-    userChanged: this.userChanged
+    profile: this.profile,
+    profileChanged: this.profileChanged
   };
 
   subSettings: any = SettingsPage;
 
   constructor(public navCtrl: NavController,
               public toastCtrl: ToastController,
-              public settings: Settings,
               public formBuilder: FormBuilder,
               public navParams: NavParams,
               public translate: TranslateService,
@@ -103,72 +111,59 @@ export class SettingsPage {
   ionViewWillEnter() {
     this.page = this.navParams.get('page') || this.page;
     this.pageTitleKey = this.navParams.get('pageTitleKey') || this.pageTitleKey;
-    this.user = this.navParams.get('user') || this.user;
-    this.userChanged = this.navParams.get('userChanged') || this.userChanged;
+    this.profile = this.navParams.get('profile') || this.profile;
+    this.profileChanged = this.navParams.get('profileChanged') || this.profileChanged;
 
-    if (this.navParams.get('profile')) {
-      this.ownProfile = false;
-      this._user.getUserById(this.navParams.get('profile')).subscribe(
-        (profile) => this.user = profile
-      )
-    } else {
-      this.ownProfile = true;
-      if (this.navParams.get('page') == 'email') {
-        this.emailForm = this.formBuilder.group({
-          email: [this.user.email]
-        });
-      }
+    this.ownProfile = (this.navParams.get('profileId') == this.myUserInfo._id);
 
-      if (this.navParams.get('page') == 'phone') {
-        this.phoneForm = this.formBuilder.group({
-          phone: [this.user.phone]
-        });
-      }
-
-      if (this.navParams.get('page') == 'nameDesc') {
-        this.nameDescForm = this.formBuilder.group({
-          firstname: [this.user.firstname],
-          lastname: [this.user.lastname],
-          description: [this.user.description],
-        });
-      }
-
-      if (this.navParams.get('page') == 'location') {
-        this.locationForm = this.formBuilder.group({
-          street: [this.user.address.street],
-          number: [this.user.address.number],
-          zip: [this.user.address.zip],
-          city: [this.user.address.city],
-        });
-      }
-
-      this.emailSettings.user
-        = this.locationSettings.user
-        = this.phoneSettings.user
-        = this.nameDescSettings.user
-        = this.user;
-
-      if (!this.user && this.page == "main") {
-        this._user.getUserById("7").subscribe(
-          (profile) => {
-            this.emailSettings.user
-              = this.locationSettings.user
-              = this.phoneSettings.user
-              = this.nameDescSettings.user
-              = this.user
-              = profile
+    if (!this.profile && this.page == "main") {
+      this._user.getUserById(this.navParams.get('profileId')).subscribe(
+        (profile) => {
+          if(this.ownProfile) {
+            this.emailSettings.profile
+              = this.locationSettings.profile
+              = this.phoneSettings.profile
+              = this.nameDescSettings.profile
+              = this.profile
+              = profile;
+          } else {
+            this.profile = profile;
           }
-        );
-      }
+        }
+      );
+    }
+
+    if (this.navParams.get('page') == 'email') {
+      this.emailForm = this.formBuilder.group({
+        email: [this.profile.email]
+      });
+    }
+
+    if (this.navParams.get('page') == 'phone') {
+      this.phoneForm = this.formBuilder.group({
+        phone: [this.profile.phone]
+      });
+    }
+
+    if (this.navParams.get('page') == 'nameDesc') {
+      this.nameDescForm = this.formBuilder.group({
+        firstname: [this.profile.firstname],
+        lastname: [this.profile.lastname],
+        description: [this.profile.description],
+      });
+    }
+
+    if (this.navParams.get('page') == 'location') {
+      this.locationForm = this.formBuilder.group({
+        street: [this.profile.address.street],
+        number: [this.profile.address.number],
+        zip: [this.profile.address.zip],
+        city: [this.profile.address.city],
+      });
     }
 
     this.translate.get(this.pageTitleKey).subscribe((res) => {
       this.pageTitle = res;
-    });
-
-    this.settings.load().then(() => {
-      this.settingsReady = true;
-      this.options = this.settings.allSettings;
     });
   }
 
@@ -201,7 +196,7 @@ export class SettingsPage {
     this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
       (address) => {
         this.locationForm.setValue(address);
-        this.user.address = address;
+        this.profile.address = address;
       },
       (error) => {
         this.translate.get(error).subscribe((res) => {
@@ -213,10 +208,10 @@ export class SettingsPage {
 
   useEnteredLocation() {
     let formattedAddress: string =
-      this.user.address.street + " " +
-      this.user.address.number + ", " +
-      this.user.address.zip + " " +
-      this.user.address.city;
+      this.profile.address.street + " " +
+      this.profile.address.number + ", " +
+      this.profile.address.zip + " " +
+      this.profile.address.city;
 
     this._maps.getLocation(formattedAddress).then(
       (location) => {
@@ -232,11 +227,11 @@ export class SettingsPage {
 
   saveData(form: FormGroup) {
     let newSettings = {};
-    Object.assign(newSettings, this.user, form.value);
+    Object.assign(newSettings, this.profile, form.value);
     if (form.dirty) {
-      this._user.updateUserById(this.user._id, form.value).subscribe(
+      this._user.updateUserById(this.profile._id, form.value).subscribe(
         () => {
-          this.userChanged(newSettings);
+          this.profileChanged(newSettings);
           this.navCtrl.pop().then();
           this.translate.get("SAVE_SUCCESSFUL").subscribe((message) => {
             this.toastCtrl.create({
