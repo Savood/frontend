@@ -40,7 +40,7 @@
         <ion-item-group>
           <button ion-item>
             <ion-icon name="mail" item-start></ion-icon>
-            {{this._auth.getActiveUserEmail()}}
+            {{this._auth.isLoggedIn()?this._auth.getActiveUserEmail():''}}
           </button>
           <button ion-item [navPush]="subSettings" [navParams]="phoneSettings">
             <ion-icon name="call" item-start></ion-icon>
