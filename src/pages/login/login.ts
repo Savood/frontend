@@ -56,12 +56,14 @@ export class LoginPage {
         }
       },
       (nomatch) => {
-        let toast = this.toastCtrl.create({
-          message: "RESSOURCE_NOT_AVAILABLE",
-          duration: 3000,
-          position: 'top'
-        });
-        toast.present();
+        if(nomatch !== 'cordova_not_available'){
+          let toast = this.toastCtrl.create({
+            message: "RESSOURCE_NOT_AVAILABLE",
+            duration: 3000,
+            position: 'top'
+          });
+          toast.present();
+        }
       }
     )
 
