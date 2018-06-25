@@ -49,6 +49,7 @@
     "cordova-plugin-whitelist": "1.3.3",
     "ionic-angular": "3.9.2",
     "ionic-img-viewer": "^2.9.0",
+    "ionic-plugin-deeplinks": "^1.0.15",
     "ionicons": "3.0.0",
     "rxjs": "5.5.10",
     "sw-toolbox": "3.6.0",
@@ -74,7 +75,25 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-geolocation": {},
-      "cordova-plugin-datepicker": {}
+      "cordova-plugin-datepicker": {},
+      "ionic-plugin-deeplinks": {
+        "URL_SCHEME": "savood",
+        "DEEPLINK_SCHEME": "https",
+        "DEEPLINK_HOST": "savood.com",
+        "ANDROID_PATH_PREFIX": "/",
+        "ANDROID_2_PATH_PREFIX": "/",
+        "ANDROID_3_PATH_PREFIX": "/",
+        "ANDROID_4_PATH_PREFIX": "/",
+        "ANDROID_5_PATH_PREFIX": "/",
+        "DEEPLINK_2_SCHEME": " ",
+        "DEEPLINK_2_HOST": " ",
+        "DEEPLINK_3_SCHEME": " ",
+        "DEEPLINK_3_HOST": " ",
+        "DEEPLINK_4_SCHEME": " ",
+        "DEEPLINK_4_HOST": " ",
+        "DEEPLINK_5_SCHEME": " ",
+        "DEEPLINK_5_HOST": " "
+      }
     },
     "platforms": [
       "browser",
