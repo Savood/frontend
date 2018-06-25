@@ -55,12 +55,12 @@ export class SettingsPage {
   pageTitleKey: string = 'SETTINGS_TITLE';
   pageTitle: string;
 
-  emailSettings = {
-    page: 'email',
-    pageTitleKey: 'SETTINGS_EMAIL',
-    profile: this.profile,
-    profileChanged: this.profileChanged
-  };
+  // emailSettings = {
+  //   page: 'email',
+  //   pageTitleKey: 'SETTINGS_EMAIL',
+  //   profile: this.profile,
+  //   profileChanged: this.profileChanged
+  // };
 
   locationSettings = {
     page: 'location',
@@ -113,8 +113,7 @@ export class SettingsPage {
       this._user.getUserById(this.navParams.get('profileId')).subscribe(
         (profile) => {
           if(this.ownProfile) {
-            this.emailSettings.profile
-              = this.locationSettings.profile
+              this.locationSettings.profile
               = this.phoneSettings.profile
               = this.nameDescSettings.profile
               = this.profile
@@ -124,13 +123,14 @@ export class SettingsPage {
           }
         }
       );
+      this._auth.getActiveUser()
     }
 
-    if (this.navParams.get('page') == 'email') {
-      this.emailForm = this.formBuilder.group({
-        email: [this.profile.email]
-      });
-    }
+    // if (this.navParams.get('page') == 'email') {
+    //   this.emailForm = this.formBuilder.group({
+    //     email: [this.profile.email]
+    //   });
+    // }
 
     if (this.navParams.get('page') == 'phone') {
       this.phoneForm = this.formBuilder.group({

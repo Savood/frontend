@@ -17,7 +17,6 @@ export interface User {
     _id?: string;
     firstname?: string;
     lastname?: string;
-    email?: string;
     phone?: string;
     address?: UserAddress;
     avatarId?: string;

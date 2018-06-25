@@ -33,9 +33,9 @@
       <ion-card *ngIf="ownProfile">
         <ion-card-header>{{'SETTINGS_PROFILE'|translate}}</ion-card-header>
         <ion-item-group>
-          <button ion-item [navPush]="subSettings" [navParams]="emailSettings">
+          <button ion-item>
             <ion-icon name="mail" item-start></ion-icon>
-            {{profile.email}}
+            {{this._auth.getActiveUserEmail()}}
           </button>
           <button ion-item [navPush]="subSettings" [navParams]="phoneSettings">
             <ion-icon name="call" item-start></ion-icon>
@@ -107,19 +107,19 @@
       </form>
     </div>
 
-    <div *ngIf="page == 'email'" class="content-location" text-wrap text-center>
-      <form [formGroup]="emailForm" class="text-location">
-        <ion-item>
-          <ion-label>
-            <ion-icon name="mail" item-start></ion-icon>
-          </ion-label>
-          <ion-input
-            placeholder="{{'EMAIL'|translate|uppercase}}"
-            formControlName="email"></ion-input>
-        </ion-item>
-        <button ion-button block color="secondary" (click)="saveData(this.emailForm)">{{'SAVE'|translate}}</button>
-      </form>
-    </div>
+    <!--<div *ngIf="page == 'email'" class="content-location" text-wrap text-center>-->
+      <!--<form [formGroup]="emailForm" class="text-location">-->
+        <!--<ion-item>-->
+          <!--<ion-label>-->
+            <!--<ion-icon name="mail" item-start></ion-icon>-->
+          <!--</ion-label>-->
+          <!--<ion-input-->
+            <!--placeholder="{{'EMAIL'|translate|uppercase}}"-->
+            <!--formControlName="email"></ion-input>-->
+        <!--</ion-item>-->
+        <!--<button ion-button block color="secondary" (click)="saveData(this.emailForm)">{{'SAVE'|translate}}</button>-->
+      <!--</form>-->
+    <!--</div>-->
 
     <div *ngIf="page == 'phone'" class="content-location" text-wrap text-center>
       <form [formGroup]="phoneForm" class="text-location">

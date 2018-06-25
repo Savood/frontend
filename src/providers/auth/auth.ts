@@ -29,6 +29,10 @@ export class AuthProvider {
     return this.helper.decodeToken(this.getToken()).userid;
   }
 
+  getActiveUserEmail():string {
+    return this.helper.decodeToken(this.getToken()).email;
+  }
+
   isActiveUser(user:User):boolean{
     return this.getActiveUserId() === user._id;
   }
