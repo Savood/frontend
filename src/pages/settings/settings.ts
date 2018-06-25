@@ -12,7 +12,7 @@ import {
 } from 'ionic-angular';
 
 import {MapsService} from "../../providers/maps/maps";
-import {UsersService, Settings} from '../../providers';
+import {UsersService} from '../../providers';
 import {} from '@types/googlemaps';
 import {User} from "../../models/user";
 import {AuthProvider} from "../../providers/auth/auth";
