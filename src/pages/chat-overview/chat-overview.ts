@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 
 import {Item} from '../../models/item';
 import {Chat, MessagesService, OfferingsService} from '../../providers';
@@ -29,9 +29,17 @@ export class ChatOverviewPage {
               public translate: TranslateService,
               public _offerings: OfferingsService,
               public _messages: MessagesService,
-              public toastCtrl: ToastController) {
+              public toastCtrl: ToastController,
+              public loadingCtrl: LoadingController) {
+
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      enableBackdropDismiss: true
+    });
+    loading.present();
     this._offerings.getOfferings().subscribe(
       (offerings) => {
+        loading.dismiss();
         this.offerings = offerings;
       }
     );

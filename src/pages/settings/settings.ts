@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {
-  ActionSheetController,
+  ActionSheetController, App,
   IonicPage,
   LoadingController,
   NavController,
@@ -99,7 +99,8 @@ export class SettingsPage {
               public loadingCtrl: LoadingController,
               public actionSheetCtrl: ActionSheetController,
               public platform: Platform,
-              public _auth:AuthProvider) {
+              public _auth: AuthProvider,
+              private app: App) {
   }
 
   ionViewDidLoad() {
@@ -114,10 +115,16 @@ export class SettingsPage {
     this.ownProfile = this._auth.isActiveUser({_id: this.navParams.get('profileId')});
 
     if (!this.profile && this.page == "main") {
+      let loading = this.loadingCtrl.create({
+        content: 'Please wait...',
+        enableBackdropDismiss: true
+      });
+      loading.present();
+
       this._user.getUserById(this.navParams.get('profileId')).subscribe(
         (profile) => {
-          if(this.ownProfile) {
-              this.locationSettings.profile
+          if (this.ownProfile) {
+            this.locationSettings.profile
               = this.phoneSettings.profile
               = this.nameDescSettings.profile
               = this.profile
@@ -125,9 +132,9 @@ export class SettingsPage {
           } else {
             this.profile = profile;
           }
+          loading.dismiss();
         }
       );
-      this._auth.getActiveUser()
     }
 
     // if (this.navParams.get('page') == 'email') {
@@ -175,9 +182,15 @@ export class SettingsPage {
   }
 
   initMap() {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      enableBackdropDismiss: true
+    });
+    loading.present();
     this._maps.getGPS().then(
       (position) => {
         this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
+        loading.dismiss();
         this._maps.newMarker(
           {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
           (marker) => {
@@ -364,9 +377,9 @@ export class SettingsPage {
     //     );
   }
 
-  logout(){
+  logout() {
     this._auth.logout();
-    this.navCtrl.setRoot(LoginPage);
+    this.app.getRootNav().setRoot(LoginPage);
   }
 
   getCamera() {
