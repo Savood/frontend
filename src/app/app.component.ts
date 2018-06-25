@@ -18,8 +18,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   constructor(private translate: TranslateService, platform: Platform, private config: Config,
-              private statusBar: StatusBar, private splashScreen: SplashScreen,
-              private _deeplinks: Deeplinks) {
+              private statusBar: StatusBar, private splashScreen: SplashScreen) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
