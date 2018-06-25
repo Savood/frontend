@@ -67,6 +67,17 @@ export class AuthProvider {
     return token && !this.helper.isTokenExpired(this.getToken());
   }
 
+  forgotPassword(email:string){
+    let body = new URLSearchParams();
+    body.set('email', email);
+
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+
+    return this._http.post(env.auth_endpoint + 'forgot', body.toString(), options);
+  }
+
   login(email:string, password:string){
 
     let body = new URLSearchParams();

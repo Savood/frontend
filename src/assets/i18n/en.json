@@ -44,6 +44,8 @@
 
   "WELCOME_TITLE": "Welcome",
 
+  "FORGOT_PASSWORD_BUTTON": "Request a new Password",
+
   "LOGIN_TITLE": "Sign in",
   "LOGIN_ERROR": "Unable to sign in. Please check your account information and try again.",
   "LOGIN_BUTTON": "Sign in",

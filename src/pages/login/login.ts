@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import {IonicPage, ModalController, NavController, ToastController} from 'ionic-angular';
+import {IonicPage, NavController, ToastController} from 'ionic-angular';
 
 import { User } from '../../providers';
 import { MainPage } from '../';
@@ -37,7 +37,7 @@ export class LoginPage {
       this.wrongPasswordString= value.WRONG_PASSWORD;
       this.emailPlaceholder = value.EMAIL;
       this.passwordPlaceholder = value.PASSWORD;
-    })
+    });
 
     if(this._auth.isLoggedIn()){
       navCtrl.setRoot(MainPage);
@@ -68,6 +68,10 @@ export class LoginPage {
         toast.present();
       }
     })
+  }
+
+  forgotPassword(){
+    this.navCtrl.push("ForgotPasswortPage", {email: this.account.email});
   }
 
   doRegister(){

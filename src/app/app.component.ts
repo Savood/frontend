@@ -41,6 +41,7 @@ export class MyApp {
     { title: 'Signup', component: 'SignupPage' },
     { title: 'Messages', component: 'MessagesPage' },
     { title: 'Menu', component: 'MenuPage' },
+    { title: 'ForgotPassword', component:'ForgotPasswordPage'},
     { title: 'Settings', component: 'SettingsPage' },
     { title: 'Search', component: 'SearchPage' },
     { title: 'Create Offering', component:'CreateOfferingPage'}
