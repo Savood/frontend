@@ -19,11 +19,12 @@
 <ion-footer>
   <form *ngIf="form" [formGroup]="form"  class="login-form" (submit)="doRegister()">
     <ion-list>
-      <ion-item>
-        <ion-label fixed class="fixed-label"><ion-icon name="person"></ion-icon></ion-label>
-        <ion-input type="text" formControlName="username" name="username" placeholder="{{this.namePlaceholder}}"></ion-input>
+
+      <ion-item class="error" *ngIf="errormessage" text-wrap>
+        {{errormessage}}
       </ion-item>
 
+      <!--<ion-item [ngClass]="{'error': form.hasError('required')}">-->
       <ion-item>
         <ion-label fixed class="fixed-label"><ion-icon name="mail"></ion-icon></ion-label>
         <ion-input type="email" formControlName="email" name="email" placeholder="{{this.emailPlaceholder}}"></ion-input>

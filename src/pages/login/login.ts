@@ -29,7 +29,7 @@ export class LoginPage {
     public user: User,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
-    public _auth:AuthProvider, public modalCtrl: ModalController) {
+    public _auth:AuthProvider) {
 
     this.translateService.get(['LOGIN_ERROR','EMAIL','PASSWORD']).subscribe((value) => {
       this.loginErrorString = value.LOGIN_ERROR;

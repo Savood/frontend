@@ -68,13 +68,21 @@
   "SIGNUP_ERROR": "Fehler beim Registrieren, bitte überprüfe deine Informationen und versuche es erneut.",
   "SIGNUP_BUTTON": "Registrieren",
 
-  "REGISTER_LABEL": "Noch kein Savooder? Tritt jetzt bei uns rette die Welt!",
+  "REGISTER_LABEL": "Noch kein Savooder? Tritt unser Community bei und rette die Welt!",
   "REGISTER_BUTTON": "Registrieren",
   "REGISTER_ERROR": "Oh nein! Da ist wohl was schief gelaufen, probiere es am besten gleich nochmal.",
   "SUCCESSFUL_REGISTER": "Es hat geklappt! Wir haben dir einen Link per Email geschickt mit dem du dein Account aktivieren kannst. Danach bist du bereit diese Welt ein kleines bisschen besser zu machen !",
 
+  "ALREADY_IN_USE": "Anscheined gehörst du, beziehungsweise deine E-Mail, schon dazu!",
+
   "PASSWORDREPEAT":"Und Nochmal das Passwort",
-  "USERNAME": "Nutzername",
+
+  "EMAILREQ":"Mithilfe deiner Email können wir dich erreichen, wenn die Welt dich braucht!",
+  "EMAILINVALID":"Die Email muss gültig sein und dir gehören.",
+  "CONFIRMPASS":"Um dich vor Rechtschreibfehlern zu retten, ist es nötig dein neues Passwort erneut einzugeben.",
+  "AREEQUAL":"Ooops da hat sich wohl ein Rechtschreibfehler eingeschlichen. Dein Passwort und die Kopie davon sind leider nicht identisch.",
+  "PASSREQ":"Du brauchst ein Passwort, damit man dir deinen Heldenstatus nicht aberkennen kann.",
+  "PASSMINLEN":"Dein Passwort muss etwas länger sein, sonst kann dir jemand bei der Weltrettung in die Quere kommen.",
 
   "ITEM_CREATE_TITLE": "Neuer Artikel",
   "ITEM_CREATE_CHOOSE_IMAGE": "Artikel hinzufügen",
