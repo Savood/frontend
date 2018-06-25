@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
 import {Tab1Root, Tab2Root, Tab3Root, Tab4Root} from '../';
+import {AuthProvider} from "../../providers/auth/auth";
 
 @IonicPage()
 @Component({
@@ -20,7 +21,9 @@ export class TabsPage {
   tab3Title = " ";
   tab4Title = " ";
 
-  constructor(public navCtrl: NavController, public translateService: TranslateService) {
+  profileId = this._auth.getActiveUserId();
+
+  constructor(public navCtrl: NavController, public translateService: TranslateService, public _auth: AuthProvider) {
     translateService.get(['TAB1_TITLE', 'TAB2_TITLE', 'TAB3_TITLE', 'TAB4_TITLE']).subscribe(values => {
       this.tab1Title = values['TAB1_TITLE'];
       this.tab2Title = values['TAB2_TITLE'];

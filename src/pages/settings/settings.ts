@@ -37,11 +37,6 @@ export class SettingsPage {
 
   // Our local settings object
   ownProfile: boolean = false;
-  myUserInfo = {
-    _id: '534b8fb2aa5e7afc1b23e69c',
-    pic: 'assets/img/speakers/iguana.jpg',
-    username: 'Marty',
-  };
   profile: User;
   profileChanged = (newSettings) => {
     this.profile = newSettings;
@@ -50,8 +45,6 @@ export class SettingsPage {
   locationMarker: any;
 
   options: any;
-
-  settingsReady = false;
 
   emailForm: FormGroup;
   phoneForm: FormGroup;
@@ -114,7 +107,7 @@ export class SettingsPage {
     this.profile = this.navParams.get('profile') || this.profile;
     this.profileChanged = this.navParams.get('profileChanged') || this.profileChanged;
 
-    this.ownProfile = (this.navParams.get('profileId') == this.myUserInfo._id);
+    this.ownProfile = this._auth.isActiveUser({_id: this.navParams.get('profileId')});
 
     if (!this.profile && this.page == "main") {
       this._user.getUserById(this.navParams.get('profileId')).subscribe(
