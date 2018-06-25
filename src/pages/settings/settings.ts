@@ -39,7 +39,10 @@ export class SettingsPage {
   ownProfile: boolean = false;
   profile: User;
   profileChanged = (newSettings) => {
-    this.profile = newSettings;
+    this.phoneSettings.profile
+      = this.nameDescSettings.profile
+      = this.profile
+      = newSettings;
   };
 
   locationMarker: any;
