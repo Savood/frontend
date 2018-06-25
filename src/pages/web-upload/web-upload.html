@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding *ngIf="auth.user | async as user">
+<ion-content padding *ngIf="_auth.getActiveUser()">
   <ion-item>
     <h1>
       Upload File

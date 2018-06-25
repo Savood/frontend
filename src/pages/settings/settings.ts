@@ -285,7 +285,7 @@ export class SettingsPage {
       });
       actionSheet.present();
     } else {
-      this.navCtrl.push('WebUploadPage')
+      this.navCtrl.push('WebUploadPage', {type: 'header'})
     }
   }
 
@@ -316,7 +316,7 @@ export class SettingsPage {
       actionSheet.present();
 
     } else {
-      this.navCtrl.push('WebUploadPage');
+      this.navCtrl.push('WebUploadPage', {type: 'avatar'});
     }
   }
 
