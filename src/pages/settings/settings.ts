@@ -259,6 +259,7 @@ export class SettingsPage {
   }
 
   changeHeader() {
+    console.log("Header click!");
     if (this.platform.is('cordova')) {
       let actionSheet = this.actionSheetCtrl.create({
         title: 'Upload Picture from',
@@ -284,15 +285,7 @@ export class SettingsPage {
       });
       actionSheet.present();
     } else {
-      console.log("Cordova not available")
-      this.translate.get("IMG_CHANGE_MOBILE_ONLY").subscribe((message) => {
-        this.toastCtrl.create({
-          position: 'top',
-          message: message,
-          duration: 3000
-        }).present();
-      });
-      // this.navCtrl.push(WebUploadHeaderPage)
+      this.navCtrl.push('WebUploadPage')
     }
   }
 
@@ -323,15 +316,7 @@ export class SettingsPage {
       actionSheet.present();
 
     } else {
-      console.log("Cordova not available")
-      this.translate.get("IMG_CHANGE_MOBILE_ONLY").subscribe((message) => {
-        this.toastCtrl.create({
-          position: 'top',
-          message: message,
-          duration: 3000
-        }).present();
-      });
-      // this.navCtrl.push(WebUploadAvatarPage)
+      this.navCtrl.push('WebUploadPage');
     }
   }
 

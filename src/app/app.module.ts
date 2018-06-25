@@ -11,7 +11,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { Geolocation} from "@ionic-native/geolocation";
 import {DatePicker} from "@ionic-native/date-picker";
 
-import { Items } from '../mocks/providers/items';
 import {User, APIS, Api} from '../providers';
 import { MyApp } from './app.component';
 import { MapsService } from '../providers/maps/maps';
@@ -21,6 +20,8 @@ import {AuthInterceptorService} from "../providers/auth/auth_interceptor";
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import {SignupPage} from "../pages/signup/signup";
 import {SignupPageModule} from "../pages/signup/signup.module";
+import {ImageService} from "../providers/api/image.service";
+import {UploadWebProvider} from "../providers/upload/upload-web";
 
 
 // The translate loader needs to know where to load i18n files
@@ -54,7 +55,6 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     APIS,
     Api,
-    Items,
     User,
     Camera,
     SplashScreen,
@@ -69,6 +69,8 @@ export function createTranslateLoader(http: HttpClient) {
     },
     Geolocation,
     MapsService,
+    ImageService,
+    UploadWebProvider,
     AuthProvider
   ]
 })

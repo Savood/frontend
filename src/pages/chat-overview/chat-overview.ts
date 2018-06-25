@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 
 import {Item} from '../../models/item';
-import {Chat, Items, MessagesService, OfferingsService} from '../../providers';
+import {Chat, MessagesService, OfferingsService} from '../../providers';
 import {TranslateService} from "@ngx-translate/core";
 import {Offering} from "../../models/offering";
 
@@ -27,7 +27,6 @@ export class ChatOverviewPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public translate: TranslateService,
-              public items: Items,
               public _offerings: OfferingsService,
               public _messages: MessagesService,
               public toastCtrl: ToastController) {

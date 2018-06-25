@@ -42,6 +42,7 @@ export class MyApp {
     { title: 'Menu', component: 'MenuPage' },
     { title: 'Settings', component: 'SettingsPage' },
     { title: 'Search', component: 'SearchPage' },
+    { title: 'Web Upload', component: 'WebUploadPage' },
     { title: 'Create Offering', component:'CreateOfferingPage'}
   ]
 
