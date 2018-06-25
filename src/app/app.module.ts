@@ -7,7 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import { Geolocation} from "@ionic-native/geolocation";
 import {DatePicker} from "@ionic-native/date-picker";
 
@@ -22,6 +22,7 @@ import {SignupPage} from "../pages/signup/signup";
 import {SignupPageModule} from "../pages/signup/signup.module";
 import {ImageService} from "../providers/api/image.service";
 import {UploadWebProvider} from "../providers/upload/upload-web";
+import {Deeplinks} from "@ionic-native/deeplinks";
 
 
 // The translate loader needs to know where to load i18n files
@@ -67,6 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
       useClass: AuthInterceptorService,
       multi: true
     },
+    Deeplinks,
     Geolocation,
     MapsService,
     ImageService,
