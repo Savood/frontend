@@ -21,6 +21,7 @@ export class LoginPage {
 
   emailPlaceholder: string = null;
   passwordPlaceholder: string = null;
+  wrongPasswordString: string = null;
 
   // Our translated text strings
   private loginErrorString: string;
@@ -31,8 +32,9 @@ export class LoginPage {
     public translateService: TranslateService,
     public _auth:AuthProvider) {
 
-    this.translateService.get(['LOGIN_ERROR','EMAIL','PASSWORD']).subscribe((value) => {
+    this.translateService.get(['LOGIN_ERROR','EMAIL','WRONG_PASSWORD','PASSWORD']).subscribe((value) => {
       this.loginErrorString = value.LOGIN_ERROR;
+      this.wrongPasswordString= value.WRONG_PASSWORD;
       this.emailPlaceholder = value.EMAIL;
       this.passwordPlaceholder = value.PASSWORD;
     })
@@ -49,12 +51,22 @@ export class LoginPage {
       this._auth.saveToken(token);
       this.navCtrl.setRoot(MainPage);
     }, err =>{
-      let toast = this.toastCtrl.create({
+      if(err.error.short_error == "WRONG_PASSWORD"){
+        let toast = this.toastCtrl.create({
+          message: this.wrongPasswordString,
+          duration: 3000,
+          position: 'top'
+        });
+        toast.present();
+      }else {
+        console.log("Error:", err);
+        let toast = this.toastCtrl.create({
           message: this.loginErrorString,
           duration: 3000,
           position: 'top'
         });
         toast.present();
+      }
     })
   }
 

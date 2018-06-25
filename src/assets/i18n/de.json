@@ -64,6 +64,7 @@
   "LOGIN_TITLE": "Anmelden",
   "LOGIN_ERROR": "Fehler beim Anmelden, bitte überprüfe deine Informationen und versuche es erneut.",
   "LOGIN_BUTTON": "Anmelden",
+  "WRONG_PASSWORD": "Oh Nein! Du hast anscheinend ein falsches Passwort eingegeben.",
   "SIGNUP_TITLE": "Registrieren",
   "SIGNUP_ERROR": "Fehler beim Registrieren, bitte überprüfe deine Informationen und versuche es erneut.",
   "SIGNUP_BUTTON": "Registrieren",
