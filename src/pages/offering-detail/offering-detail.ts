@@ -18,4 +18,8 @@ export class OfferingDetailPage {
   ionViewWillEnter(){
     this.whichtab = "info";
   }
+
+  sharePage(){
+
+  }
 }

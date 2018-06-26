@@ -403,4 +403,8 @@ export class SettingsPage {
     //       this.presentToast(err);
     //     });
   }
+
+  sharePage(){
+
+  }
 }
