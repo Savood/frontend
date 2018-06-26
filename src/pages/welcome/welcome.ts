@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {IonicPage, NavController, Slides, ToastController} from 'ionic-angular';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {User} from "../../models/user";
+import {TranslateService} from "@ngx-translate/core";
+import {UserAddress} from "../../models/userAddress";
+import {UsersService} from "../../providers/api/users.service";
+import {MainPage} from "../index";
 
 /**
  * The Welcome Page is a splash page that quickly describes the app,
@@ -13,14 +19,63 @@ import { IonicPage, NavController } from 'ionic-angular';
   templateUrl: 'welcome.html'
 })
 export class WelcomePage {
+  @ViewChild(Slides) slides: Slides;
 
-  constructor(public navCtrl: NavController) { }
 
-  login() {
-    this.navCtrl.push('LoginPage');
+  locationMarker:any;
+  nameForm: FormGroup;
+
+  address:UserAddress = {};
+  user:User = {};
+
+  successfulCreateUser:string = null;
+
+  loading = false;
+
+  constructor(public navCtrl: NavController,
+              public formBuilder: FormBuilder,
+              public translateService: TranslateService,
+              public _user:UsersService,
+              public toastCtrl: ToastController) {
+
+    this.nameForm = this.formBuilder.group({
+      firstname: [this.user.firstname, Validators.required],
+      lastname: [this.user.lastname, Validators.required],
+    });
+
+    this.translateService.get(['CREATE_USER_SUCCESS']).subscribe((value) => {
+      this.successfulCreateUser = value.CREATE_USER_SUCCESS;
+    });
+
   }
 
-  signup() {
-    this.navCtrl.push('SignupPage');
+  swipeToName(){
+    this.slides.slideTo(2);
+  }
+
+  finishCreation(){
+
+    this.user.address = this.address;
+    this.user.firstname = this.nameForm.controls['firstname'].value;
+    this.user.lastname = this.nameForm.controls['lastname'].value;
+    this.loading=true;
+
+    console.log(this.user)
+
+    this._user.createNewUser(this.user).subscribe(
+      data=> {
+        let toast = this.toastCtrl.create({
+          message: this.successfulCreateUser,
+          duration: 3000,
+          position: 'top'
+        });
+        toast.present();
+        this.navCtrl.setRoot(MainPage);
+        
+      },
+          err=>{},
+          ()=>this.loading = false
+      );
+
   }
 }
