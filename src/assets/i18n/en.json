@@ -116,8 +116,26 @@
   "USE_POINTER_LOCATION": "Use Pointer Location",
   "ZIP": "ZIP Code",
 
-  "WELCOME": "Du bist jetzt offiziell ein <b>Savooder</b>!",
-  "SLIDE_1_INTROTEXT":"Es ist vollbracht! Du hast dich dafür bereiterklärt gegen Essensverschwendung in der Welt vorzugehen.",
-  "SLIDE_2_INFOTEXT":"",
-  "SLIDE_3_INFOTEXT":""
+  "WELCOME": "Now you are a Savooder!",
+  "SLIDE_1_INTROTEXT":"Congrats! Now you can start saving the world",
+
+  "SLIDE_2_HEADER":"It's time to introduce yourself!",
+  "SLIDE_2_INFOTEXT":"To save food it is necessary to introduce yourself to the community.",
+
+  "SLIDE_3_INFOTEXT":"Let's start with your Name:",
+  "NAME":"Firstname",
+  "FAMILY_NAME":"Lastname",
+  "SLIDE_4_INFOTEXT":"Now you can add a little description about yourself.",
+  "DESCRIPTION":"Description",
+
+  "SLIDE_5_INFOTEXT":"Now you can give us your phonenumber to get in touch with other Savooders.",
+
+  "SLIDE_6_INFOTEXT": "At last you can enter a default address for your Offerings.",
+
+  "SLIDE_7_INFOTEXT": "We wish you good luck for saving our food and world!",
+  "SLIDE_7_HEADER": "Aaaand it's done!",
+  "GO":"Go!",
+  "TELEPHONE":"Phonenumber",
+
+  "CREATE_USER_SUCCESS":"Now it is done! You can personalise your profile under the settings tab"
 }
