@@ -23,6 +23,7 @@ import {SignupPageModule} from "../pages/signup/signup.module";
 import {ImageService} from "../providers/api/image.service";
 import {UploadWebProvider} from "../providers/upload/upload-web";
 import {Deeplinks} from "@ionic-native/deeplinks";
+import {SocialSharing} from "@ionic-native/social-sharing";
 
 
 // The translate loader needs to know where to load i18n files
@@ -73,7 +74,8 @@ export function createTranslateLoader(http: HttpClient) {
     MapsService,
     ImageService,
     UploadWebProvider,
-    AuthProvider
+    AuthProvider,
+    SocialSharing
   ]
 })
 export class AppModule { }

@@ -17,6 +17,7 @@ import {} from '@types/googlemaps';
 import {User} from "../../models/user";
 import {AuthProvider} from "../../providers/auth/auth";
 import {LoginPage} from "../login/login";
+import {SocialSharing} from "@ionic-native/social-sharing";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -25,8 +26,7 @@ import {LoginPage} from "../login/login";
  */
 @IonicPage(
   {
-    segment: 'profile/:profileId',
-    defaultHistory: ['tabs']
+    segment: 'profile/:profileId'
   }
 )
 @Component({
@@ -100,7 +100,8 @@ export class SettingsPage {
               public actionSheetCtrl: ActionSheetController,
               public platform: Platform,
               public _auth: AuthProvider,
-              private app: App) {
+              private app: App,
+              private _social: SocialSharing) {
   }
 
   ionViewDidLoad() {
@@ -405,6 +406,19 @@ export class SettingsPage {
   }
 
   sharePage(){
-
+    let route: string[] = this.platform.url().split('/');
+    let tabPos: number;
+    for(let part of route){
+      if(part === 'profile'){
+        tabPos = route.indexOf(part);
+      }
+    }
+    route.splice(0,tabPos);
+    let shareUrl: string = 'savood.com/#';
+    for(let part of route){
+      shareUrl += '/' + part;
+    }
+    console.log(shareUrl);
+    this._social.share('','','',shareUrl)
   }
 }
