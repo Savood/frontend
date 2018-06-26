@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {App, IonicPage, NavController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
 import {OfferingsService} from "../../providers/api/offerings.service";
+import {UsersService} from "../../providers/api/users.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @IonicPage()
 @Component({
@@ -12,13 +14,21 @@ export class OfferingsPage {
   cardItems: any[];
   toggle = false;
 
-  constructor(public navCtrl: NavController,public _auth: AuthProvider, public _offering: OfferingsService)
+  constructor(public navCtrl: NavController,
+              public _auth: AuthProvider,
+              public _offering: OfferingsService,
+              public _user: UsersService,
+              private appCtrl:App)
   {
+
+    this._auth.getActiveUser().subscribe((data)=>{}, (err:HttpErrorResponse)=>{
+      if(err.status == 404){
+        this.appCtrl.getRootNav().push("WelcomePage");
+      }
+    });
 
     this._auth.refreshToken().subscribe(data=>console.log(data));
     // this._offering.getOfferingById("1").subscribe((data)=>console.log(data), (err)=>console.log(err));
-
-
 
     this.cardItems = [
       {

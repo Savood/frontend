@@ -108,8 +108,34 @@
   "COMMENTS": "Kommentare",
   "LIKES": "Hochwähls",
 
+  "NEXT": "Weiter",
+  "NO_NAME_ERROR":"Oh dein Name fehlt noch, klick einfach auf diesen Text und trage ihn nach.",
+
   "IMG_CHANGE_MOBILE_ONLY": "Bild nur auf Mobilgeräten editierbar",
   "IMG_CHANGE_WEB_ONLY": "Bild nur im Browser editierbar",
 
-  "SEND_A_MESSAGE": "Sende jetzt eine Nachricht!"
+  "SEND_A_MESSAGE": "Sende jetzt eine Nachricht!",
+
+  "WELCOME": "Du bist jetzt offiziell ein Savooder!",
+  "SLIDE_1_INTROTEXT":"Es ist vollbracht! Du hast dich dafür bereiterklärt gegen Essensverschwendung in der Welt vorzugehen.",
+
+  "SLIDE_2_HEADER":"Es wird Zeit dich uns vorzustellen",
+  "SLIDE_2_INFOTEXT":"Damit du mit der Weltrettung beginnen kannst, musst du dir ein passendes Profil erstellen.",
+
+  "SLIDE_3_INFOTEXT":"Beginnen wir mit deinem Namen:",
+  "NAME":"Vorname",
+  "FAMILY_NAME":"Nachname",
+  "SLIDE_4_INFOTEXT":"Jetzt hast du die Möglichkeit eine kleine Beschreibung über dich zu geben, damit andere Savooder mehr über dich erfahren können.",
+  "DESCRIPTION":"Beschreibung",
+
+  "SLIDE_5_INFOTEXT":"Nun kannst du deine Telefonnummer angeben. So können andere Savooder mit dir in Kontakt treten, sofern sie deine Angebote annehmen.",
+
+  "SLIDE_6_INFOTEXT": "Zuletzt kannst du hier eine Standardadresse angeben an dem du deine Angebote zu Verfügung stellen willst.",
+
+  "SLIDE_7_INFOTEXT": "Wir vom Savood-Team wünschen dir nun viel Erfolg bei der Rettung von Lebensmittel und der Welt!",
+  "SLIDE_7_HEADER": "Und fertig!",
+  "GO":"Los gehts!",
+  "TELEPHONE":"Telefonnummer",
+
+  "CREATE_USER_SUCCESS":"Jetzt kann es endlich los gehen. Innerhalb des Einstellungstab können sie ihr Profil weiter personifizieren."
 }

@@ -7,7 +7,7 @@
   "PASSWORD": "Password",
   "LOGIN": "Sign in",
   "SIGNUP": "Sign up",
-  "SLOGAN":"only survived food is good"
+  "SLOGAN":"only survived food is good",
 
   "TAB1_TITLE": "Items",
   "TAB2_TITLE": "Search",
@@ -69,6 +69,7 @@
   "PASSREQ":"We need you to have password, because otherwise people will come and your career as an hero will suffer.",
   "PASSMINLEN":"To be sure about your heroism we need you to have an password with more than 4 letters.",
 
+  "NEXT":"Next",
 
   "LIST_MASTER_TITLE": "Items",
 
@@ -89,5 +90,10 @@
 
   "OFFERINGS_TITLE": "All Savoods",
   "COMMENTS": "Comments",
-  "LIKES": "Likes"
+  "LIKES": "Likes",
+
+  "WELCOME": "Du bist jetzt offiziell ein <b>Savooder</b>!",
+  "SLIDE_1_INTROTEXT":"Es ist vollbracht! Du hast dich dafür bereiterklärt gegen Essensverschwendung in der Welt vorzugehen.",
+  "SLIDE_2_INFOTEXT":"",
+  "SLIDE_3_INFOTEXT":""
 }
