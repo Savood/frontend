@@ -115,9 +115,54 @@ export class OfferingsService {
 
     let headers = this.defaultHeaders;
 
+<<<<<<< HEAD
     // authentication (bearer) required
     if (this.configuration.apiKeys["Authorization"]) {
       headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+=======
+    /**
+     * Add a new offering
+     *
+     * @param body Offering that needs to be added
+     */
+    public createNewOffering(body: Offering): Observable<Offering> {
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createNewOffering.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (bearer) required
+        // if (this.configuration.apiKeys["Authorization"]) {
+        //     headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        // }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+        let httpContentTypeSelected:string = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set("Content-Type", httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.basePath}/offerings`,
+            body,
+            {
+                headers: headers,
+                withCredentials: this.configuration.withCredentials,
+            }
+        );
+>>>>>>> c3e55b971d76e53f4a5432db0f3530471a573a2a
     }
 
     // to determine the Accept header

@@ -16,6 +16,7 @@ export class OfferingDetailPage {
   offering: any;
   whichtab: string;
 
+
   constructor(public navCtrl: NavController, navParams: NavParams, items: Items, public _maps: MapsService) {
     this.offering = navParams.get('offering') || items.defaultItem;
   }
