@@ -5,11 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>Create new Offering</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -51,21 +49,25 @@
       <div #map id="map"></div>
       <ion-list>
         <ion-item>
-          <ion-label stacked>Straße</ion-label>
-          <ion-input type="street" formControlName="street" clearInput (click)="openDatePicker()"></ion-input>
+          <ion-label stacked>{{'STREET'|translate}}</ion-label>
+          <ion-input type="street" formControlName="street" clearInput></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Stadt</ion-label>
-          <ion-input type="city" formControlName="city" clearInput (click)="openDatePicker()"></ion-input>
+          <ion-label stacked>{{'NUMBER'|translate}}</ion-label>
+          <ion-input type="number" formControlName="number" clearInput></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label stacked>Nummer</ion-label>
-          <ion-input type="number" formControlName="number" clearInput (click)="openDatePicker()"></ion-input>
+          <ion-label stacked>{{'ZIP'|translate}}</ion-label>
+          <ion-input type="number" formControlName="zip" clearInput></ion-input>
         </ion-item>
-
+        <ion-item>
+          <ion-label stacked>{{'CITY'|translate}}</ion-label>
+          <ion-input type="city" formControlName="city" clearInput></ion-input>
+        </ion-item>
       </ion-list>
     </ion-card>
     <button ion-button color="primary"  [disabled]="!valid" type="submit">Save da world!</button>
     <button ion-button outline>Neeeeep</button>
   </form>
 </ion-content>
+w

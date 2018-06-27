@@ -78,10 +78,11 @@
     <!--Location-->
     <ion-list *ngSwitchCase="'location'">
       <ion-item>
-        <ion-thumbnail item-start>
-          <img src="img/thumbnail-kitten-1.jpg">
-        </ion-thumbnail>
-        <h2>Luna</h2>
+        <h2>{{'ADDRESS'|translate}}:</h2>
+        <span>{{offering.location}}</span>
+      </ion-item>
+      <ion-item>
+        <div #map id="map"></div>
       </ion-item>
     </ion-list>
   </div>
