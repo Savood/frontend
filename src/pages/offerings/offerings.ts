@@ -9,7 +9,6 @@ import {Location} from "../../models/location";
 import {Offering} from "../../models/offering";
 import {env} from "../../environment/environment";
 import {SuccessObject} from "../../models/successObject";
-import {TimeProvider} from "../../providers/time/time";
 import {TranslateService} from "@ngx-translate/core";
 
 @IonicPage()
@@ -25,14 +24,12 @@ export class OfferingsPage {
   browser_local = null;
   current_location:Location = null;
 
-
   constructor(public navCtrl: NavController,
               public _auth: AuthProvider,
               public _offering: OfferingsService,
               public _user: UsersService,
               private appCtrl:App,
               public _maps: MapsService,
-              public _time: TimeProvider,
               public _translate: TranslateService)
   {
 
@@ -75,7 +72,9 @@ export class OfferingsPage {
   }
 
   getImageSource(item:Offering){
-    return `${env.api_endpoint}/offerings/${item.id}/image.jpeg:`;
+    let _id = item.id
+    let path =  `${env.api_endpoint}/offerings/${_id}/image.jpeg:`;
+
   }
 
   placeSavood(feed){
@@ -85,10 +84,6 @@ export class OfferingsPage {
     },(err)=>{
       console.log(err);
     });
-  }
-
-  getAgoString(date:string){
-    return this._time.getAgoString(date);
   }
 
   getDistanceString(item): string {
