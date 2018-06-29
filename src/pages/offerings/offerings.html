@@ -11,22 +11,20 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="toggle" class="blureffect" (click)="fab.close(); toggle=false">
-  </div>
 
-  <ion-card *ngFor="let item of cardItems" (click)="openItem(item)">
+  <ion-card *ngFor="let item of feed" (click)="openItem(item)">
     <div style="position: relative;">
-      <img [src]="item.image">
+      <img [src]="getImageSource(feed)">
 
       <ion-fab right bottom edge>
-        <button ion-fab fab-map color="primary">
+        <button ion-fab fab-map color="primary" (click)="placeSavood(feed)">
           <ion-icon name='restaurant'></ion-icon>
         </button>
       </ion-fab>
     </div>
 
     <ion-item>
-      <h1  padding-top ion-text text-wrap>{{item.header}}</h1>
+      <h1  padding-top ion-text text-wrap>{{item.name}}</h1>
       <!--<p>{{item.date}} </p>-->
     </ion-item>
     <ion-row>
@@ -38,16 +36,15 @@
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="pin"></ion-icon>
-          <div>{{item.distance}}</div>
+          <div>{{getDistanceString(item)}}</div>
         </button>
       </ion-col>
       <ion-col>
         <button ion-button icon-left clear small >
           <ion-icon name="restaurant"></ion-icon>
-          <div>{{item.cum_savoods}}</div>
+          <div>{{item.requestedBy}}</div>
         </button>
       </ion-col>
-
     </ion-row>
   </ion-card>
 </ion-content>

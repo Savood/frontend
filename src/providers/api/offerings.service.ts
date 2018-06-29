@@ -12,29 +12,31 @@
 
 /* tslint:disable:no-unused-variable member-ordering */
 
-import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams }               from '@angular/common/http';
 
-import {Observable} from 'rxjs/Observable';
+import { Observable }                                        from 'rxjs/Observable';
 import '../rxjs-operators';
 
-import {Chat} from '../../models/chat';
-import {InvalidParameterInput} from '../../models/invalidParameterInput';
-import {Offering} from '../../models/offering';
 
-import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
-import {Configuration} from '../configuration';
-import {CustomHttpUrlEncodingCodec} from '../encoder';
-
+import { BASE_PATH }                     from '../variables';
+import { Configuration }                                     from '../configuration';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import {Offering} from "../../models/offering";
+import {Chat} from "../../models/chat";
+import {SuccessObject} from "../../models/successObject";
+import {env} from '../../environment/environment';
+import {Location} from "../../models/location";
+import {OfferingLocation} from "../../models/offeringLocation";
 
 @Injectable()
 export class OfferingsService {
 
-  protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
+  protected basePath = env.api_endpoint;
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
 
-  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+  constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
     if (basePath) {
       this.basePath = basePath;
     }
@@ -71,10 +73,6 @@ export class OfferingsService {
 
     let headers = this.defaultHeaders;
 
-    // authentication (bearer) required
-    if (this.configuration.apiKeys["Authorization"]) {
-      headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-    }
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
@@ -89,7 +87,7 @@ export class OfferingsService {
     let consumes: string[] = [
       'application/json'
     ];
-    let httpContentTypeSelected: string = this.configuration.selectHeaderContentType(consumes);
+    let httpContentTypeSelected:string = this.configuration.selectHeaderContentType(consumes);
     if (httpContentTypeSelected != undefined) {
       headers = headers.set("Content-Type", httpContentTypeSelected);
     }
@@ -115,10 +113,6 @@ export class OfferingsService {
 
     let headers = this.defaultHeaders;
 
-    // authentication (bearer) required
-    if (this.configuration.apiKeys["Authorization"]) {
-      headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-    }
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
@@ -130,7 +124,8 @@ export class OfferingsService {
     }
 
     // to determine the Content-Type header
-    let consumes: string[] = [];
+    let consumes: string[] = [
+    ];
 
     return this.httpClient.delete<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}`,
       {
@@ -152,6 +147,7 @@ export class OfferingsService {
 
     let headers = this.defaultHeaders;
 
+
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
       'application/json'
@@ -162,7 +158,8 @@ export class OfferingsService {
     }
 
     // to determine the Content-Type header
-    let consumes: string[] = [];
+    let consumes: string[] = [
+    ];
 
     return this.httpClient.get<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}/chats`,
       {
@@ -173,28 +170,36 @@ export class OfferingsService {
   }
 
   /**
-   * Display a feed of nearby offerings
+   * Display a feed of nearby feed
    *
-   * @param location
+   * @param lat Latitude
+   * @param lon Longitude
    * @param distance Distance in Meters
    */
-  public getFeed(location: string, distance: number): Observable<Array<Offering>> {
-    if (location === null || location === undefined) {
-      throw new Error('Required parameter location was null or undefined when calling getFeed.');
+  public getFeed(lat: number, lon: number, distance: number): Observable<Array<Offering>> {
+    if (lat === null || lat === undefined) {
+      throw new Error('Required parameter lat was null or undefined when calling getFeed.');
+    }
+    if (lon === null || lon === undefined) {
+      throw new Error('Required parameter lon was null or undefined when calling getFeed.');
     }
     if (distance === null || distance === undefined) {
-      throw new Error('Required parameter distance was null or undefined when calling getFeed.');
+      throw new Error('Required parameter distanceString was null or undefined when calling getFeed.');
     }
 
     let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-    if (location !== undefined) {
-      queryParameters = queryParameters.set('location', <any>location);
+    if (lat !== undefined) {
+      queryParameters = queryParameters.set('lat', <any>lat);
+    }
+    if (lon !== undefined) {
+      queryParameters = queryParameters.set('lon', <any>lon);
     }
     if (distance !== undefined) {
       queryParameters = queryParameters.set('distance', <any>distance);
     }
 
     let headers = this.defaultHeaders;
+
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
@@ -206,7 +211,8 @@ export class OfferingsService {
     }
 
     // to determine the Content-Type header
-    let consumes: string[] = [];
+    let consumes: string[] = [
+    ];
 
     return this.httpClient.get<any>(`${this.basePath}/feed`,
       {
@@ -229,6 +235,7 @@ export class OfferingsService {
 
     let headers = this.defaultHeaders;
 
+
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
       'application/json'
@@ -239,7 +246,8 @@ export class OfferingsService {
     }
 
     // to determine the Content-Type header
-    let consumes: string[] = [];
+    let consumes: string[] = [
+    ];
 
     return this.httpClient.get<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}`,
       {
@@ -250,9 +258,9 @@ export class OfferingsService {
   }
 
   /**
-   * Display a feed of nearby offerings
+   * Display a feed of nearby feed
    *
-   * @param filter Filteres offerings by owned or requested
+   * @param filter Filteres feed by owned or requested
    */
   public getOfferings(filter?: string): Observable<Array<Offering>> {
 
@@ -262,6 +270,7 @@ export class OfferingsService {
     }
 
     let headers = this.defaultHeaders;
+
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
@@ -273,9 +282,150 @@ export class OfferingsService {
     }
 
     // to determine the Content-Type header
-    let consumes: string[] = [];
+    let consumes: string[] = [
+    ];
 
     return this.httpClient.get<any>(`${this.basePath}/offerings`,
+      {
+        params: queryParameters,
+        headers: headers,
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
+
+  /**
+   * Gets the avatar image.
+   *
+   * @param id
+   * @param height If either width or height is set to 0, it will be set to an aspect ratio preserving value.
+   * @param width If either width or height is set to 0, it will be set to an aspect ratio preserving value.
+   */
+  public offeringsIdImageJpegGet(id: string, height?: number, width?: number): Observable<Blob> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling offeringsIdImageJpegGet.');
+    }
+
+    let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+    if (height !== undefined) {
+      queryParameters = queryParameters.set('height', <any>height);
+    }
+    if (width !== undefined) {
+      queryParameters = queryParameters.set('width', <any>width);
+    }
+
+    let headers = this.defaultHeaders;
+
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      'image/jpeg',
+      'application/json'
+    ];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    let consumes: string[] = [
+    ];
+
+    return this.httpClient.get(`${this.basePath}/offerings/${encodeURIComponent(String(id))}/image.jpeg`,
+      {
+        params: queryParameters,
+        headers: headers,
+        responseType: "blob",
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
+
+  /**
+   * Uploads avatar image.
+   *
+   * @param id
+   * @param upfile The file to upload.
+   */
+  public offeringsIdImageJpegPost(id: string, upfile?: Blob): Observable<{}> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling offeringsIdImageJpegPost.');
+    }
+
+    let headers = this.defaultHeaders;
+
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+    ];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    let consumes: string[] = [
+      'multipart/form-data'
+    ];
+
+    const canConsumeForm = this.canConsumeForm(consumes);
+
+    let formParams: { append(param: string, value: any): void; };
+    let useForm = false;
+    let convertFormParamsToString = false;
+    // use FormData to transmit files using content-type "multipart/form-data"
+    // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+    useForm = canConsumeForm;
+    if (useForm) {
+      formParams = new FormData();
+    } else {
+      formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+    }
+
+    if (upfile !== undefined) {
+      formParams = formParams.append('upfile', <any>upfile) || formParams;
+    }
+
+    return this.httpClient.post<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}/image.jpeg`,
+      convertFormParamsToString ? formParams.toString() : formParams,
+      {
+        headers: headers,
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
+
+  /**
+   * Places a savood on an offering
+   *
+   * @param offeringId The offering ID on which the savood should be placed.
+   */
+  public placeSavood(offeringId?: string): Observable<SuccessObject> {
+
+    let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+    if (offeringId !== undefined) {
+      queryParameters = queryParameters.set('offeringId', <any>offeringId);
+    }
+
+    let headers = this.defaultHeaders;
+
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      'application/json'
+    ];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    let consumes: string[] = [
+      'application/json'
+    ];
+
+    return this.httpClient.post<any>(`${this.basePath}/placeSavood`,
+      null,
       {
         params: queryParameters,
         headers: headers,
@@ -313,7 +463,7 @@ export class OfferingsService {
     let consumes: string[] = [
       'application/json'
     ];
-    let httpContentTypeSelected: string = this.configuration.selectHeaderContentType(consumes);
+    let httpContentTypeSelected:string = this.configuration.selectHeaderContentType(consumes);
     if (httpContentTypeSelected != undefined) {
       headers = headers.set("Content-Type", httpContentTypeSelected);
     }
@@ -325,6 +475,12 @@ export class OfferingsService {
         withCredentials: this.configuration.withCredentials,
       }
     );
+  }
+
+  changeOfferingLocationToLocation(location:OfferingLocation){
+    if(location)
+      return {latitude: location.coordinates[0], longitude: location.coordinates[1]};
+    else return {latitude: 0, longitude:0}
   }
 
 }

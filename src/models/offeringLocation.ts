@@ -12,9 +12,10 @@
 
 
 
-export interface UserAddress {
-    street?: string;
-    number?: string;
-    zip?: number;
-    city?: string;
+export interface OfferingLocation {
+    type?: string;
+    /**
+     * longitude then latidue as floats
+     */
+    coordinates?: Array<number>;
 }

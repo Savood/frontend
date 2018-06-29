@@ -3,7 +3,7 @@ import {IonicPage, NavController, Slides, ToastController} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../models/user";
 import {TranslateService} from "@ngx-translate/core";
-import {UserAddress} from "../../models/userAddress";
+import {Address} from "../../models/address";
 import {UsersService} from "../../providers/api/users.service";
 import {MainPage} from "../index";
 
@@ -25,7 +25,7 @@ export class WelcomePage {
   locationMarker:any;
   nameForm: FormGroup;
 
-  address:UserAddress = {};
+  address:Address = {};
   user:User = {};
 
   successfulCreateUser:string = null;
@@ -71,7 +71,7 @@ export class WelcomePage {
         });
         toast.present();
         this.navCtrl.setRoot(MainPage);
-        
+
       },
           err=>{},
           ()=>this.loading = false

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { UserAddress } from './userAddress';
+import { Address } from './address';
 
 
 export interface User {
@@ -18,7 +18,7 @@ export interface User {
     firstname?: string;
     lastname?: string;
     phone?: string;
-    address?: UserAddress;
+    address?: Address;
     avatarId?: string;
     backgroundId?: string;
     description?: string;

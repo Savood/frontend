@@ -125,7 +125,23 @@ export class MapsService {
     });
   }
 
-  getDistance(start: Location, end: Location, km?: boolean): number {
+  /**
+   *  Returns the distanceString between 2 Locations
+   *
+   * @param start
+   * @param end
+   * @param threshold for differentiating between meters and kilometers, default: 1000
+   * @param round number of numbers behind the comma
+   * @returns {number}
+   */
+  getDistance(start: Location, end: Location, threshold?:number, round?:number): {amount: number, unit: string} {
+    if(!threshold){
+      threshold = 1000;
+    }
+    if(!round){
+      round = 2;
+    }
+
     let rad = function (x) {
       return x * Math.PI / 180;
     };
@@ -139,6 +155,10 @@ export class MapsService {
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     let d: number = R * c;
 
-    return km ? d/1000 : d;
+    let d_m:string = d.toFixed(round);
+    let d_km:number = d_m/1000;
+    let d_km_string:string = d_km.toFixed(round);
+
+    return d < threshold? {amount: Number.parseFloat(d_m), unit: "m"}: {amount: Number.parseFloat(d_km_string), unit: "km"};
   }
 }

@@ -7,30 +7,30 @@
 
 <ion-content elestic-header fullscreen>
   <div>
-    <img style="height: 60vh; width: auto; object-fit: cover" [src]="offering.image" imageViewer >
+    <img style="height: 60vh; width: auto; object-fit: cover" [src]="getImageSource(offering)" imageViewer >
 
     <div style="position: relative;">
 
       <ion-fab right bottom edge>
-        <button ion-fab fab-map color="primary">
+        <button ion-fab fab-map color="primary" (click)="placeSavood(offering)">
           <ion-icon name='restaurant'></ion-icon>
         </button>
       </ion-fab>
     </div>
     <ion-item>
-      <h1 ion-text text-wrap>{{offering.header}}</h1>
+      <h1 ion-text text-wrap>{{offering.name}}</h1>
       <!--<p>{{item.date}} </p>-->
       <ion-row>
         <ion-col>
           <button ion-button icon-left clear small>
             <ion-icon name="pin"></ion-icon>
-            <div>{{offering.distance}}</div>
+            <div> {distance.</div>
           </button>
         </ion-col>
         <ion-col>
           <button ion-button icon-left clear small>
             <ion-icon name="restaurant"></ion-icon>
-            <div>{{offering.cum_savoods}}</div>
+            <div>{{offering.requestedBy}}</div>
           </button>
         </ion-col>
       </ion-row>
@@ -40,7 +40,7 @@
 
   <div class="item-detail" padding>
     <h2>{{offering.name}}</h2>
-    <p>{{offering.data}}</p>
+    <p>{{offering.description}}</p>
   </div>
 
   <div padding>
@@ -58,9 +58,9 @@
       <ion-card>
         <ion-item>
           <ion-avatar item-start>
-            <img [src]="offering.user?.avatar">
+            <img [src]="getUserAvatarPath(offering.creatorId)">
           </ion-avatar>
-          <h2>{{offering.user.name}}</h2>
+          <h2>{{offering.creator}}</h2>
           <h5>{{offering.date}}</h5>
         </ion-item>
 
