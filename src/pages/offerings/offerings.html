@@ -30,7 +30,7 @@
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small >
-          <ion-note>11h ago</ion-note>
+          <ion-note>{{item.time | amLocale: browser_local| amTimeAgo}}</ion-note>
         </button>
       </ion-col>
       <ion-col>

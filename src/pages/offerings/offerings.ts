@@ -9,6 +9,8 @@ import {Location} from "../../models/location";
 import {Offering} from "../../models/offering";
 import {env} from "../../environment/environment";
 import {SuccessObject} from "../../models/successObject";
+import {TimeProvider} from "../../providers/time/time";
+import {TranslateService} from "@ngx-translate/core";
 
 @IonicPage()
 @Component({
@@ -20,6 +22,7 @@ export class OfferingsPage {
   toggle = false;
   default_distance:number = 4000;
 
+  browser_local = null;
   current_location:Location = null;
 
 
@@ -28,8 +31,12 @@ export class OfferingsPage {
               public _offering: OfferingsService,
               public _user: UsersService,
               private appCtrl:App,
-              public _maps: MapsService)
+              public _maps: MapsService,
+              public _time: TimeProvider,
+              public _translate: TranslateService)
   {
+
+    this.browser_local = _translate.getBrowserLang();
 
     this._auth.getActiveUser().subscribe((data)=>{}, (err:HttpErrorResponse)=>{
       if(err.status == 404){
@@ -78,6 +85,10 @@ export class OfferingsPage {
     },(err)=>{
       console.log(err);
     });
+  }
+
+  getAgoString(date:string){
+    return this._time.getAgoString(date);
   }
 
   getDistanceString(item): string {

@@ -155,7 +155,7 @@ export class MapsService {
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     let d: number = R * c;
 
-    let d_m:string = d.toFixed(round);
+    let d_m:any = d.toFixed(round);
     let d_km:number = d_m/1000;
     let d_km_string:string = d_km.toFixed(round);
 

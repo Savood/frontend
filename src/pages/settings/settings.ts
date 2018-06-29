@@ -101,6 +101,8 @@ export class SettingsPage {
               public platform: Platform,
               public _auth: AuthProvider,
               private app: App) {
+    console.log("lang",translate.getDefaultLang());
+    console.log("lang",translate.getBrowserLang());
   }
 
   ionViewDidLoad() {
