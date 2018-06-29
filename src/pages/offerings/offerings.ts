@@ -41,9 +41,6 @@ export class OfferingsPage {
         this.appCtrl.getRootNav().push("WelcomePage");
       }
     });
-
-    this._auth.refreshToken().subscribe(data=>console.log(data));
-    // this._offering.getOfferingById("1").subscribe((data)=>console.log(data), (err)=>console.log(err));
   }
 
   async ionViewWillEnter(){
