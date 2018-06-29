@@ -12,13 +12,14 @@
 
 import { Address } from './address';
 import { OfferingLocation } from './offeringLocation';
+import {UserShort} from "./userShort";
 
 
 export interface Offering {
   id?: string;
   name?: string;
   description?: string;
-  creatorId?: string;
+  creator: UserShort;
   bestByDate?: string;
   address?: Address;
   location?: OfferingLocation;

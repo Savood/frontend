@@ -3,6 +3,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
 
 import { OfferingDetailPage } from './offering-detail';
+import {IonicImageViewerModule} from "ionic-img-viewer";
+import {MomentModule} from "angular2-moment";
 
 @NgModule({
   declarations: [
@@ -10,7 +12,10 @@ import { OfferingDetailPage } from './offering-detail';
   ],
   imports: [
     IonicPageModule.forChild(OfferingDetailPage),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    IonicImageViewerModule,
+    MomentModule
+
   ],
   exports: [
     OfferingDetailPage

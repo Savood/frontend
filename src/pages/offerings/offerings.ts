@@ -51,7 +51,7 @@ export class OfferingsPage {
     this._offering.getFeed(this.current_location.latitude, this.current_location.longitude, this.default_distance)
       .subscribe((data:Offering[])=>{
         this.feed = data;
-        console.log(data[0].requestedBy);
+        console.log(data[0].time);
       }, err=>{
           console.log("ERROR", err);
         }
@@ -63,7 +63,8 @@ export class OfferingsPage {
    */
   openItem(item) {
     this.navCtrl.push('OfferingDetailPage', {
-      offering: item
+      offering: item,
+      browser_lang: this.browser_local
     });
   }
 
