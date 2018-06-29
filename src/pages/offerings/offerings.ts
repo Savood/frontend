@@ -24,6 +24,7 @@ export class OfferingsPage {
   browser_local = null;
   current_location:Location = null;
 
+
   constructor(public navCtrl: NavController,
               public _auth: AuthProvider,
               public _offering: OfferingsService,
@@ -79,12 +80,16 @@ export class OfferingsPage {
   }
 
   placeSavood(feed){
-    this._offering.placeSavood(feed.id).subscribe((data:SuccessObject)=>{
-      if(data.success)
-        console.log("Wuhu");
-    },(err)=>{
-      console.log(err);
-    });
+    if(feed.savooded){
+      //TODO Send to message side
+    }else {
+      this._offering.placeSavood(feed.id).subscribe((data: SuccessObject) => {
+        if (data.success)
+          console.log("Wuhu");
+      }, (err) => {
+        console.log(err);
+      });
+    }
   }
 
   getDistanceString(item): string {

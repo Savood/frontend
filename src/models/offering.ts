@@ -25,4 +25,5 @@ export interface Offering {
   location?: OfferingLocation;
   requestedBy?: number;
   time?: Date;
+  savooded?: boolean;
 }
