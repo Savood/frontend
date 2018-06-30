@@ -7,6 +7,7 @@ import {MapsService} from "../../providers/maps/maps";
 import {Location} from "../../models/location";
 import {SuccessObject} from "../../models/successObject";
 import {User} from "../../models/user";
+import {TranslateService} from "@ngx-translate/core";
 
 @IonicPage()
 @Component({
@@ -24,13 +25,15 @@ export class OfferingDetailPage {
   browser_local = null;
 
   constructor(public navCtrl: NavController,
-              navParams: NavParams,
+              public navParams: NavParams,
               public _offering: OfferingsService,
-              public _maps: MapsService) {
+              public _maps: MapsService,
+              public _translate: TranslateService) {
     this.offering = navParams.get('offering');
     this.browser_local = navParams.get('browser_lang');
-
-    console.log(this.offering);
+    if(!this.browser_local){
+      this.browser_local = this._translate.getBrowserLang();
+    }
   }
 
   async ionViewWillEnter(){

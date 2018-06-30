@@ -25,7 +25,7 @@ export class JSMapsService {
       });
   }
 
-  async addMarker(location: Location, title: string, draggable: boolean) {
+  async addMarker(location: Location, title: string, draggable: boolean, icon?:object) {
     let latLng = new LatLng(location.latitude, location.longitude);
 
     return new Marker({
@@ -33,7 +33,8 @@ export class JSMapsService {
       position: latLng,
       map: this.map,
       draggable: draggable,
-      optimized: false
+      optimized: false,
+      icon: icon
     });
   }
 

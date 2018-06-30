@@ -9,7 +9,7 @@
   "SLOGAN": "only survived food is good",
 
   "TAB1_TITLE": "Items",
-  "TAB2_TITLE": "Search",
+  "TAB2_TITLE": "Map",
   "TAB3_TITLE": "Messages",
   "MAP_TITLE": "Map",
   "TUTORIAL_SKIP_BUTTON": "Skip",
@@ -137,5 +137,8 @@
   "GO":"Go!",
   "TELEPHONE":"Phonenumber",
 
-  "CREATE_USER_SUCCESS":"Now it is done! You can personalise your profile under the settings tab"
+  "CREATE_USER_SUCCESS":"Now it is done! You can personalise your profile under the settings tab",
+
+  "OFFERING_MAP_TILE" :"Map",
+  "MAP_LOADING":"One Second, we are just distributing the offerings..."
 }

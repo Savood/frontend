@@ -46,8 +46,28 @@ export class MapsService {
    * @param draggable Makes the Marker draggable if true
    * @returns Promise<Marker>, where Marker is defined by the used platform
    */
-  async newMarker(location: Location, title: string, draggable?: boolean): Promise<any> {
-    return this.map.addMarker(location, title, draggable)
+  async newMarker(location: Location, title: string, draggable?: boolean, icon?:string): Promise<any> {
+
+    let image:{size:any, origin:any , anchor:any, url?:string}= {
+      size: new google.maps.Size(30, 35),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(15, 35)
+    };
+
+    switch(icon){
+      case 'offering':
+        image.url= '../../assets/icon/offering_not_savooded_ico.png';
+        break;
+      case 'me':
+        image.url= '../../assets/icon/me.png';
+        break;
+      case 'savood':
+        image.url= '../../assets/icon/offering_savooded_ico.png';
+        break;
+      default:
+        image.url = icon;
+    }
+    return this.map.addMarker(location, title, draggable, image);
   }
 
   /**

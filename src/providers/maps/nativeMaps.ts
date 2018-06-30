@@ -22,14 +22,17 @@ export class NativeMapsService {
       });
   }
 
-  async addMarker(location: Location, title: string, draggable: boolean) {
+
+
+  async addMarker(location: Location, title: string, draggable: boolean, icon?:object) {
 
     let latLng = new LatLng(location.latitude, location.longitude);
 
     return this.map.addMarker({
       title: title,
       position: latLng,
-      draggable: draggable
+      draggable: draggable,
+      icon: icon,
     }).then(
       (marker) => {
         return marker;

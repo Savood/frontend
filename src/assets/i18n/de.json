@@ -11,7 +11,7 @@
 
 
   "TAB1_TITLE": "Items",
-  "TAB2_TITLE": "Suche",
+  "TAB2_TITLE": "Rettungskarte",
   "TAB3_TITLE": "Nachrichten",
   "TAB4_TITLE": "Account",
 
@@ -137,5 +137,8 @@
   "GO":"Los gehts!",
   "TELEPHONE":"Telefonnummer",
 
-  "CREATE_USER_SUCCESS":"Jetzt kann es endlich los gehen. Innerhalb des Einstellungstab können sie ihr Profil weiter personifizieren."
+  "CREATE_USER_SUCCESS":"Jetzt kann es endlich los gehen. Innerhalb des Einstellungstab können sie ihr Profil weiter personifizieren.",
+
+  "OFFERING_MAP_TILE":"Rettungskarte",
+  "MAP_LOADING":"Kleinen Moment, wir verteilen kurz das Essen..."
 }
