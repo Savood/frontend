@@ -41,6 +41,9 @@ export class OfferingMapPage {
   }
 
   async initMap() {
+
+    const default_radius = 1000
+
     let loading = this.loadingCtrl.create({
       content: this.mapLoadingString,
       enableBackdropDismiss: true
@@ -48,13 +51,18 @@ export class OfferingMapPage {
     loading.present();
     let position = await this._maps.getGPS();
 
-    this.feed = await this._offering.getFeed(position.latitude,position.longitude, 1000).toPromise();
+    this.feed = await this._offering.getFeed(position.latitude,position.longitude, default_radius).toPromise();
 
     this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
-    loading.dismiss();
 
+
+
+    //Set user marker
     let user_marker = await this._maps.newMarker({latitude: position.latitude, longitude: position.longitude}, 'userPos', false,"me");
     this._maps.addListener(user_marker, 'click', ()=>{console.log("Hallo")});
+
+    //Set circle
+    let circle = await this._maps.createCircle({latitude: position.latitude, longitude: position.longitude},default_radius,'#6FD800');
 
     this.feed.forEach(async (item)=>{
       let marker = await this._maps.newMarker({latitude: item.location.coordinates[0],
@@ -62,7 +70,7 @@ export class OfferingMapPage {
         item.name, false, item.savooded?"savood":"offering");
       this._maps.addListener(marker, 'click', ()=>{console.log("Hallo");this.clickMarker(item);});
     });
-    // this._maps.addListener(user_marker, 'dragend', () => drag_user());
+    loading.dismiss();
   }
 
   goToUser(){

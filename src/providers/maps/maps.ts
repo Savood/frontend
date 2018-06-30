@@ -181,4 +181,16 @@ export class MapsService {
 
     return d < threshold? {amount: Number.parseFloat(d_m), unit: "m"}: {amount: Number.parseFloat(d_km_string), unit: "km"};
   }
+
+
+  /**
+   * Creates Circle on the map
+   * @param location the location of the circles centre
+   * @param radius the radius of the circle
+   * @param color the color of the circle
+   * @returns
+   */
+  async createCircle(location:Location, radius:number, color:string){
+    return this.map.createCircle(location,radius,color);
+  }
 }
