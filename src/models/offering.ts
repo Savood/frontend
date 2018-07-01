@@ -10,16 +10,20 @@
  * Do not edit the class manually.
  */
 
+import { Address } from './address';
+import { OfferingLocation } from './offeringLocation';
+import {UserShort} from "./userShort";
 
 
 export interface Offering {
-    _id?: string;
-    name?: string;
-    header?: string;
-    creatorId?: string;
-    bestByDate?: string;
-    location?: string;
-    avatarId?: string;
-    requestedBy?: number;
-    time?: Date;
+  id?: string;
+  name?: string;
+  description?: string;
+  creator: UserShort;
+  bestByDate?: string;
+  address?: Address;
+  location?: OfferingLocation;
+  requestedBy?: number;
+  time?: Date;
+  savooded?: boolean;
 }

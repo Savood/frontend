@@ -46,8 +46,28 @@ export class MapsService {
    * @param draggable Makes the Marker draggable if true
    * @returns Promise<Marker>, where Marker is defined by the used platform
    */
-  async newMarker(location: Location, title: string, draggable?: boolean): Promise<any> {
-    return this.map.addMarker(location, title, draggable)
+  async newMarker(location: Location, title: string, draggable?: boolean, icon?:string): Promise<any> {
+
+    let image:{size:any, origin:any , anchor:any, url?:string}= {
+      size: new google.maps.Size(30, 35),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(15, 35)
+    };
+
+    switch(icon){
+      case 'offering':
+        image.url= '../../assets/icon/offering_not_savooded_ico.png';
+        break;
+      case 'me':
+        image.url= '../../assets/icon/me.png';
+        break;
+      case 'savood':
+        image.url= '../../assets/icon/offering_savooded_ico.png';
+        break;
+      default:
+        image.url = icon;
+    }
+    return this.map.addMarker(location, title, draggable, image);
   }
 
   /**
@@ -125,7 +145,23 @@ export class MapsService {
     });
   }
 
-  getDistance(start: Location, end: Location, km?: boolean): number {
+  /**
+   *  Returns the distanceString between 2 Locations
+   *
+   * @param start
+   * @param end
+   * @param threshold for differentiating between meters and kilometers, default: 1000
+   * @param round number of numbers behind the comma
+   * @returns {number}
+   */
+  getDistance(start: Location, end: Location, threshold?:number, round?:number): {amount: number, unit: string} {
+    if(!threshold){
+      threshold = 1000;
+    }
+    if(!round){
+      round = 2;
+    }
+
     let rad = function (x) {
       return x * Math.PI / 180;
     };
@@ -139,6 +175,22 @@ export class MapsService {
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     let d: number = R * c;
 
-    return km ? d/1000 : d;
+    let d_m:any = d.toFixed(round);
+    let d_km:number = d_m/1000;
+    let d_km_string:string = d_km.toFixed(round);
+
+    return d < threshold? {amount: Number.parseFloat(d_m), unit: "m"}: {amount: Number.parseFloat(d_km_string), unit: "km"};
+  }
+
+
+  /**
+   * Creates Circle on the map
+   * @param location the location of the circles centre
+   * @param radius the radius of the circle
+   * @param color the color of the circle
+   * @returns
+   */
+  async createCircle(location:Location, radius:number, color:string){
+    return this.map.createCircle(location,radius,color);
   }
 }

@@ -9,7 +9,7 @@
   "SLOGAN": "only survived food is good",
 
   "TAB1_TITLE": "Items",
-  "TAB2_TITLE": "Search",
+  "TAB2_TITLE": "Map",
   "TAB3_TITLE": "Messages",
   "MAP_TITLE": "Map",
   "TUTORIAL_SKIP_BUTTON": "Skip",
@@ -51,6 +51,10 @@
   "AREEQUAL": "Ooops, your passwords do not match eachother. But don't panic, you can give it another try.",
   "PASSREQ": "We need you to have password, because otherwise people will come and your career as an hero will suffer.",
   "PASSMINLEN": "To be sure about your heroism we need you to have an password with more than 4 letters.",
+
+
+  "NEXT":"Next",
+
   "LIST_MASTER_TITLE": "Items",
   "ITEM_CREATE_TITLE": "New Item",
   "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
@@ -65,6 +69,7 @@
   "OFFERINGS_TITLE": "All Savoods",
   "COMMENTS": "Comments",
   "LIKES": "Likes",
+
   "CHAT": "Chat",
   "CHATS": "Chats",
   "CITY": "City",
@@ -109,5 +114,31 @@
   "USE_CURRENT_LOCATION": "Use Current Location",
   "USE_ENTERED_LOCATION": "Use Entered Location",
   "USE_POINTER_LOCATION": "Use Pointer Location",
-  "ZIP": "ZIP Code"
+  "ZIP": "ZIP Code",
+
+  "WELCOME": "Now you are a Savooder!",
+  "SLIDE_1_INTROTEXT":"Congrats! Now you can start saving the world",
+
+  "SLIDE_2_HEADER":"It's time to introduce yourself!",
+  "SLIDE_2_INFOTEXT":"To save food it is necessary to introduce yourself to the community.",
+
+  "SLIDE_3_INFOTEXT":"Let's start with your Name:",
+  "NAME":"Firstname",
+  "FAMILY_NAME":"Lastname",
+  "SLIDE_4_INFOTEXT":"Now you can add a little description about yourself.",
+  "DESCRIPTION":"Description",
+
+  "SLIDE_5_INFOTEXT":"Now you can give us your phonenumber to get in touch with other Savooders.",
+
+  "SLIDE_6_INFOTEXT": "At last you can enter a default address for your Offerings.",
+
+  "SLIDE_7_INFOTEXT": "We wish you good luck for saving our food and world!",
+  "SLIDE_7_HEADER": "Aaaand it's done!",
+  "GO":"Go!",
+  "TELEPHONE":"Phonenumber",
+
+  "CREATE_USER_SUCCESS":"Now it is done! You can personalise your profile under the settings tab",
+
+  "OFFERING_MAP_TILE" :"Map",
+  "MAP_LOADING":"One Second, we are just distributing the offerings..."
 }

@@ -19,18 +19,16 @@ import {Observable} from 'rxjs/Observable';
 import '../rxjs-operators';
 
 import {Chat} from '../../models/chat';
-import {InvalidParameterInput} from '../../models/invalidParameterInput';
 import {Message} from '../../models/message';
 
 import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
 import {Configuration} from '../configuration';
-import {CustomHttpUrlEncodingCodec} from '../encoder';
-
+import {env} from '../../environment/environment';
 
 @Injectable()
 export class MessagesService {
 
-  protected basePath = 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0';
+  protected basePath = env.api_endpoint;
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
 

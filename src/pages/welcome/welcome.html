@@ -1,13 +1,74 @@
-<ion-content scroll="false">
-  <div class="splash-bg"></div>
-  <div class="splash-info">
-    <div class="splash-logo"></div>
-    <div class="splash-intro">
-      {{ 'WELCOME_INTRO' | translate }}
-    </div>
-  </div>
-  <div padding>
-    <button ion-button block (click)="signup()">{{ 'SIGNUP' | translate }}</button>
-    <button ion-button block (click)="login()" class="login">{{ 'LOGIN' | translate }}</button>
-  </div>
+<ion-content>
+
+  <ion-slides pager>
+      <!--Willkommen-->
+      <ion-slide>
+        <img class="circle" src="../../assets/img/slide_1.jpg"/>
+        <h1>{{"WELCOME"| translate}}</h1>
+        <p text-wrap> {{"SLIDE_1_INTROTEXT"|translate}} </p>
+      </ion-slide>
+      <!--Vorstellung-->
+      <ion-slide>
+        <h1>{{"SLIDE_2_HEADER"| translate}}</h1>
+        <p text-wrap> {{"SLIDE_2_INFOTEXT"|translate}} </p>
+      </ion-slide>
+      <!--Name-->
+      <ion-slide>
+        <p>{{"SLIDE_3_INFOTEXT"|translate}}</p>
+        <form *ngIf="nameForm" [formGroup]="nameForm" (submit)="finishName()">
+          <ion-item>
+            <ion-label color="primary" floating>{{'NAME'|translate}}</ion-label>
+            <ion-input formControlName="firstname"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" floating>{{'FAMILY_NAME'|translate}}</ion-label>
+            <ion-input formControlName="lastname"></ion-input>
+          </ion-item>
+        </form>
+      </ion-slide>
+      <!--Beschreibung-->
+      <ion-slide>
+        <p>{{"SLIDE_4_INFOTEXT"|translate}}</p>
+        <ion-item>
+          <ion-label color="primary" floating>{{'DESCRIPTION'|translate}}</ion-label>
+          <ion-textarea [(ngModel)]="user.description"></ion-textarea>
+        </ion-item>
+      </ion-slide>
+      <!--Telefon-->
+      <ion-slide>
+        <p>{{"SLIDE_5_INFOTEXT"|translate}}</p>
+        <ion-item>
+          <ion-label color="primary" floating>{{'TELEPHONE'|translate}}</ion-label>
+          <ion-input [(ngModel)]="user.phone"></ion-input>
+        </ion-item>
+      </ion-slide>
+      <!--Standardaddresse-->
+      <ion-slide>
+        <p>{{"SLIDE_6_INFOTEXT"|translate}}</p>
+        <ion-item>
+          <ion-label color="primary" floating>{{'STREET'|translate}}</ion-label>
+          <ion-input [(ngModel)]="address.street"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" floating>{{'NUMBER'|translate}}</ion-label>
+          <ion-input  [(ngModel)]="address.number"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" floating>{{'CITY'|translate}}</ion-label>
+          <ion-input [(ngModel)]="address.city"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" floating>{{'ZIP'|translate}}</ion-label>
+          <ion-input [(ngModel)]="address.zip"></ion-input>
+        </ion-item>
+      </ion-slide>
+      <!--Finish-->
+      <ion-slide>
+        <p>{{"SLIDE_7_INFOTEXT"|translate}}</p>
+        <p class="error" *ngIf="!nameForm.valid" (click)="swipeToName()">{{"NO_NAME_ERROR"|translate}}</p>
+        <button ion-button outline [disabled]="!nameForm.valid" (click)="finishCreation()">{{"GO" | translate}}</button>
+      </ion-slide>
+
+  </ion-slides>
+  <ion-spinner *ngIf="loading"></ion-spinner>
 </ion-content>

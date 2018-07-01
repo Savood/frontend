@@ -3,6 +3,7 @@ import {Location} from "../../models/location";
 import {} from '@types/googlemaps';
 import LatLng = google.maps.LatLng;
 import Marker = google.maps.Marker;
+import Circle = google.maps.Circle;
 
 @Injectable()
 export class JSMapsService {
@@ -25,7 +26,7 @@ export class JSMapsService {
       });
   }
 
-  async addMarker(location: Location, title: string, draggable: boolean) {
+  async addMarker(location: Location, title: string, draggable: boolean, icon?:object) {
     let latLng = new LatLng(location.latitude, location.longitude);
 
     return new Marker({
@@ -33,7 +34,8 @@ export class JSMapsService {
       position: latLng,
       map: this.map,
       draggable: draggable,
-      optimized: false
+      optimized: false,
+      icon: icon
     });
   }
 
@@ -83,6 +85,28 @@ export class JSMapsService {
           reject('GEOCODER_ERROR' + status);
         }
       });
+    });
+  }
+
+  /**
+   * Creates Circle on the map
+   * @param location the location of the circles centre
+   * @param radius the radius of the circle
+   * @param color the color of the circle
+   * @returns
+   */
+  async createCircle(location:Location, radius:number, color:string){
+    let latLng = new LatLng(location.latitude, location.longitude);
+
+    return new Circle({
+      strokeColor: color,
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor:color,
+      fillOpacity: 0.15,
+      map: this.map,
+      center: latLng,
+      radius: radius
     });
   }
 

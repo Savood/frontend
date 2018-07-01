@@ -1,5 +1,6 @@
 import {
-  HttpErrorResponse, HttpHandler, HttpHeaderResponse, HttpInterceptor, HttpProgressEvent, HttpRequest, HttpResponse,
+  HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaderResponse, HttpInterceptor, HttpProgressEvent, HttpRequest,
+  HttpResponse,
   HttpSentEvent,
   HttpUserEvent
 } from "@angular/common/http";
@@ -20,83 +21,69 @@ export class AuthInterceptorService implements HttpInterceptor {
   isRefreshingToken: boolean = false;
   tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
-  constructor(private authService: AuthProvider, public app:App) {
+  constructor(private authService: AuthProvider, public app: App) {
 
   }
 
   addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
     let header = {setHeaders: {Authorization: 'Bearer ' + token}};
     let req_erg = req.clone(header);
-    console.log(typeof(req_erg));
     return req_erg;
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
     //TODO Fix this
-    console.log("Intercepting");
-    return next.handle(req);
-    // let token = this.authService.getToken();
-    // return next.handle(this.addToken(req, token))
-//       .catch(error => {
-//         console.log("Error", error)
-// ;
-//
-//         if (error instanceof HttpErrorResponse) {
-//           switch ((<HttpErrorResponse>error).status) {
-//             case 401:
-//               return this.handle401Error(req, next);
-//           }
-//         } else {
-//           return next.handle(req);
-//         }
-//       });
+    let token = this.authService.getToken();
+
+    return next.handle(this.addToken(req, token)).catch(error => {
+      if (error instanceof HttpErrorResponse) {
+        if ((<HttpErrorResponse>error).status == 401)
+          return this.handle401Error(req, next);
+        else {
+          return next.handle(req);
+        }
+      } else {
+        return next.handle(req);
+      }
+    });
   }
 
   handle401Error(req: HttpRequest<any>, next: HttpHandler) {
     console.log("401 Error");
 
-      if (!this.isRefreshingToken) {
-          this.isRefreshingToken = true;
+    if (!this.isRefreshingToken) {
+      this.isRefreshingToken = true;
 
-          // Reset here so that the following requests wait until the token
-          // comes back from the refreshToken call.
-          this.tokenSubject.next(null);
+      this.tokenSubject.next(null);
 
-          return this.authService.refreshToken()
-            .switchMap((newToken:Token) => {
-              console.log("new_token", newToken);
-              if (newToken) {
-                this.tokenSubject.next(newToken.id_token);
-                return next.handle(this.addToken(req, newToken.id_token));
-              }
-
-              // If we don't get a new token, we are in trouble so logout.
-              return this.logoutUser();
-            })
-            .catch(error => {
-              // If there is an exception calling 'refreshToken', bad news so logout.
-              return this.logoutUser();
-            })
-            .finally(() => {
-              this.isRefreshingToken = false;
-            });
-      } else {
-        return this.tokenSubject
-          .filter(token => token != null)
-          .take(1)
-          .switchMap(token => {
-            return next.handle(this.addToken(req, token));
-          });
+      if (this.authService.getRefreshToken()) {
+        this.authService.renewToken().then((token: { id_token: string }) => {
+          if (token) {
+            this.tokenSubject.next(token.id_token);
+            this.isRefreshingToken = false;
+            return next.handle(this.addToken(req, token.id_token));
+          } else {
+            this.isRefreshingToken = false;
+            return this.logoutUser();
+          }
+        });
       }
+    } else {
+      return this.tokenSubject
+        .filter(token => token != null)
+        .take(1)
+        .switchMap(token => {
+          return next.handle(this.addToken(req, token));
+        });
+    }
   }
 
-  handle400Error(req:HttpRequest<any>, next: HttpHandler){
+  handle400Error(req: HttpRequest<any>, next: HttpHandler) {
     return Observable.throw('Error');
   }
 
   logoutUser() {
-    // Route to the login page (implementation up to you)
     //TODO send back to login
     return Observable.throw("");
   }

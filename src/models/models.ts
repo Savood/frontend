@@ -5,5 +5,5 @@ export * from './message';
 export * from './offering';
 export * from './principal';
 export * from './user';
-export * from './userAddress';
+export * from './address';
 export * from './userShort';

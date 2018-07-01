@@ -3,6 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
 
 import { OfferingsPage } from './offerings';
+import {MomentModule} from "angular2-moment";
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { OfferingsPage } from './offerings';
   ],
   imports: [
     IonicPageModule.forChild(OfferingsPage),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    MomentModule
   ],
   exports: [
     OfferingsPage

@@ -42,9 +42,12 @@ export class LoginPage {
       this.passwordPlaceholder = value.PASSWORD;
     });
 
-    if (this._auth.isLoggedIn()) {
-      navCtrl.setRoot(MainPage);
-    }
+    this._auth.isLoggedIn().then(loggedIn => {
+        if (loggedIn) {
+          navCtrl.setRoot(MainPage);
+        }
+      }
+    );
 
     this._deeplinks.route({
       '/profile/:profileId': 'SettingsPage',
@@ -56,7 +59,7 @@ export class LoginPage {
         }
       },
       (nomatch) => {
-        if(nomatch !== 'cordova_not_available'){
+        if (nomatch !== 'cordova_not_available') {
           let toast = this.toastCtrl.create({
             message: "RESSOURCE_NOT_AVAILABLE",
             duration: 3000,

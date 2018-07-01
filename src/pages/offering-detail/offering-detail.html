@@ -10,30 +10,35 @@
 
 <ion-content elestic-header fullscreen>
   <div>
-    <img style="height: 60vh; width: auto; object-fit: cover" [src]="offering.image" imageViewer >
+    <img style="height: 60vh; width: auto; object-fit: cover" [src]="getImageSource(offering)"  onError="this.src='../../assets/img/fallback_offering.jpg';" imageViewer />
 
     <div style="position: relative;">
 
       <ion-fab right bottom edge>
-        <button ion-fab fab-map color="primary">
+        <button ion-fab fab-map color="primary" (click)="placeSavood(offering)">
           <ion-icon name='restaurant'></ion-icon>
         </button>
       </ion-fab>
     </div>
     <ion-item>
-      <h1 ion-text text-wrap>{{offering.header}}</h1>
+      <h1 ion-text text-wrap>{{offering.name}}</h1>
       <!--<p>{{item.date}} </p>-->
       <ion-row>
         <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="pin"></ion-icon>
-            <div>{{offering.distance}}</div>
+          <button ion-button icon-left clear small (click) = "whichtab='info'" >
+            <ion-note>{{offering.time | amLocale: browser_local| amTimeAgo}}</ion-note>
           </button>
         </ion-col>
         <ion-col>
-          <button ion-button icon-left clear small>
+          <button ion-button icon-left clear small (click) = "whichtab='location'" >
+            <ion-icon name="pin"></ion-icon>
+            <div>{{distanceString}}</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small >
             <ion-icon name="restaurant"></ion-icon>
-            <div>{{offering.cum_savoods}}</div>
+            <div>{{offering.requestedBy}}</div>
           </button>
         </ion-col>
       </ion-row>
@@ -41,13 +46,9 @@
   </div>
   <!--<h5 padding style="margin: 0 0">{{offering.header}}</h5>-->
 
-  <div class="item-detail" padding>
-    <h2>{{offering.name}}</h2>
-    <p>{{offering.data}}</p>
-  </div>
 
   <div padding>
-    <ion-segment [(ngModel)]="whichtab" selectedIndex="0">
+    <ion-segment [(ngModel)]="whichtab" selectedIndex="0" (ionChange)="onSegmentChanged()">
       <ion-segment-button value="info">
         Information
       </ion-segment-button>
@@ -61,10 +62,10 @@
       <ion-card>
         <ion-item>
           <ion-avatar item-start>
-            <img [src]="offering.user?.avatar">
+            <img [src]="getUserAvatarPath(offering.creator)" onError="this.src='../../assets/img/user_fallback_avatar.png';">
           </ion-avatar>
-          <h2>{{offering.user.name}}</h2>
-          <h5>{{offering.date}}</h5>
+          <h2>{{offering.creator.firstname}}</h2>
+          <h5>{{offering.time |amLocale: browser_local| amCalendar}}</h5>
         </ion-item>
 
         <ion-item>
@@ -79,12 +80,12 @@
     </ion-list>
 
     <!--Location-->
-    <ion-list *ngSwitchCase="'location'">
+    <ion-list [style.display]="whichtab == 'location' ? 'block' : 'none'">
+      <div #map id="map" ></div>
       <ion-item>
-        <ion-thumbnail item-start>
-          <img src="img/thumbnail-kitten-1.jpg">
-        </ion-thumbnail>
-        <h2>Luna</h2>
+          <ion-icon name="pin" item-left></ion-icon>
+          {{offering.address?.street}} {{offering.address?.number}} <br />
+          {{offering.address?.zip}} {{offering.address?.city}}
       </ion-item>
     </ion-list>
   </div>

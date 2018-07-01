@@ -22,14 +22,28 @@ export class NativeMapsService {
       });
   }
 
-  async addMarker(location: Location, title: string, draggable: boolean) {
+  /**
+   * Creates Circle on the map
+   * @param location the location of the circles centre
+   * @param radius the radius of the circle
+   * @param color the color of the circle
+   * @returns
+   */
+  async createCircle(location:Location, radius:number, color:string){
+    let latLng = new LatLng(location.latitude, location.longitude);
+
+    return this.map.createCircle(latLng,radius,color);
+  }
+
+  async addMarker(location: Location, title: string, draggable: boolean, icon?:object) {
 
     let latLng = new LatLng(location.latitude, location.longitude);
 
     return this.map.addMarker({
       title: title,
       position: latLng,
-      draggable: draggable
+      draggable: draggable,
+      icon: icon,
     }).then(
       (marker) => {
         return marker;

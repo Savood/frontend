@@ -17,7 +17,7 @@ export class ChatOverviewPage {
   page: string = 'startOverview';
   pageTitleKey: string = 'MESSAGES_OFFERINGS_TITLE';
   pageTitle: string;
-  tab: string = "offerings";
+  tab: string = "feed";
 
   offerings: Offering[] = [];
   currentOffering: Offering;

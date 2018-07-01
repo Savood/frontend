@@ -1,7 +1,15 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {App, IonicPage, NavController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
 import {OfferingsService} from "../../providers/api/offerings.service";
+import {UsersService} from "../../providers/api/users.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {MapsService} from "../../providers/maps/maps";
+import {Location} from "../../models/location";
+import {Offering} from "../../models/offering";
+import {env} from "../../environment/environment";
+import {SuccessObject} from "../../models/successObject";
+import {TranslateService} from "@ngx-translate/core";
 
 @IonicPage()
 @Component({
@@ -9,62 +17,43 @@ import {OfferingsService} from "../../providers/api/offerings.service";
   templateUrl: 'offerings.html'
 })
 export class OfferingsPage {
-  cardItems: any[];
+  feed: Offering[] = null;
   toggle = false;
+  default_distance:number = 4000;
 
-  constructor(public navCtrl: NavController,public _auth: AuthProvider, public _offering: OfferingsService)
+  browser_local = null;
+  current_location:Location = null;
+
+
+  constructor(public navCtrl: NavController,
+              public _auth: AuthProvider,
+              public _offering: OfferingsService,
+              public _user: UsersService,
+              private appCtrl:App,
+              public _maps: MapsService,
+              public _translate: TranslateService)
   {
 
-    this._auth.refreshToken().subscribe(data=>console.log(data));
-    // this._offering.getOfferingById("1").subscribe((data)=>console.log(data), (err)=>console.log(err));
+    this.browser_local = _translate.getBrowserLang();
 
-
-
-    this.cardItems = [
-      {
-        user: {
-          avatar: 'assets/img/marty-avatar.png',
-          name: 'Marty McFly'
-        },
-        distance: "100 m",
-        header: "Spam for everyone",
-        date: 'November 5, 1955',
-        image: 'assets/img/foods/spam.jpg',
-        description: "Think of cheeseburgers like a Tinder match. They might not all be your soulmate but you’ve gotta find out to be sure. It can get a little messy and that’s just part of the fun. Some are cheesy, others can be a little dry, and the rare few are a disaster. There are so many cheeseburgers out there it can be hard to commit to just one favourite. That being said, when you know, you just know.Everyone has their perfect match. Sometimes it’s just around the corner, other times you have to travel the world in search of it. Wherever your perfect cheeseburger is, it’s out there.",
-        cum_like: 5,
-        cum_comments: 10,
-        cum_savoods:2,
-      },
-      {
-        user: {
-          avatar: 'assets/img/sarah-avatar.png.jpeg',
-          name: 'Sarah Connor'
-        },
-        distance: "100 m",
-        header: "Wassermelone",
-
-        date: 'May 12, 1984',
-        image: 'assets/img/foods/wassermelone.jpg',
-        description: 'Hatte ich Lust drauf. Dann hatte ich es. Dann wollte ich nicht mehr. Vielleicht ihr',
-        cum_like: 5,
-        cum_comments: 10,
-        cum_savoods:2
-      },
-      {
-        user: {
-          avatar: 'assets/img/ian-avatar.png',
-          name: 'Dr. Ian Malcolm'
-        },
-        distance: "100 m",
-        header: "Kiwi, gut gemästet zum abholen.",
-        date: 'June 28, 1990',
-        image: 'assets/img/foods/Kiwi.jpg',
-        description: 'Hab nen paar zu viel gekauft aber wenn noch wer will, meine Kiwis warten nur auf euch.',
-        cum_like: 5,
-        cum_comments: 10,
-        cum_savoods:2
+    this._auth.getActiveUser().subscribe((data)=>{}, (err:HttpErrorResponse)=>{
+      if(err.status == 404){
+        this.appCtrl.getRootNav().push("WelcomePage");
       }
-    ];
+    });
+  }
+
+  async ionViewWillEnter(){
+    this.current_location  = await this._maps.getGPS();
+
+    this._offering.getFeed(this.current_location.latitude, this.current_location.longitude, this.default_distance)
+      .subscribe((data:Offering[])=>{
+        this.feed = data;
+        console.log(data[0].time);
+      }, err=>{
+          console.log("ERROR", err);
+        }
+      );
   }
 
   /**
@@ -72,7 +61,8 @@ export class OfferingsPage {
    */
   openItem(item) {
     this.navCtrl.push('OfferingDetailPage', {
-      offering: item
+      offering: item,
+      browser_lang: this.browser_local
     });
   }
 
@@ -80,4 +70,27 @@ export class OfferingsPage {
     this.navCtrl.push('CreateOfferingPage');
   }
 
+  getImageSource(item:Offering){
+    let _id = item.id
+    let path =  `${env.api_endpoint}/offerings/${_id}/image.jpeg:`;
+
+  }
+
+  placeSavood(feed){
+    if(feed.savooded){
+      //TODO Send to message side
+    }else {
+      this._offering.placeSavood(feed.id).subscribe((data: SuccessObject) => {
+        if (data.success)
+          console.log("Wuhu");
+      }, (err) => {
+        console.log(err);
+      });
+    }
+  }
+
+  getDistanceString(item): string {
+    let dist = this._maps.getDistance(this.current_location, this._offering.changeOfferingLocationToLocation(item.location));
+    return `${dist.amount} ${dist.unit}`;
+  }
 }

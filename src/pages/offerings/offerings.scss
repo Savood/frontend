@@ -11,6 +11,10 @@ page-cards {
     transition: opacity 0.5s ease-in-out;
   }
 
+  .savooded{
+    border: 3px solid map-get($colors, secondary);
+  }
+
   .blureffect {
     min-width: 100vw;
     min-height: 100%;
