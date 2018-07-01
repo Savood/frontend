@@ -128,7 +128,8 @@ export class NativeMapsService {
       marker.on(nativeEvent).subscribe(
         () => {
           console.log('dragged');
-          desiredFunction;
+          console.log(desiredFunction);
+          () => desiredFunction;
         }
       )
     } else {
