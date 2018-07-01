@@ -7,7 +7,8 @@ export class NativeMapsService {
 
   map: any;
 
-  constructor(public googleMaps: GoogleMaps,) { }
+  constructor(public googleMaps: GoogleMaps,) {
+  }
 
   init(element: ElementRef, location: Location, zoom: number) {
 
@@ -29,13 +30,13 @@ export class NativeMapsService {
    * @param color the color of the circle
    * @returns
    */
-  async createCircle(location:Location, radius:number, color:string){
+  async createCircle(location: Location, radius: number, color: string) {
     let latLng = new LatLng(location.latitude, location.longitude);
 
-    return this.map.createCircle(latLng,radius,color);
+    return this.map.createCircle(latLng, radius, color);
   }
 
-  async addMarker(location: Location, title: string, draggable: boolean, icon?:object) {
+  async addMarker(location: Location, title: string, draggable: boolean, icon?: object) {
 
     let latLng = new LatLng(location.latitude, location.longitude);
 
@@ -56,7 +57,7 @@ export class NativeMapsService {
     return location;
   }
 
-  setMarkerPosition(marker: Marker, location: Location){
+  setMarkerPosition(marker: Marker, location: Location) {
     let latLng: LatLng = new LatLng(location.latitude, location.longitude);
     marker.setPosition(latLng);
   }
@@ -104,18 +105,31 @@ export class NativeMapsService {
         });
     });
   }
-  addListener(marker: Marker, event: any, desiredFunction: any){
+
+  addListener(marker: Marker, event: any, desiredFunction: any) {
     let nativeEvent: string;
-    switch(event){
-      case 'click': nativeEvent = 'MARKER_CLICK'; break;
-      case 'dragend': nativeEvent = 'MARKER_DRAG_END'; break;
-      case 'dragstart': nativeEvent = 'MARKER_DRAG_START'; break;
-      case 'drag': nativeEvent = 'MARKER_DRAG'; break;
-      default: nativeEvent = null;
+    switch (event) {
+      case 'click':
+        nativeEvent = 'MARKER_CLICK';
+        break;
+      case 'dragend':
+        nativeEvent = 'MARKER_DRAG_END';
+        break;
+      case 'dragstart':
+        nativeEvent = 'MARKER_DRAG_START';
+        break;
+      case 'drag':
+        nativeEvent = 'MARKER_DRAG';
+        break;
+      default:
+        nativeEvent = null;
     }
-    if(nativeEvent){
+    if (nativeEvent) {
       marker.on(nativeEvent).subscribe(
-        () => desiredFunction
+        () => {
+          console.log('dragged');
+          desiredFunction;
+        }
       )
     } else {
       alert("Event not found");

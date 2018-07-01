@@ -122,10 +122,20 @@ export class MapsService {
     });
   }
 
+  /**
+   * Add listener to a marker
+   * @param marker Marker which should have
+   * @param event Event which should listened for
+   * @param desiredFunction Function which should be run when event happens
+   */
   addListener(marker: any, event: any, desiredFunction: any) {
     this.map.addListener(marker, event, desiredFunction);
   }
 
+  /**
+   * Get current location of the device
+   * @returns {Promise<Location>} Promise of the Location in default frontend Location format
+   */
   getGPS(): Promise<Location> {
     return new Promise<any>((resolve, reject) => {
       if (this.geolocation) {
