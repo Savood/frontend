@@ -9,7 +9,10 @@ import {SuccessObject} from "../../models/successObject";
 import {User} from "../../models/user";
 import {TranslateService} from "@ngx-translate/core";
 
-@IonicPage()
+@IonicPage(
+  {
+    segment: 'savood/:offeringId'
+  })
 @Component({
   selector: 'page-item-detail',
   templateUrl: 'offering-detail.html'
@@ -68,11 +71,10 @@ export class OfferingDetailPage {
     return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
   }
 
-<<<<<<< HEAD
   sharePage(){
 
   }
-=======
+
   placeSavood(){
     this._offering.placeSavood(this.offering.id).subscribe((data:SuccessObject)=>{
       if(data.success)
@@ -86,6 +88,4 @@ export class OfferingDetailPage {
     let dist = this._maps.getDistance(this.current_location, this._offering.changeOfferingLocationToLocation(item.location));
     this.distanceString = `${dist.amount} ${dist.unit}`;
   }
-
->>>>>>> develop
 }
