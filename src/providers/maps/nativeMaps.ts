@@ -124,13 +124,10 @@ export class NativeMapsService {
       default:
         nativeEvent = null;
     }
+
     if (nativeEvent) {
       marker.on(nativeEvent).subscribe(
-        () => {
-          console.log('dragged');
-          console.log(desiredFunction);
-          () => desiredFunction;
-        }
+        () => desiredFunction()
       )
     } else {
       alert("Event not found");
