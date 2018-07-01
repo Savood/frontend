@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 import {env} from "../../environment/environment";
 import {Offering} from "../../models/offering";
 import {OfferingsService} from "../../providers/api/offerings.service";
@@ -8,6 +8,7 @@ import {Location} from "../../models/location";
 import {SuccessObject} from "../../models/successObject";
 import {User} from "../../models/user";
 import {TranslateService} from "@ngx-translate/core";
+import {SocialSharing} from "@ionic-native/social-sharing";
 
 @IonicPage(
   {
@@ -24,62 +25,90 @@ export class OfferingDetailPage {
   whichtab: string;
 
   distanceString: string;
-  current_location:Location = null;
+  current_location: Location = null;
   browser_local = null;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public _offering: OfferingsService,
+              public toastCtrl: ToastController,
               public _maps: MapsService,
+              public platform: Platform,
+              private _social: SocialSharing,
               public _translate: TranslateService) {
     this.offering = navParams.get('offering');
     this.browser_local = navParams.get('browser_lang');
-    if(!this.browser_local){
+    if (!this.browser_local) {
       this.browser_local = this._translate.getBrowserLang();
     }
   }
 
-  async ionViewWillEnter(){
+  async ionViewWillEnter() {
     this.whichtab = "info";
-    this.current_location  = await this._maps.getGPS();
+    this.current_location = await this._maps.getGPS();
     await this.getDistanceString(this.offering);
 
   }
 
-  onSegmentChanged(){
+  onSegmentChanged() {
 
   }
 
   ionViewDidEnter() {
-      this.initMap();
+    this.initMap();
   }
 
   initMap() {
     let offering = this.offering;
 
-    this._maps.initMap(this.mapElement, {latitude: offering.location.coordinates[0], longitude: offering.location.coordinates[1]});
-    this._maps.newMarker({latitude: offering.location.coordinates[0], longitude: offering.location.coordinates[1]}, 'offeringPos', false).then(
+    this._maps.initMap(this.mapElement, {
+      latitude: offering.location.coordinates[0],
+      longitude: offering.location.coordinates[1]
+    });
+    this._maps.newMarker({
+      latitude: offering.location.coordinates[0],
+      longitude: offering.location.coordinates[1]
+    }, 'offeringPos', false).then(
       (marker) => {
       });
   }
 
-  getImageSource(item:Offering){
-    return `${env.api_endpoint}/offerings/${item.id}/image.jpeg:`;
+  getImageSource(item: Offering) {
+    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg:`;
   }
 
-  getUserAvatarPath(user:User){
+  getUserAvatarPath(user: User) {
     return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
   }
 
-  sharePage(){
+  sharePage() {
+    let route: string[] = this.platform.url().split('/');
 
+    route.splice(0, route.indexOf('savood'));
+
+    let shareUrl: string = 'savood.com/#';
+
+    for (let part of route) {
+      shareUrl += '/' + part;
+    }
+
+    if (this.platform.is('cordova') &&
+      (this.platform.is('ios') || this.platform.is('android'))) {
+      this._social.share('', '', '', shareUrl)
+    } else {
+      this.toastCtrl.create({
+        position: 'top',
+        message: shareUrl,
+        duration: 7000
+      }).present();
+    }
   }
 
-  placeSavood(){
-    this._offering.placeSavood(this.offering.id).subscribe((data:SuccessObject)=>{
-      if(data.success)
+  placeSavood() {
+    this._offering.placeSavood(this.offering._id).subscribe((data: SuccessObject) => {
+      if (data.success)
         console.log("Wuhu");
-    },(err)=>{
+    }, (err) => {
       console.log(err);
     });
   }

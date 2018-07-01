@@ -18,6 +18,9 @@ import {User} from "../../models/user";
 import {AuthProvider} from "../../providers/auth/auth";
 import {LoginPage} from "../login/login";
 import {SocialSharing} from "@ionic-native/social-sharing";
+import {GoogleMaps} from "@ionic-native/google-maps";
+import {JSMapsService} from "../../providers/maps/jsMaps";
+import {NativeMapsService} from "../../providers/maps/nativeMaps";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -407,18 +410,24 @@ export class SettingsPage {
 
   sharePage(){
     let route: string[] = this.platform.url().split('/');
-    let tabPos: number;
-    for(let part of route){
-      if(part === 'profile'){
-        tabPos = route.indexOf(part);
-      }
-    }
-    route.splice(0,tabPos);
+
+    route.splice(0, route.indexOf('profile'));
+
     let shareUrl: string = 'savood.com/#';
     for(let part of route){
       shareUrl += '/' + part;
     }
-    console.log(shareUrl);
-    this._social.share('','','',shareUrl)
+
+    if (this.platform.is('cordova') &&
+      (this.platform.is('ios') || this.platform.is('android'))) {
+      this._social.share('','','',shareUrl)
+    } else {
+      this.toastCtrl.create({
+        position: 'top',
+        message: shareUrl,
+        duration: 7000
+      }).present();
+    }
+
   }
 }

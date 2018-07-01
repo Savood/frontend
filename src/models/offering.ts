@@ -16,7 +16,7 @@ import {UserShort} from "./userShort";
 
 
 export interface Offering {
-  id?: string;
+  _id?: string;
   name?: string;
   description?: string;
   creator: UserShort;
