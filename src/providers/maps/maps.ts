@@ -21,12 +21,12 @@ export class MapsService {
   constructor(public http: HttpClient,
               public plt: Platform,
               public geolocation: Geolocation) {
-    if (this.plt.is('cordova') &&
-      (this.plt.is('ios') || this.plt.is('android'))) {
-      this.map = new NativeMapsService(GoogleMaps);
-    } else {
+    //if (this.plt.is('cordova') &&
+     // (this.plt.is('ios') || this.plt.is('android'))) {
+      //this.map = new NativeMapsService(GoogleMaps);
+  //  } else {
       this.map = new JSMapsService();
-    }
+   // }
   }
 
   /**
