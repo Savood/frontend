@@ -77,7 +77,6 @@ export class ChatPage {
   }
 
   viewProfile(id: string) {
-    console.log(id)
     this.navCtrl.push('SettingsPage', {profileId: id, pageTitleKey: 'PROFILE_TITLE'});
   }
 }

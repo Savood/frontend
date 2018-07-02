@@ -19,7 +19,7 @@
   </div>
 
   <!-- OfferingOverview: See feedings related to the user -->
-  <ion-list *ngIf="page == 'startOverview' && offerings && tab == 'feed'">
+  <ion-list *ngIf="page == 'startOverview' && offerings && tab == 'offerings'">
     <button *ngFor="let offering of offerings" ion-item (click)="openChatOverview(offering)">
       <ion-avatar item-start>
         <img [src]="offering.avatarId">
