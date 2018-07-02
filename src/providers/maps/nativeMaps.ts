@@ -125,9 +125,14 @@ export class NativeMapsService {
         nativeEvent = null;
     }
 
+    console.log(nativeEvent);
+
     if (nativeEvent) {
       marker.on(nativeEvent).subscribe(
-        () => desiredFunction()
+        () => {
+          console.log(nativeEvent);
+          desiredFunction()
+        }
       )
     } else {
       alert("Event not found");

@@ -200,7 +200,7 @@ export class SettingsPage {
           (marker) => {
             this.locationMarker = marker;
             this.usePointerLocation();
-            this._maps.addListener(this.locationMarker, 'dragend', this.usePointerLocation);
+            this._maps.addListener(this.locationMarker, 'dragend', () => this.usePointerLocation());
           });
       }
     )
