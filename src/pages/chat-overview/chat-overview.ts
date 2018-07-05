@@ -60,7 +60,7 @@ export class ChatOverviewPage {
 
     if (this.page == "chats") {
       this.currentOffering = this.navParams.get('offering');
-      this.offeringChats = this.navParams.get('chats');
+      this.getChats(this.currentOffering._id);
     }
   }
 
@@ -72,10 +72,21 @@ export class ChatOverviewPage {
       });
   }
 
-  openChatOverview(offeringId: string) {
+  openChatOverview(offering: Offering) {
+    this.navCtrl.push('ChatOverviewPage',
+      {
+        page: "chats",
+        pageTitleKey: " ",
+        offering: offering,
+      }
+    );
+  }
+
+  getChats(offeringId: string) {
     this._messages.getAllChatsForOffering(offeringId).subscribe(
       (chats) => {
-        console.log(chats);
+        this.offeringChats = chats;
+
         if (chats.length == 1) {
           this.translate.get("OPENED_ONLY_CHAT").subscribe((message) => {
             this.toastCtrl.create({
@@ -89,15 +100,6 @@ export class ChatOverviewPage {
               chatId: chats[0]._id,
               partner: chats[0].partner
             });
-        } else {
-          this.navCtrl.push('ChatOverviewPage',
-            {
-              page: "chats",
-              pageTitleKey: " ",
-              offering: offeringId,
-              chats: chats
-            }
-          );
         }
       }
     );
