@@ -12,7 +12,7 @@
     <input type="file" class="button" (change)="detectFiles($event)">
   </ion-item>
   <button id="upload-button" ion-button color="stable" block
-          [disabled]="!selectedFiles" (click)="uploadFile(user)">
+          [disabled]="!selectedFiles" (click)="uploadFile()">
     Upload
   </button>
 </ion-content>

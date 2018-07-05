@@ -35,14 +35,23 @@ export class WebUploadPage {
     this.selectedFiles = ($event.target as HTMLInputElement).files;
   }
 
-  uploadFile(user) {
+  uploadFile() {
     if (this.navParams.get('type') === 'avatar') {
       const file = this.selectedFiles.item(0);
       if (file) {
         const blobImage: Blob = file;
+        console.log(blobImage.size);
         this.loading.present();
         this._user.usersIdImageJpegPost(this.navParams.get('userId'), blobImage).subscribe(
-          () => this.loading.dismiss()
+          () => {
+            this.loading.dismiss();
+            this.navCtrl.pop();
+            this.toastCtrl.create({
+              position: 'top',
+              message: "Bild hochgeladen!",
+              duration: 5000
+            }).present();
+          }
         );
       } else {
         console.error('No file found!');
@@ -53,7 +62,15 @@ export class WebUploadPage {
         const blobImage: Blob = file;
         this.loading.present();
         this._user.usersIdBackgroundimageJpegPost(this.navParams.get('userId'), blobImage).subscribe(
-          () => this.loading.dismiss()
+          () => {
+            this.loading.dismiss();
+            this.navCtrl.pop();
+            this.toastCtrl.create({
+              position: 'top',
+              message: "Bild hochgeladen!",
+              duration: 5000
+            }).present();
+          }
         );
       } else {
         console.error('No file found!');
