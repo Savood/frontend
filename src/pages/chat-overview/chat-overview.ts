@@ -70,7 +70,7 @@ export class ChatOverviewPage {
     return `${env.api_endpoint}/offerings/${item._id}/image.jpeg:`;
   }
 
-  getUserAvatarPath(user: User) {
+  getUserAvatar(user: User) {
     return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
   }
 

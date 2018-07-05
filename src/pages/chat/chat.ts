@@ -83,11 +83,7 @@ export class ChatPage {
     this.navCtrl.push('SettingsPage', {profileId: id, pageTitleKey: 'PROFILE_TITLE'});
   }
 
-  getImageSource(item: Offering) {
-    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg:`;
-  }
-
-  getUserAvatarPath(user: User) {
+  getUserAvatar(user: User) {
     return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
   }
 }
