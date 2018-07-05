@@ -20,7 +20,6 @@ import {AuthInterceptorService} from "../providers/auth/auth_interceptor";
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import {SignupPage} from "../pages/signup/signup";
 import {SignupPageModule} from "../pages/signup/signup.module";
-import {ImageService} from "../providers/api/image.service";
 import {UploadWebProvider} from "../providers/upload/upload-web";
 import {Deeplinks} from "@ionic-native/deeplinks";
 import {SocialSharing} from "@ionic-native/social-sharing";
@@ -72,7 +71,6 @@ export function createTranslateLoader(http: HttpClient) {
     Deeplinks,
     Geolocation,
     MapsService,
-    ImageService,
     UploadWebProvider,
     AuthProvider,
     SocialSharing

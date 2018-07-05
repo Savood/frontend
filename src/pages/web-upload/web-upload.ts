@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {IonicPage, Loading, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {Upload} from "../../models/upload";
 import {AuthProvider} from "../../providers/auth/auth";
-import {ImageService} from "../../providers/api/image.service";
 
 /**
  * Generated class for the WebUploadAvatarPage page.
@@ -26,7 +25,6 @@ export class WebUploadPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public _image: ImageService,
               public _auth: AuthProvider,
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController) {
