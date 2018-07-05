@@ -11,11 +11,11 @@
 
 <ion-content>
   <div *ngIf="profile">
-    <img *ngIf="page == 'main'" class="header-image" src="assets/img/queen-live.png" (click)="changeHeader()">
+    <img *ngIf="page == 'main'" class="header-image" [src]="getUserHeader(profile._id)" onError="this.src='assets/img/user_fallback_avatar.png';" (click)="changeHeader()">
 
     <div *ngIf="page == 'main'" class="content-main" text-wrap>
       <div class="circular">
-        <img src="assets/img/marty-avatar.png">
+        <img [src]="getUserAvatar(profile._id)" onError="this.src='assets/img/user_fallback_avatar.png';">
         <div *ngIf="ownProfile" class="overlay" (click)="changeAvatar()">
           <a class="icon">
             <ion-icon name="build"></ion-icon>

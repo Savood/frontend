@@ -18,9 +18,8 @@ import {User} from "../../models/user";
 import {AuthProvider} from "../../providers/auth/auth";
 import {LoginPage} from "../login/login";
 import {SocialSharing} from "@ionic-native/social-sharing";
-import {GoogleMaps} from "@ionic-native/google-maps";
-import {JSMapsService} from "../../providers/maps/jsMaps";
-import {NativeMapsService} from "../../providers/maps/nativeMaps";
+import {env} from "../../environment/environment";
+import * as Clipboard from 'clipboard/dist/clipboard.min.js';
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -413,7 +412,7 @@ export class SettingsPage {
 
     route.splice(0, route.indexOf('profile'));
 
-    let shareUrl: string = 'savood.com/#';
+    let shareUrl: string = 'http://savood.app.chd.cx/#';
     for(let part of route){
       shareUrl += '/' + part;
     }
@@ -426,8 +425,15 @@ export class SettingsPage {
         position: 'top',
         message: shareUrl,
         duration: 7000
-      }).present();
+      }).present();6
     }
+  }
 
+  getUserHeader(user: User) {
+    return `${env.api_endpoint}/users/${user._id}/backgroundimage.jpeg`;
+  }
+
+  getUserAvatar(user: User) {
+    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
   }
 }
