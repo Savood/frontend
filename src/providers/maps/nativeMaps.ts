@@ -13,15 +13,23 @@ export class NativeMapsService {
 
     let latLng = new LatLng(location.latitude, location.longitude);
 
+    this.map = this.googleMaps.create(element.nativeElement,
+      {
+        camera: {
+          target: latLng,
+          zoom: zoom
+        }
+      });
 
-      this.map = this.googleMaps.create(element.nativeElement,
-        {
-          camera: {
-            target: latLng,
-            zoom: zoom
-          }
-        });
+  }
 
+
+  remove(){
+    this.map.remove()
+  }
+
+  setDiv(div:any){
+    this.map.setDiv(div);
   }
 
   /**

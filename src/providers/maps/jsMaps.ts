@@ -16,14 +16,14 @@ export class JSMapsService {
   init(element: ElementRef, location: Location, zoom: number) {
     let latLng = new google.maps.LatLng(location.latitude, location.longitude);
 
-      this.map = new google.maps.Map(element.nativeElement,
-        {
+    this.map = new google.maps.Map(element.nativeElement,
+      {
           center: latLng,
           zoom: zoom,
           clickableIcons: false,
           streetViewControl: false,
           mapTypeControl: false,
-        });
+      });
   }
 
   async addMarker(location: Location, title: string, draggable: boolean, icon?:object) {
@@ -37,6 +37,12 @@ export class JSMapsService {
       optimized: false,
       icon: icon
     });
+  }
+
+  remove(){
+  }
+
+  setDiv(div:any){
   }
 
   getMarkerPosition(marker: Marker): Location {

@@ -24,6 +24,8 @@ export class OfferingMapPage {
   feed: Offering[] = null;
   mapLoadingString:string = "";
 
+  firstLoad: boolean = true;
+
   constructor(public navCtrl: NavController,
               public loadingCtrl: LoadingController,
               public navParams: NavParams,
@@ -36,10 +38,29 @@ export class OfferingMapPage {
     });
   }
 
-
   ionViewDidLoad() {
-      this.initMap();
+    this.initMap();
   }
+  ionViewWillLeave() {
+    this._maps.reinitMap(null);
+
+    /* According to Google Maps plugin's developer hiding the map
+     is no longer needed from version 2.2.8 as the plugin takes care of hiding/showing the map automatically.
+     However, it is still possible to hide it manually if needed...
+
+  */
+  }
+
+  ionViewDidEnter() {
+
+    if (!this.firstLoad) {
+      this._maps.reinitMap('map');
+    } else {
+      this.firstLoad = false;
+    }
+
+  }
+
 
   async initMap() {
     const default_radius = env.default_radius;

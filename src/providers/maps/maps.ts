@@ -39,6 +39,14 @@ export class MapsService {
     this.map.init(mapElement, location, zoom);
   }
 
+  removeMap(){
+    this.map.remove()
+  }
+
+  reinitMap(div){
+    this.map.setDiv(div);
+  }
+
   /**
    * Creates a new Marker on the specified Map
    * @param location Location of the Marker
