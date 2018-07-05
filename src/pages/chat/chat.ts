@@ -2,6 +2,9 @@ import {Component, ViewChild} from '@angular/core';
 import {Content, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {MessagesService} from "../../providers";
 import {TranslateService} from "@ngx-translate/core";
+import {env} from "../../environment/environment";
+import {Offering} from "../../models/offering";
+import {User} from "../../models/user";
 
 /**
  * Generated class for the ChatPage page.
@@ -78,5 +81,13 @@ export class ChatPage {
 
   viewProfile(id: string) {
     this.navCtrl.push('SettingsPage', {profileId: id, pageTitleKey: 'PROFILE_TITLE'});
+  }
+
+  getImageSource(item: Offering) {
+    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg:`;
+  }
+
+  getUserAvatarPath(user: User) {
+    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
   }
 }

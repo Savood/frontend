@@ -5,6 +5,8 @@ import {Item} from '../../models/item';
 import {Chat, MessagesService, OfferingsService} from '../../providers';
 import {TranslateService} from "@ngx-translate/core";
 import {Offering} from "../../models/offering";
+import {env} from "../../environment/environment";
+import {User} from "../../models/user";
 
 @IonicPage()
 @Component({
@@ -62,6 +64,14 @@ export class ChatOverviewPage {
       this.currentOffering = this.navParams.get('offering');
       this.getChats(this.currentOffering._id);
     }
+  }
+
+  getImageSource(item: Offering) {
+    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg:`;
+  }
+
+  getUserAvatarPath(user: User) {
+    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
   }
 
   openChat(chatId: string, partner: any) {
