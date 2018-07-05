@@ -19,7 +19,7 @@ import {AuthProvider} from "../../providers/auth/auth";
 import {LoginPage} from "../login/login";
 import {SocialSharing} from "@ionic-native/social-sharing";
 import {env} from "../../environment/environment";
-import * as Clipboard from 'clipboard/dist/clipboard.min.js';
+import {ClipboardService} from "ngx-clipboard";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -93,6 +93,7 @@ export class SettingsPage {
 
   constructor(public navCtrl: NavController,
               public toastCtrl: ToastController,
+              public _clipboard: ClipboardService,
               public formBuilder: FormBuilder,
               public navParams: NavParams,
               public translate: TranslateService,
@@ -421,11 +422,12 @@ export class SettingsPage {
       (this.platform.is('ios') || this.platform.is('android'))) {
       this._social.share('','','',shareUrl)
     } else {
+      this._clipboard.copyFromContent(shareUrl);
       this.toastCtrl.create({
         position: 'top',
-        message: shareUrl,
-        duration: 7000
-      }).present();6
+        message: "URL kopiert!",
+        duration: 5000
+      }).present();
     }
   }
 
