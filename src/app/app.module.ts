@@ -11,7 +11,7 @@ import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import { Geolocation} from "@ionic-native/geolocation";
 import {DatePicker} from "@ionic-native/date-picker";
 
-import {User, APIS, Api} from '../providers';
+import {APIS, Api} from '../providers';
 import { MyApp } from './app.component';
 import { MapsService } from '../providers/maps/maps';
 import { AuthProvider } from '../providers/auth/auth';
@@ -56,7 +56,6 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     APIS,
     Api,
-    User,
     Camera,
     SplashScreen,
     StatusBar,
