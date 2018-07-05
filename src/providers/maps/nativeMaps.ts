@@ -1,5 +1,5 @@
 import {ElementRef, Injectable} from '@angular/core';
-import {Geocoder, GoogleMaps, LatLng, Marker} from '@ionic-native/google-maps';
+import {Geocoder, GoogleMaps, GoogleMapsEvent, LatLng, Marker} from '@ionic-native/google-maps';
 import {Location} from "../../models/location";
 
 @Injectable()
@@ -13,13 +13,15 @@ export class NativeMapsService {
 
     let latLng = new LatLng(location.latitude, location.longitude);
 
-    this.map = this.googleMaps.create(element.nativeElement,
-      {
-        camera: {
-          target: latLng,
-          zoom: zoom
-        }
-      });
+
+      this.map = this.googleMaps.create(element.nativeElement,
+        {
+          camera: {
+            target: latLng,
+            zoom: zoom
+          }
+        });
+
   }
 
   /**
@@ -29,10 +31,21 @@ export class NativeMapsService {
    * @param color the color of the circle
    * @returns
    */
-  async createCircle(location:Location, radius:number, color:string){
+  async createCircle(location:Location, radius:number, color:number[]){
     let latLng = new LatLng(location.latitude, location.longitude);
 
-    return this.map.createCircle(latLng,radius,color);
+    let str_color:string = `rgba(${color[0]},${color[1]}, ${color[2]}, 0.15)`;
+    let stroke_color:string = `rgba(${color[0]},${color[1]}, ${color[2]}, 0.8)`;
+
+    return this.map.addCircleSync(
+    {
+      strokeColor: stroke_color,
+      strokeWeight: 2,
+      fillColor:str_color,
+      map: this.map,
+      center: latLng,
+      radius: radius
+    });
   }
 
   async addMarker(location: Location, title: string, draggable: boolean, icon?:object) {
@@ -104,13 +117,14 @@ export class NativeMapsService {
         });
     });
   }
+
   addListener(marker: Marker, event: any, desiredFunction: any){
-    let nativeEvent: string;
+    let nativeEvent: any;
     switch(event){
-      case 'click': nativeEvent = 'MARKER_CLICK'; break;
-      case 'dragend': nativeEvent = 'MARKER_DRAG_END'; break;
-      case 'dragstart': nativeEvent = 'MARKER_DRAG_START'; break;
-      case 'drag': nativeEvent = 'MARKER_DRAG'; break;
+      case 'click': nativeEvent = GoogleMapsEvent.MARKER_CLICK; break;
+      case 'dragend': nativeEvent = GoogleMapsEvent.MARKER_DRAG_END; break;
+      case 'dragstart': nativeEvent = GoogleMapsEvent.MARKER_DRAG_START; break;
+      case 'drag': nativeEvent = GoogleMapsEvent.MARKER_DRAG; break;
       default: nativeEvent = null;
     }
     if(nativeEvent){

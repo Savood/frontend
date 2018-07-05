@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {App, IonicPage, NavController} from 'ionic-angular';
+import {App, IonicPage, LoadingController, NavController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
 import {OfferingsService} from "../../providers/api/offerings.service";
 import {UsersService} from "../../providers/api/users.service";
@@ -19,11 +19,12 @@ import {TranslateService} from "@ngx-translate/core";
 export class OfferingsPage {
   feed: Offering[] = null;
   toggle = false;
-  default_distance:number = 4000;
-
+  default_distance:number = env.default_radius;
   browser_local = null;
   current_location:Location = null;
 
+  offeringsLoadingString:string = null;
+  loading:any = null;
 
   constructor(public navCtrl: NavController,
               public _auth: AuthProvider,
@@ -31,19 +32,31 @@ export class OfferingsPage {
               public _user: UsersService,
               private appCtrl:App,
               public _maps: MapsService,
-              public _translate: TranslateService)
+              public _translate: TranslateService,
+              public loadingCtrl: LoadingController)
   {
 
     this.browser_local = _translate.getBrowserLang();
+
+    this._translate.get(['OFFERINGS_LOADING']).subscribe((value) => {
+      this.offeringsLoadingString = value.OFFERINGS_LOADING;
+    });
 
     this._auth.getActiveUser().subscribe((data)=>{}, (err:HttpErrorResponse)=>{
       if(err.status == 404){
         this.appCtrl.getRootNav().push("WelcomePage");
       }
     });
+
   }
 
   async ionViewWillEnter(){
+    this.loading = this.loadingCtrl.create({
+      content: this.offeringsLoadingString,
+      enableBackdropDismiss: true
+    });
+    this.loading.present();
+
     this.current_location  = await this._maps.getGPS();
 
     this._offering.getFeed(this.current_location.latitude, this.current_location.longitude, this.default_distance)
@@ -52,7 +65,8 @@ export class OfferingsPage {
         console.log(data[0].time);
       }, err=>{
           console.log("ERROR", err);
-        }
+        },
+        ()=> this.loading.dismiss()
       );
   }
 
@@ -66,16 +80,26 @@ export class OfferingsPage {
     });
   }
 
+  /**
+   * Link to Creation Modal
+   */
   startCreationModal(){
     this.navCtrl.push('CreateOfferingPage');
   }
 
+  /**
+   * Gets source of offering image
+   * @param item
+   */
   getImageSource(item:Offering){
-    let _id = item.id
+    let _id = item.id;
     let path =  `${env.api_endpoint}/offerings/${_id}/image.jpeg:`;
-
   }
 
+  /**
+   * Place savood on offering
+   * @param feed
+   */
   placeSavood(feed){
     if(feed.savooded){
       //TODO Send to message side

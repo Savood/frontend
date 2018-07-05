@@ -56,13 +56,13 @@ export class MapsService {
 
     switch(icon){
       case 'offering':
-        image.url= '../../assets/icon/offering_not_savooded_ico.png';
+        image.url= 'assets/icon/offering_not_savooded_ico.png';
         break;
       case 'me':
-        image.url= '../../assets/icon/me.png';
+        image.url= 'assets/icon/me.png';
         break;
       case 'savood':
-        image.url= '../../assets/icon/offering_savooded_ico.png';
+        image.url= 'assets/icon/offering_savooded_ico.png';
         break;
       default:
         image.url = icon;
@@ -190,7 +190,10 @@ export class MapsService {
    * @param color the color of the circle
    * @returns
    */
-  async createCircle(location:Location, radius:number, color:string){
+  async createCircle(location:Location, radius:number, color?:number[]){
+    if(color == undefined){
+      color = [111, 216, 0]
+    }
     return this.map.createCircle(location,radius,color);
   }
 }

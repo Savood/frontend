@@ -29,6 +29,7 @@ export class CreateOfferingPage {
   item: any;
 
   form: FormGroup;
+  image: Blob;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -133,7 +134,7 @@ export class CreateOfferingPage {
       let imageData = (readerEvent.target as any).result;
       this.form.patchValue({'offeringPic': imageData});
     };
-
+    this.image = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
   }
 

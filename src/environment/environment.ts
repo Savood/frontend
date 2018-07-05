@@ -4,4 +4,6 @@
 export const env = {
   api_endpoint: 'https://virtserver.swaggerhub.com/TimMaa/Savood/1.0',
   auth_endpoint: 'https://savood.app.chd.cx/',
+  //default radius in meter
+  default_radius: 1000
 }
