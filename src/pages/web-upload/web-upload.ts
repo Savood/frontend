@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, Loading, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {Upload} from "../../models/upload";
-import {AuthProvider} from "../../providers/auth/auth";
+import {UsersService} from "../../providers";
 
 /**
  * Generated class for the WebUploadAvatarPage page.
@@ -19,13 +19,11 @@ import {AuthProvider} from "../../providers/auth/auth";
 export class WebUploadPage {
 
   selectedFiles: FileList | null;
-  currentUpload: Upload;
   loading: Loading;
-
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public _auth: AuthProvider,
+              public _user: UsersService,
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController) {
     this.loading = this.loadingCtrl.create({
@@ -37,62 +35,33 @@ export class WebUploadPage {
     this.selectedFiles = ($event.target as HTMLInputElement).files;
   }
 
-  uploadFile(user){
-    if(this.navParams.get('type') === 'avatar'){
-      const file = this.selectedFiles;
-      if (file && file.length === 1) {
-        this.currentUpload = new Upload(file.item(0));
-
-        //console.log(this.currentUpload)
+  uploadFile(user) {
+    if (this.navParams.get('type') === 'avatar') {
+      const file = this.selectedFiles.item(0);
+      if (file) {
+        const blobImage: Blob = file;
         this.loading.present();
-
-        // this._image.changeAvatarWeb(this.currentUpload,user).then(
-        //   () => {
-        //     this.loading.dismiss();
-        //     this.navCtrl.pop();
-        //   },
-        //   reason => {
-        //     let toast = this.toastCtrl.create({
-        //       message: reason.message,
-        //       duration: 3000
-        //     });
-        //     this.loading.dismiss();
-        //     toast.present();
-        //   }
-        // )
+        this._user.usersIdImageJpegPost(this.navParams.get('userId'), blobImage).subscribe(
+          () => this.loading.dismiss()
+        );
       } else {
         console.error('No file found!');
       }
-    } else
-      if (this.navParams.get('type') === 'header') {
-        const file = this.selectedFiles;
-        if (file && file.length === 1) {
-          this.currentUpload = new Upload(file.item(0));
-
-          //console.log(this.currentUpload)
-          this.loading.present();
-
-          // this._image.changeAvatarWeb(this.currentUpload,user).then(
-          //   () => {
-          //     this.loading.dismiss();
-          //     this.navCtrl.pop();
-          //   },
-          //   reason => {
-          //     let toast = this.toastCtrl.create({
-          //       message: reason.message,
-          //       duration: 3000
-          //     });
-          //     this.loading.dismiss();
-          //     toast.present();
-          //   }
-          // )
-        } else {
-          console.error('No file found!');
-        }
+    } else if (this.navParams.get('type') === 'header') {
+      const file = this.selectedFiles.item(0);
+      if (file) {
+        const blobImage: Blob = file;
+        this.loading.present();
+        this._user.usersIdBackgroundimageJpegPost(this.navParams.get('userId'), blobImage).subscribe(
+          () => this.loading.dismiss()
+        );
+      } else {
+        console.error('No file found!');
+      }
     } else {
       alert('No type specified!');
       this.navCtrl.pop();
-      }
+    }
   }
 
 }

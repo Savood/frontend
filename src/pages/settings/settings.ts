@@ -20,6 +20,7 @@ import {LoginPage} from "../login/login";
 import {SocialSharing} from "@ionic-native/social-sharing";
 import {env} from "../../environment/environment";
 import {ClipboardService} from "ngx-clipboard";
+import {Camera} from "@ionic-native/camera";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -97,6 +98,7 @@ export class SettingsPage {
               public formBuilder: FormBuilder,
               public navParams: NavParams,
               public translate: TranslateService,
+              public camera: Camera,
               public _user: UsersService,
               public _maps: MapsService,
               public loadingCtrl: LoadingController,
@@ -334,7 +336,7 @@ export class SettingsPage {
       actionSheet.present();
 
     } else {
-      this.navCtrl.push('WebUploadPage', {type: 'avatar'});
+      this.navCtrl.push('WebUploadPage', {type: 'avatar', user: this.profile._id});
     }
   }
 
@@ -354,6 +356,20 @@ export class SettingsPage {
     //       loader.dismiss();
     //       this.presentToast(err);
     //     });
+  }
+
+  getPicture() {
+    if (Camera['installed']()) {
+      this.camera.getPicture({
+        destinationType: this.camera.DestinationType.DATA_URL,
+      }).then((data) => {
+        console.log(data);
+      }, (err) => {
+        alert('Unable to take photo');
+      })
+    } else {
+      this.navCtrl.push('WebUploadPage', {type: 'avatar', userId: this.profile._id});
+    }
   }
 
   getImage() {
