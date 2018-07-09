@@ -19,8 +19,6 @@ export interface User {
     lastname?: string;
     phone?: string;
     address?: Address;
-    avatarId?: string;
-    backgroundId?: string;
     description?: string;
     badges?: Array<string>;
 }

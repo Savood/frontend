@@ -4,6 +4,7 @@ import {Offering} from "../../models/offering";
 import {OfferingsService} from "../../providers/api/offerings.service";
 import {MapsService} from "../../providers/maps/maps";
 import {TranslateService} from "@ngx-translate/core";
+import {env} from "../../environment/environment";
 
 /**
  * Generated class for the OfferingMapPage page.
@@ -36,13 +37,12 @@ export class OfferingMapPage {
   }
 
 
-  ionViewDidEnter() {
+  ionViewDidLoad() {
       this.initMap();
   }
 
   async initMap() {
-
-    const default_radius = 1000
+    const default_radius = env.default_radius;
 
     let loading = this.loadingCtrl.create({
       content: this.mapLoadingString,
@@ -55,14 +55,12 @@ export class OfferingMapPage {
 
     this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
 
-
-
     //Set user marker
     let user_marker = await this._maps.newMarker({latitude: position.latitude, longitude: position.longitude}, 'userPos', false,"me");
     this._maps.addListener(user_marker, 'click', ()=>{console.log("Hallo")});
 
     //Set circle
-    let circle = await this._maps.createCircle({latitude: position.latitude, longitude: position.longitude},default_radius,'#6FD800');
+    let circle = await this._maps.createCircle({latitude: position.latitude, longitude: position.longitude},default_radius);
 
     this.feed.forEach(async (item)=>{
       let marker = await this._maps.newMarker({latitude: item.location.coordinates[0],
@@ -73,9 +71,17 @@ export class OfferingMapPage {
     loading.dismiss();
   }
 
+  /**
+   * Navigate to User Page
+   */
   goToUser(){
     this.navCtrl.push('SettingsPage');
   }
+
+  /**
+   * Handler for mapmarkers
+   * @param item
+   */
   clickMarker(item:Offering){
     this.navCtrl.push('OfferingDetailPage', {
       offering: item,

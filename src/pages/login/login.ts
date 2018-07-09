@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {IonicPage, NavController, ToastController} from 'ionic-angular';
 
-import {User} from '../../providers';
 import {MainPage} from '../';
 import {AuthProvider} from "../../providers/auth/auth";
 import {SignupPage} from "../signup/signup";
@@ -29,7 +28,6 @@ export class LoginPage {
   private loginErrorString: string;
 
   constructor(public navCtrl: NavController,
-              public user: User,
               public toastCtrl: ToastController,
               public translateService: TranslateService,
               public _auth: AuthProvider,
@@ -51,6 +49,7 @@ export class LoginPage {
 
     this._deeplinks.route({
       '/profile/:profileId': 'SettingsPage',
+      '/savood/:offeringId': 'OfferingDetailPage',
       '/': {}
     }).subscribe(
       (match) => {
@@ -60,12 +59,14 @@ export class LoginPage {
       },
       (nomatch) => {
         if (nomatch !== 'cordova_not_available') {
-          let toast = this.toastCtrl.create({
-            message: "RESSOURCE_NOT_AVAILABLE",
-            duration: 3000,
-            position: 'top'
-          });
-          toast.present();
+          if (nomatch.$route.length() > 0) {
+            let toast = this.toastCtrl.create({
+              message: "RESSOURCE_NOT_AVAILABLE",
+              duration: 3000,
+              position: 'top'
+            });
+            toast.present();
+          }
         }
       }
     )

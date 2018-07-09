@@ -11,16 +11,13 @@ import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import { Geolocation} from "@ionic-native/geolocation";
 import {DatePicker} from "@ionic-native/date-picker";
 
-import {User, APIS, Api} from '../providers';
+import {APIS, Api} from '../providers';
 import { MyApp } from './app.component';
 import { MapsService } from '../providers/maps/maps';
 import { AuthProvider } from '../providers/auth/auth';
 import {AuthInterceptorService} from "../providers/auth/auth_interceptor";
-
+import { ClipboardModule } from 'ngx-clipboard';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
-import {SignupPage} from "../pages/signup/signup";
-import {SignupPageModule} from "../pages/signup/signup.module";
-import {ImageService} from "../providers/api/image.service";
 import {UploadWebProvider} from "../providers/upload/upload-web";
 import {Deeplinks} from "@ionic-native/deeplinks";
 import {SocialSharing} from "@ionic-native/social-sharing";
@@ -39,6 +36,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     IonicImageViewerModule,
     BrowserModule,
+    ClipboardModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -57,7 +55,6 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     APIS,
     Api,
-    User,
     Camera,
     SplashScreen,
     StatusBar,
@@ -72,7 +69,6 @@ export function createTranslateLoader(http: HttpClient) {
     Deeplinks,
     Geolocation,
     MapsService,
-    ImageService,
     UploadWebProvider,
     AuthProvider,
     SocialSharing

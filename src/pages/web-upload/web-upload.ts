@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IonicPage, Loading, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {Upload} from "../../models/upload";
-import {AuthProvider} from "../../providers/auth/auth";
-import {ImageService} from "../../providers/api/image.service";
+import {UsersService} from "../../providers";
+import {Camera} from "@ionic-native/camera";
 
 /**
  * Generated class for the WebUploadAvatarPage page.
@@ -19,15 +19,15 @@ import {ImageService} from "../../providers/api/image.service";
 })
 export class WebUploadPage {
 
-  selectedFiles: FileList | null;
-  currentUpload: Upload;
+  @ViewChild('fileInput') fileInput;
+  selectedFile: String | null;
+  image: Blob;
   loading: Loading;
-
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public _image: ImageService,
-              public _auth: AuthProvider,
+              public _user: UsersService,
+              public camera: Camera,
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController) {
     this.loading = this.loadingCtrl.create({
@@ -35,66 +35,74 @@ export class WebUploadPage {
     });
   }
 
-  detectFiles($event: Event) {
-    this.selectedFiles = ($event.target as HTMLInputElement).files;
+  uploadFile() {
+    if (this.image) {
+      if (this.navParams.get('type') === 'avatar') {
+        this.loading.present();
+        this._user.usersIdImageJpegPost(this.navParams.get('userId'), this.image).subscribe(
+          () => {
+            this.loading.dismiss();
+            this.navCtrl.pop();
+            this.toastCtrl.create({
+              position: 'top',
+              message: "Bild hochgeladen!",
+              duration: 5000
+            }).present();
+          }
+        );
+      }
+      else if (this.navParams.get('type') === 'header') {
+        this.loading.present();
+        this._user.usersIdBackgroundimageJpegPost(this.navParams.get('userId'), this.image).subscribe(
+          () => {
+            this.loading.dismiss();
+            this.navCtrl.pop();
+            this.toastCtrl.create({
+              position: 'top',
+              message: "Bild hochgeladen!",
+              duration: 5000
+            }).present();
+          }
+        )
+      } else {
+        alert('No type specified!');
+        this.navCtrl.pop();
+      }
+    }
+    else {
+      console.error('No file found!');
+    }
   }
 
-  uploadFile(user){
-    if(this.navParams.get('type') === 'avatar'){
-      const file = this.selectedFiles;
-      if (file && file.length === 1) {
-        this.currentUpload = new Upload(file.item(0));
+  getOfferingImage() {
+    // return 'url(' + this.form.controls['offeringPic'].value + ')';
+    return this.selectedFile;
+  }
 
-        //console.log(this.currentUpload)
-        this.loading.present();
-
-        // this._image.changeAvatarWeb(this.currentUpload,user).then(
-        //   () => {
-        //     this.loading.dismiss();
-        //     this.navCtrl.pop();
-        //   },
-        //   reason => {
-        //     let toast = this.toastCtrl.create({
-        //       message: reason.message,
-        //       duration: 3000
-        //     });
-        //     this.loading.dismiss();
-        //     toast.present();
-        //   }
-        // )
-      } else {
-        console.error('No file found!');
-      }
-    } else
-      if (this.navParams.get('type') === 'header') {
-        const file = this.selectedFiles;
-        if (file && file.length === 1) {
-          this.currentUpload = new Upload(file.item(0));
-
-          //console.log(this.currentUpload)
-          this.loading.present();
-
-          // this._image.changeAvatarWeb(this.currentUpload,user).then(
-          //   () => {
-          //     this.loading.dismiss();
-          //     this.navCtrl.pop();
-          //   },
-          //   reason => {
-          //     let toast = this.toastCtrl.create({
-          //       message: reason.message,
-          //       duration: 3000
-          //     });
-          //     this.loading.dismiss();
-          //     toast.present();
-          //   }
-          // )
-        } else {
-          console.error('No file found!');
-        }
+  getPicture() {
+    if (Camera['installed']()) {
+      this.camera.getPicture({
+        destinationType: this.camera.DestinationType.DATA_URL,
+      }).then((data) => {
+        this.selectedFile = 'date:image/jpg;base64,' + data;
+      }, (err) => {
+        alert('Unable to take photo');
+      })
     } else {
-      alert('No type specified!');
-      this.navCtrl.pop();
-      }
+      this.fileInput.nativeElement.click();
+    }
+  }
+
+  processWebImage(event) {
+    let reader = new FileReader();
+    reader.onload = (readerEvent) => {
+
+      let imageData = (readerEvent.target as any).result;
+      this.selectedFile = imageData;
+    };
+
+    this.image = event.target.files[0];
+    reader.readAsDataURL(event.target.files[0]);
   }
 
 }

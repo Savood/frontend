@@ -10,7 +10,7 @@
 
 <ion-content elestic-header fullscreen>
   <div>
-    <img style="height: 60vh; width: auto; object-fit: cover" [src]="getImageSource(offering)"  onError="this.src='../../assets/img/fallback_offering.jpg';" imageViewer />
+    <img style="height: 60vh; width: auto; object-fit: cover" [src]="getImageSource(offering)"  onError="this.src='assets/img/fallback_offering.jpg';" imageViewer />
 
     <div style="position: relative;">
 
@@ -62,7 +62,7 @@
       <ion-card>
         <ion-item>
           <ion-avatar item-start>
-            <img [src]="getUserAvatarPath(offering.creator)" onError="this.src='../../assets/img/user_fallback_avatar.png';">
+            <img [src]="getUserAvatarPath(offering.creator)" onError="this.src='assets/img/user_fallback_avatar.png';">
           </ion-avatar>
           <h2>{{offering.creator.firstname}}</h2>
           <h5>{{offering.time |amLocale: browser_local| amCalendar}}</h5>

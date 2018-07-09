@@ -18,13 +18,15 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import '../rxjs-operators';
 
+import {ErrorModel} from '../../models/errorModel';
 import {InvalidParameterInput} from '../../models/invalidParameterInput';
 import {User} from '../../models/user';
 
 import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
 import {Configuration} from '../configuration';
 import {CustomHttpUrlEncodingCodec} from '../encoder';
-import {env} from '../../environment/environment';
+import {env} from "../../environment/environment";
+
 
 @Injectable()
 export class UsersService {
@@ -108,11 +110,6 @@ export class UsersService {
     }
 
     let headers = this.defaultHeaders;
-
-    // authentication (bearer) required
-    if (this.configuration.apiKeys["Authorization"]) {
-      headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-    }
 
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
@@ -206,6 +203,200 @@ export class UsersService {
 
     return this.httpClient.patch<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}`,
       body,
+      {
+        headers: headers,
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
+
+  /**
+   * Gets the avatar image.
+   *
+   * @param id
+   * @param height If either width or height is set to 0, it will be set to an aspect ratio preserving value.
+   * @param width If either width or height is set to 0, it will be set to an aspect ratio preserving value.
+   */
+  public usersIdBackgroundimageJpegGet(id: string, height?: number, width?: number): Observable<Blob> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling usersIdBackgroundimageJpegGet.');
+    }
+
+    let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+    if (height !== undefined) {
+      queryParameters = queryParameters.set('height', <any>height);
+    }
+    if (width !== undefined) {
+      queryParameters = queryParameters.set('width', <any>width);
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      'image/jpeg',
+      'application/json'
+    ];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    let consumes: string[] = [];
+
+    return this.httpClient.get(`${this.basePath}/users/${encodeURIComponent(String(id))}/backgroundimage.jpeg`,
+      {
+        params: queryParameters,
+        headers: headers,
+        responseType: "blob",
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
+
+  /**
+   * Uploads avatar image.
+   *
+   * @param id
+   * @param upfile The file to upload.
+   */
+  public usersIdBackgroundimageJpegPost(id: string, upfile?: Blob): Observable<{}> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling usersIdBackgroundimageJpegPost.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    let consumes: string[] = [
+      'multipart/form-data'
+    ];
+
+    const canConsumeForm = this.canConsumeForm(consumes);
+
+    let formParams: { append(param: string, value: any): void; };
+    let useForm = false;
+    let convertFormParamsToString = false;
+    // use FormData to transmit files using content-type "multipart/form-data"
+    // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+    useForm = canConsumeForm;
+    if (useForm) {
+      formParams = new FormData();
+    } else {
+      formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+    }
+
+    if (upfile !== undefined) {
+      formParams = formParams.append('upfile', <any>upfile) || formParams;
+    }
+
+    return this.httpClient.post<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}/backgroundimage.jpeg`,
+      convertFormParamsToString ? formParams.toString() : formParams,
+      {
+        headers: headers,
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
+
+  /**
+   * Gets the avatar image.
+   *
+   * @param id
+   * @param height If either width or height is set to 0, it will be set to an aspect ratio preserving value.
+   * @param width If either width or height is set to 0, it will be set to an aspect ratio preserving value.
+   */
+  public usersIdImageJpegGet(id: string, height?: number, width?: number): Observable<Blob> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling usersIdImageJpegGet.');
+    }
+
+    let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+    if (height !== undefined) {
+      queryParameters = queryParameters.set('height', <any>height);
+    }
+    if (width !== undefined) {
+      queryParameters = queryParameters.set('width', <any>width);
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      'image/jpeg',
+      'application/json'
+    ];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    let consumes: string[] = [];
+
+    return this.httpClient.get(`${this.basePath}/users/${encodeURIComponent(String(id))}/image.jpeg`,
+      {
+        params: queryParameters,
+        headers: headers,
+        responseType: "blob",
+        withCredentials: this.configuration.withCredentials,
+      }
+    );
+  }
+
+  /**
+   * Uploads avatar image.
+   *
+   * @param id
+   * @param upfile The file to upload.
+   */
+  public usersIdImageJpegPost(id: string, upfile?: Blob): Observable<{}> {
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling usersIdImageJpegPost.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [];
+    let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set("Accept", httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    let consumes: string[] = [
+      'multipart/form-data'
+    ];
+
+    const canConsumeForm = this.canConsumeForm(consumes);
+
+    let formParams: { append(param: string, value: any): void; };
+    let useForm = false;
+    let convertFormParamsToString = false;
+    // use FormData to transmit files using content-type "multipart/form-data"
+    // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+    useForm = canConsumeForm;
+    if (useForm) {
+      formParams = new FormData();
+    } else {
+      formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+    }
+
+    if (upfile !== undefined) {
+      formParams = formParams.append('upfile', <any>upfile) || formParams;
+    }
+
+    return this.httpClient.post<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}/image.jpeg`,
+      convertFormParamsToString ? formParams.toString() : formParams,
       {
         headers: headers,
         withCredentials: this.configuration.withCredentials,

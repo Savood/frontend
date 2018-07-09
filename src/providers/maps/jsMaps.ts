@@ -16,14 +16,14 @@ export class JSMapsService {
   init(element: ElementRef, location: Location, zoom: number) {
     let latLng = new google.maps.LatLng(location.latitude, location.longitude);
 
-    this.map = new google.maps.Map(element.nativeElement,
-      {
-        center: latLng,
-        zoom: zoom,
-        clickableIcons: false,
-        streetViewControl: false,
-        mapTypeControl: false,
-      });
+      this.map = new google.maps.Map(element.nativeElement,
+        {
+          center: latLng,
+          zoom: zoom,
+          clickableIcons: false,
+          streetViewControl: false,
+          mapTypeControl: false,
+        });
   }
 
   async addMarker(location: Location, title: string, draggable: boolean, icon?:object) {
@@ -95,15 +95,16 @@ export class JSMapsService {
    * @param color the color of the circle
    * @returns
    */
-  async createCircle(location:Location, radius:number, color:string){
+  async createCircle(location:Location, radius:number, color:number[]){
     let latLng = new LatLng(location.latitude, location.longitude);
 
+    let str_color:string = `rgba(${color[0]},${color[1]}, ${color[2]}, 0.15)`;
+    let stroke_color:string = `rgba(${color[0]},${color[1]}, ${color[2]}, 0.8)`;
+
     return new Circle({
-      strokeColor: color,
-      strokeOpacity: 0.8,
+      strokeColor: stroke_color,
       strokeWeight: 2,
-      fillColor:color,
-      fillOpacity: 0.15,
+      fillColor:str_color,
       map: this.map,
       center: latLng,
       radius: radius

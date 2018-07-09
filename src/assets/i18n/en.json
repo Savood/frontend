@@ -141,7 +141,9 @@
   "CREATE_USER_SUCCESS":"Now it is done! You can personalise your profile under the settings tab",
 
   "OFFERING_MAP_TILE" :"Map",
+
   "MAP_LOADING":"One Second, we are just distributing the offerings...",
+  "OFFERINGS_LOADING":"Our detectors are looking for lonely food...",
 
   "NO_RESSOURCE_FOUND":"Page not found"
 }

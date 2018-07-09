@@ -9,6 +9,7 @@ import {SuccessObject} from "../../models/successObject";
 import {User} from "../../models/user";
 import {TranslateService} from "@ngx-translate/core";
 import {SocialSharing} from "@ionic-native/social-sharing";
+import {ClipboardService} from "ngx-clipboard";
 
 @IonicPage(
   {
@@ -33,6 +34,7 @@ export class OfferingDetailPage {
               public _offering: OfferingsService,
               public toastCtrl: ToastController,
               public _maps: MapsService,
+              public _clipboard: ClipboardService,
               public platform: Platform,
               private _social: SocialSharing,
               public _translate: TranslateService) {
@@ -86,7 +88,7 @@ export class OfferingDetailPage {
 
     route.splice(0, route.indexOf('savood'));
 
-    let shareUrl: string = 'savood.com/#';
+    let shareUrl: string = 'savood.app.chd.cx/#';
 
     for (let part of route) {
       shareUrl += '/' + part;
@@ -96,10 +98,11 @@ export class OfferingDetailPage {
       (this.platform.is('ios') || this.platform.is('android'))) {
       this._social.share('', '', '', shareUrl)
     } else {
+      this._clipboard.copyFromContent(shareUrl);
       this.toastCtrl.create({
         position: 'top',
         message: shareUrl,
-        duration: 7000
+        duration: 3000
       }).present();
     }
   }

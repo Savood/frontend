@@ -142,6 +142,6 @@
 
   "OFFERING_MAP_TILE":"Rettungskarte",
   "MAP_LOADING":"Kleinen Moment, wir verteilen kurz das Essen...",
-
+  "OFFERINGS_LOADING":"Unser Detektoren sind dabei nach verlorenem Essen zu suchen...",
   "RESSOURCE_NOT_FOUND":"Seite nicht gefunden!"
 }

@@ -18,9 +18,9 @@ import {User} from "../../models/user";
 import {AuthProvider} from "../../providers/auth/auth";
 import {LoginPage} from "../login/login";
 import {SocialSharing} from "@ionic-native/social-sharing";
-import {GoogleMaps} from "@ionic-native/google-maps";
-import {JSMapsService} from "../../providers/maps/jsMaps";
-import {NativeMapsService} from "../../providers/maps/nativeMaps";
+import {env} from "../../environment/environment";
+import {ClipboardService} from "ngx-clipboard";
+import {Camera} from "@ionic-native/camera";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -94,9 +94,11 @@ export class SettingsPage {
 
   constructor(public navCtrl: NavController,
               public toastCtrl: ToastController,
+              public _clipboard: ClipboardService,
               public formBuilder: FormBuilder,
               public navParams: NavParams,
               public translate: TranslateService,
+              public camera: Camera,
               public _user: UsersService,
               public _maps: MapsService,
               public loadingCtrl: LoadingController,
@@ -334,7 +336,7 @@ export class SettingsPage {
       actionSheet.present();
 
     } else {
-      this.navCtrl.push('WebUploadPage', {type: 'avatar'});
+      this.navCtrl.push('WebUploadPage', {type: 'avatar', user: this.profile._id});
     }
   }
 
@@ -354,6 +356,20 @@ export class SettingsPage {
     //       loader.dismiss();
     //       this.presentToast(err);
     //     });
+  }
+
+  getPicture() {
+    if (Camera['installed']()) {
+      this.camera.getPicture({
+        destinationType: this.camera.DestinationType.DATA_URL,
+      }).then((data) => {
+        console.log(data);
+      }, (err) => {
+        alert('Unable to take photo');
+      })
+    } else {
+      this.navCtrl.push('WebUploadPage', {type: 'avatar', userId: this.profile._id});
+    }
   }
 
   getImage() {
@@ -413,7 +429,7 @@ export class SettingsPage {
 
     route.splice(0, route.indexOf('profile'));
 
-    let shareUrl: string = 'savood.com/#';
+    let shareUrl: string = 'savood.app.chd.cx/#';
     for(let part of route){
       shareUrl += '/' + part;
     }
@@ -422,12 +438,20 @@ export class SettingsPage {
       (this.platform.is('ios') || this.platform.is('android'))) {
       this._social.share('','','',shareUrl)
     } else {
+      this._clipboard.copyFromContent(shareUrl);
       this.toastCtrl.create({
         position: 'top',
-        message: shareUrl,
-        duration: 7000
+        message: "URL kopiert!",
+        duration: 5000
       }).present();
     }
+  }
 
+  getUserHeader(user: User) {
+    return `${env.api_endpoint}/users/${user._id}/backgroundimage.jpeg`;
+  }
+
+  getUserAvatar(user: User) {
+    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
   }
 }

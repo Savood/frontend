@@ -5,6 +5,8 @@ import {Item} from '../../models/item';
 import {Chat, MessagesService, OfferingsService} from '../../providers';
 import {TranslateService} from "@ngx-translate/core";
 import {Offering} from "../../models/offering";
+import {env} from "../../environment/environment";
+import {User} from "../../models/user";
 
 @IonicPage()
 @Component({
@@ -60,8 +62,16 @@ export class ChatOverviewPage {
 
     if (this.page == "chats") {
       this.currentOffering = this.navParams.get('offering');
-      this.offeringChats = this.navParams.get('chats');
+      this.getChats(this.currentOffering._id);
     }
+  }
+
+  getImageSource(item: Offering) {
+    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg:`;
+  }
+
+  getUserAvatar(user: User) {
+    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
   }
 
   openChat(chatId: string, partner: any) {
@@ -72,10 +82,21 @@ export class ChatOverviewPage {
       });
   }
 
-  openChatOverview(offeringId: string) {
+  openChatOverview(offering: Offering) {
+    this.navCtrl.push('ChatOverviewPage',
+      {
+        page: "chats",
+        pageTitleKey: " ",
+        offering: offering,
+      }
+    );
+  }
+
+  getChats(offeringId: string) {
     this._messages.getAllChatsForOffering(offeringId).subscribe(
       (chats) => {
-        console.log(chats);
+        this.offeringChats = chats;
+
         if (chats.length == 1) {
           this.translate.get("OPENED_ONLY_CHAT").subscribe((message) => {
             this.toastCtrl.create({
@@ -89,15 +110,6 @@ export class ChatOverviewPage {
               chatId: chats[0]._id,
               partner: chats[0].partner
             });
-        } else {
-          this.navCtrl.push('ChatOverviewPage',
-            {
-              page: "chats",
-              pageTitleKey: " ",
-              offering: offeringId,
-              chats: chats
-            }
-          );
         }
       }
     );
