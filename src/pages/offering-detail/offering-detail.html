@@ -82,7 +82,7 @@
     <!--Location-->
     <ion-list [style.display]="whichtab == 'location' ? 'block' : 'none'">
       <div #map id="map" ></div>
-      <ion-item>
+      <ion-item (click)="openMapsNavigation()">
           <ion-icon name="pin" item-left></ion-icon>
           {{offering.address?.street}} {{offering.address?.number}} <br />
           {{offering.address?.zip}} {{offering.address?.city}}

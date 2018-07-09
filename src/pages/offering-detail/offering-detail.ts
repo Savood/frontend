@@ -10,6 +10,7 @@ import {User} from "../../models/user";
 import {TranslateService} from "@ngx-translate/core";
 import {SocialSharing} from "@ionic-native/social-sharing";
 import {ClipboardService} from "ngx-clipboard";
+import {LaunchNavigator, LaunchNavigatorOptions} from '@ionic-native/launch-navigator';
 
 @IonicPage(
   {
@@ -37,7 +38,8 @@ export class OfferingDetailPage {
               public _clipboard: ClipboardService,
               public platform: Platform,
               private _social: SocialSharing,
-              public _translate: TranslateService) {
+              public _translate: TranslateService,
+              private launchNavigator: LaunchNavigator) {
     this.offering = navParams.get('offering');
     this.browser_local = navParams.get('browser_lang');
     if (!this.browser_local) {
@@ -119,5 +121,17 @@ export class OfferingDetailPage {
   getDistanceString(item): void {
     let dist = this._maps.getDistance(this.current_location, this._offering.changeOfferingLocationToLocation(item.location));
     this.distanceString = `${dist.amount} ${dist.unit}`;
+  }
+
+  openMapsNavigation() {
+    if (this.platform.is('cordova')) {
+      window.open("https://www.google.com/maps/dir/?api=1" +
+        "&destination=" + this.offering.location.coordinates,
+        "_blank");
+    } else {
+      window.open("https://www.google.com/maps/dir/?api=1" +
+        "&destination=" + this.offering.location.coordinates,
+        "_blank");
+    }
   }
 }
