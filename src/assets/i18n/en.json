@@ -102,6 +102,7 @@
   "PROFILE_PHONE": "Phone",
   "PROFILE_TITLE": "Other Profile",
   "SAVE": "Save",
+  "SAVE_NO_CHANGE": "Keine Ändernungen gespeichert",
   "SEND_A_MESSAGE": "Send a lovely message",
   "SETTINGS_EMAIL": "Email",
   "SETTINGS_LOCATION": "Location",
@@ -142,6 +143,7 @@
   "OFFERING_MAP_TILE" :"Map",
 
   "MAP_LOADING":"One Second, we are just distributing the offerings...",
-  "OFFERINGS_LOADING":"Our detectors are looking for lonely food..."
+  "OFFERINGS_LOADING":"Our detectors are looking for lonely food...",
 
+  "NO_RESSOURCE_FOUND":"Page not found"
 }
