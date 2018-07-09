@@ -4,15 +4,23 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-item>
-    <h1>
-      Upload File
-    </h1>
-    <input type="file" class="button" (change)="detectFiles($event)">
-  </ion-item>
+<ion-content padding text-center>
+  <ion-card>
+    <input type="file" #fileInput id="image-upload"
+           (change)="processWebImage($event)"/>
+    <div class="image-wrapper" (click)="getPicture()">
+      <div class="image-placeholder" *ngIf="!this.image">
+        <ion-icon name="camera"></ion-icon>
+        <div>
+          Wähle ein Bild
+        </div>
+      </div>
+      <!--<div class="offering-image" [style.backgroundImage]="getOfferingImage()" *ngIf="this.form.controls.offeringPic.value"></div>-->
+      <img [src]="getOfferingImage()" *ngIf="this.image"/>
+    </div>
+  </ion-card>
   <button id="upload-button" ion-button color="stable" block
-          [disabled]="!selectedFiles" (click)="uploadFile()">
+          [disabled]="!image" (click)="uploadFile()">
     Upload
   </button>
 </ion-content>
