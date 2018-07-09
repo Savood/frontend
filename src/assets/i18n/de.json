@@ -30,6 +30,7 @@
   "SETTINGS_EMAIL": "Email",
   "SETTINGS_PHONE": "Telefon",
   "SAVE": "Speichern",
+  "SAVE_NO_CHANGE": "Keine Änderungen gespeichert",
 
   "MESSAGES_OFFERINGS_TITLE": "Aktuelle Savoodchats",
   "MESSAGES_PERSONAL_TITLE": "Chats zu",
@@ -140,5 +141,7 @@
   "CREATE_USER_SUCCESS":"Jetzt kann es endlich los gehen. Innerhalb des Einstellungstab können sie ihr Profil weiter personifizieren.",
 
   "OFFERING_MAP_TILE":"Rettungskarte",
-  "MAP_LOADING":"Kleinen Moment, wir verteilen kurz das Essen..."
+  "MAP_LOADING":"Kleinen Moment, wir verteilen kurz das Essen...",
+
+  "RESSOURCE_NOT_FOUND":"Seite nicht gefunden!"
 }

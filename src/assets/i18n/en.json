@@ -102,6 +102,7 @@
   "PROFILE_PHONE": "Phone",
   "PROFILE_TITLE": "Other Profile",
   "SAVE": "Save",
+  "SAVE_NO_CHANGE": "Keine Ändernungen gespeichert",
   "SEND_A_MESSAGE": "Send a lovely message",
   "SETTINGS_EMAIL": "Email",
   "SETTINGS_LOCATION": "Location",
@@ -140,5 +141,7 @@
   "CREATE_USER_SUCCESS":"Now it is done! You can personalise your profile under the settings tab",
 
   "OFFERING_MAP_TILE" :"Map",
-  "MAP_LOADING":"One Second, we are just distributing the offerings..."
+  "MAP_LOADING":"One Second, we are just distributing the offerings...",
+
+  "NO_RESSOURCE_FOUND":"Page not found"
 }
