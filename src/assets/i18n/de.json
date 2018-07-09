@@ -140,5 +140,9 @@
   "CREATE_USER_SUCCESS":"Jetzt kann es endlich los gehen. Innerhalb des Einstellungstab können sie ihr Profil weiter personifizieren.",
 
   "OFFERING_MAP_TILE":"Rettungskarte",
-  "MAP_LOADING":"Kleinen Moment, wir verteilen kurz das Essen..."
+
+
+  "MAP_LOADING":"Kleinen Moment, wir verteilen kurz das Essen...",
+  "OFFERINGS_LOADING":"Unser Detektoren sind dabei nach verlorenem Essen zu suchen..."
+
 }

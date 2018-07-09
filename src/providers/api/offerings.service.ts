@@ -176,7 +176,7 @@ export class OfferingsService {
    * @param lon Longitude
    * @param distance Distance in Meters
    */
-  public getFeed(lat: number, lon: number, distance: number): Observable<Array<Offering>> {
+  public getFeed(lat: number, lon: number, distance: number): Observable<any> {
     if (lat === null || lat === undefined) {
       throw new Error('Required parameter lat was null or undefined when calling getFeed.');
     }
@@ -186,6 +186,8 @@ export class OfferingsService {
     if (distance === null || distance === undefined) {
       throw new Error('Required parameter distanceString was null or undefined when calling getFeed.');
     }
+
+    console.log("Feddie");
 
     let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
     if (lat !== undefined) {
@@ -200,7 +202,6 @@ export class OfferingsService {
 
     let headers = this.defaultHeaders;
 
-
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
       'application/json'
@@ -209,10 +210,6 @@ export class OfferingsService {
     if (httpHeaderAcceptSelected != undefined) {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
-
-    // to determine the Content-Type header
-    let consumes: string[] = [
-    ];
 
     return this.httpClient.get<any>(`${this.basePath}/feed`,
       {
@@ -477,6 +474,11 @@ export class OfferingsService {
     );
   }
 
+  /**
+   * Method to change OfferingLocation to Location Object
+   * @param location
+   * @returns {{latitude: number, longitude: number}}
+   */
   changeOfferingLocationToLocation(location:OfferingLocation){
     if(location)
       return {latitude: location.coordinates[0], longitude: location.coordinates[1]};
