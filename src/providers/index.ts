@@ -1,4 +1,3 @@
-export { Items } from '../mocks/providers/items';
 export * from './api/api';
 export * from '../models/models';
 export * from './variables';

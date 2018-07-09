@@ -14,8 +14,6 @@ import {User} from "../../models/user";
   templateUrl: 'chat-overview.html'
 })
 export class ChatOverviewPage {
-  currentItems: Item[];
-
   page: string = 'startOverview';
   pageTitleKey: string = 'MESSAGES_OFFERINGS_TITLE';
   pageTitle: string;

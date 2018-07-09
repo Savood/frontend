@@ -17,7 +17,6 @@ import { AuthProvider } from '../providers/auth/auth';
 import {AuthInterceptorService} from "../providers/auth/auth_interceptor";
 import { ClipboardModule } from 'ngx-clipboard';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
-import {UploadWebProvider} from "../providers/upload/upload-web";
 import {Deeplinks} from "@ionic-native/deeplinks";
 import {SocialSharing} from "@ionic-native/social-sharing";
 
@@ -67,7 +66,6 @@ export function createTranslateLoader(http: HttpClient) {
     Deeplinks,
     Geolocation,
     MapsService,
-    UploadWebProvider,
     AuthProvider,
     SocialSharing
   ]

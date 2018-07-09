@@ -1,9 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {ElementRef, Injectable} from '@angular/core';
 import {Platform} from "ionic-angular";
-import {GoogleMaps} from "@ionic-native/google-maps";
 import {JSMapsService} from "./jsMaps";
-import {NativeMapsService} from "./nativeMaps";
 import {Location} from "../../models/location";
 import {Geolocation} from "@ionic-native/geolocation";
 
@@ -19,7 +17,6 @@ export class MapsService {
   map: any;
 
   constructor(public http: HttpClient,
-              public plt: Platform,
               public geolocation: Geolocation) {
     //if (this.plt.is('cordova') &&
      // (this.plt.is('ios') || this.plt.is('android'))) {
@@ -44,6 +41,7 @@ export class MapsService {
    * @param location Location of the Marker
    * @param title Title of the Marker
    * @param draggable Makes the Marker draggable if true
+   * @param icon Possible icon for the marker
    * @returns Promise<Marker>, where Marker is defined by the used platform
    */
   async newMarker(location: Location, title: string, draggable?: boolean, icon?:string): Promise<any> {
@@ -137,7 +135,7 @@ export class MapsService {
    * @returns {Promise<Location>} Promise of the Location in default frontend Location format
    */
   getGPS(): Promise<Location> {
-    return new Promise<any>((resolve, reject) => {
+    return new Promise<any>((resolve) => {
       if (this.geolocation) {
         this.geolocation.getCurrentPosition().then(
           (position) => {

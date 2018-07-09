@@ -18,11 +18,9 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import '../rxjs-operators';
 
-import {ErrorModel} from '../../models/errorModel';
-import {InvalidParameterInput} from '../../models/invalidParameterInput';
 import {User} from '../../models/user';
 
-import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
+import {BASE_PATH} from '../variables';
 import {Configuration} from '../configuration';
 import {CustomHttpUrlEncodingCodec} from '../encoder';
 import {env} from "../../environment/environment";
@@ -120,11 +118,6 @@ export class UsersService {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
 
-    // to determine the Content-Type header
-    let consumes: string[] = [
-      'application/json'
-    ];
-
     return this.httpClient.delete<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}`,
       {
         headers: headers,
@@ -153,11 +146,6 @@ export class UsersService {
     if (httpHeaderAcceptSelected != undefined) {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
-
-    // to determine the Content-Type header
-    let consumes: string[] = [
-      'application/json'
-    ];
 
     return this.httpClient.get<any>(`${this.basePath}/users/${encodeURIComponent(String(id))}`,
       {
@@ -242,9 +230,6 @@ export class UsersService {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
 
-    // to determine the Content-Type header
-    let consumes: string[] = [];
-
     return this.httpClient.get(`${this.basePath}/users/${encodeURIComponent(String(id))}/backgroundimage.jpeg`,
       {
         params: queryParameters,
@@ -283,11 +268,10 @@ export class UsersService {
     const canConsumeForm = this.canConsumeForm(consumes);
 
     let formParams: { append(param: string, value: any): void; };
-    let useForm = false;
     let convertFormParamsToString = false;
     // use FormData to transmit files using content-type "multipart/form-data"
     // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
-    useForm = canConsumeForm;
+    let useForm = canConsumeForm;
     if (useForm) {
       formParams = new FormData();
     } else {
@@ -339,9 +323,6 @@ export class UsersService {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
 
-    // to determine the Content-Type header
-    let consumes: string[] = [];
-
     return this.httpClient.get(`${this.basePath}/users/${encodeURIComponent(String(id))}/image.jpeg`,
       {
         params: queryParameters,
@@ -380,11 +361,10 @@ export class UsersService {
     const canConsumeForm = this.canConsumeForm(consumes);
 
     let formParams: { append(param: string, value: any): void; };
-    let useForm = false;
     let convertFormParamsToString = false;
     // use FormData to transmit files using content-type "multipart/form-data"
     // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
-    useForm = canConsumeForm;
+    let useForm = canConsumeForm;
     if (useForm) {
       formParams = new FormData();
     } else {

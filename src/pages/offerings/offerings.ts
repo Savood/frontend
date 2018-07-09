@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {App, IonicPage, LoadingController, NavController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
-import {OfferingsService} from "../../providers/api/offerings.service";
-import {UsersService} from "../../providers/api/users.service";
+import {OfferingsService} from "../../providers";
+import {UsersService} from "../../providers";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MapsService} from "../../providers/maps/maps";
 import {Location} from "../../models/location";
@@ -42,7 +42,7 @@ export class OfferingsPage {
       this.offeringsLoadingString = value.OFFERINGS_LOADING;
     });
 
-    this._auth.getActiveUser().subscribe((data)=>{}, (err:HttpErrorResponse)=>{
+    this._auth.getActiveUser().subscribe(()=>{}, (err:HttpErrorResponse)=>{
       if(err.status == 404){
         this.appCtrl.getRootNav().push("WelcomePage");
       }

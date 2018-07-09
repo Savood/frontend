@@ -1,7 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {Offering} from "../../models/offering";
-import {OfferingsService} from "../../providers/api/offerings.service";
+import {OfferingsService} from "../../providers";
 import {MapsService} from "../../providers/maps/maps";
 import {TranslateService} from "@ngx-translate/core";
 import {env} from "../../environment/environment";

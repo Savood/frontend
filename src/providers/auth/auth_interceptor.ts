@@ -1,5 +1,5 @@
 import {
-  HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaderResponse, HttpInterceptor, HttpProgressEvent, HttpRequest,
+  HttpErrorResponse, HttpHandler, HttpHeaderResponse, HttpInterceptor, HttpProgressEvent, HttpRequest,
   HttpResponse,
   HttpSentEvent,
   HttpUserEvent
@@ -8,7 +8,6 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Injectable} from "@angular/core";
 import {AuthProvider} from "./auth";
 import {App} from "ionic-angular";
-import {Token} from "../../models/token";
 import {Observable} from "rxjs/Rx";
 
 /**
@@ -27,8 +26,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
     let header = {setHeaders: {Authorization: 'Bearer ' + token}};
-    let req_erg = req.clone(header);
-    return req_erg;
+    return req.clone(header);
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {

@@ -13,16 +13,13 @@
 /* tslint:disable:no-unused-variable member-ordering */
 
 import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Observable} from 'rxjs/Observable';
 import '../rxjs-operators';
 
-import {ErrorModel} from '../../models/errorModel';
-
-import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
+import {BASE_PATH} from '../variables';
 import {Configuration} from '../configuration';
-import {CustomHttpUrlEncodingCodec} from '../encoder';
 import {env} from '../../environment/environment';
 
 @Injectable()
@@ -43,21 +40,6 @@ export class HealthService {
   }
 
   /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
-    for (let consume of consumes) {
-      if (form === consume) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-
-  /**
    * Check Server status
    *
    */
@@ -73,9 +55,6 @@ export class HealthService {
     if (httpHeaderAcceptSelected != undefined) {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
-
-    // to determine the Content-Type header
-    let consumes: string[] = [];
 
     return this.httpClient.get<any>(`${this.basePath}/healthcheck`,
       {

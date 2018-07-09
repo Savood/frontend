@@ -49,7 +49,7 @@ export class CreateOfferingPage {
       city: ['']
     });
 
-    this.form.valueChanges.subscribe((v) => {
+    this.form.valueChanges.subscribe(() => {
       this.valid = this.form.valid;
     });
 
@@ -119,7 +119,7 @@ export class CreateOfferingPage {
         destinationType: this.camera.DestinationType.DATA_URL,
       }).then((data) => {
         this.form.patchValue({'offeringPic': 'date:image/jpg;base64,' + data});
-      }, (err) => {
+      }, () => {
         alert('Unable to take photo');
       })
     } else {

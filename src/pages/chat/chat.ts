@@ -3,7 +3,6 @@ import {Content, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {MessagesService} from "../../providers";
 import {TranslateService} from "@ngx-translate/core";
 import {env} from "../../environment/environment";
-import {Offering} from "../../models/offering";
 import {User} from "../../models/user";
 
 /**

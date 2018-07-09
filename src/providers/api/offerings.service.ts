@@ -26,7 +26,6 @@ import {Offering} from "../../models/offering";
 import {Chat} from "../../models/chat";
 import {SuccessObject} from "../../models/successObject";
 import {env} from '../../environment/environment';
-import {Location} from "../../models/location";
 import {OfferingLocation} from "../../models/offeringLocation";
 
 @Injectable()
@@ -123,10 +122,6 @@ export class OfferingsService {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
 
-    // to determine the Content-Type header
-    let consumes: string[] = [
-    ];
-
     return this.httpClient.delete<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}`,
       {
         headers: headers,
@@ -156,10 +151,6 @@ export class OfferingsService {
     if (httpHeaderAcceptSelected != undefined) {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
-
-    // to determine the Content-Type header
-    let consumes: string[] = [
-    ];
 
     return this.httpClient.get<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}/chats`,
       {
@@ -242,10 +233,6 @@ export class OfferingsService {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
 
-    // to determine the Content-Type header
-    let consumes: string[] = [
-    ];
-
     return this.httpClient.get<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}`,
       {
         headers: headers,
@@ -277,10 +264,6 @@ export class OfferingsService {
     if (httpHeaderAcceptSelected != undefined) {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
-
-    // to determine the Content-Type header
-    let consumes: string[] = [
-    ];
 
     return this.httpClient.get<any>(`${this.basePath}/offerings`,
       {
@@ -324,10 +307,6 @@ export class OfferingsService {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
 
-    // to determine the Content-Type header
-    let consumes: string[] = [
-    ];
-
     return this.httpClient.get(`${this.basePath}/offerings/${encodeURIComponent(String(id))}/image.jpeg`,
       {
         params: queryParameters,
@@ -368,11 +347,10 @@ export class OfferingsService {
     const canConsumeForm = this.canConsumeForm(consumes);
 
     let formParams: { append(param: string, value: any): void; };
-    let useForm = false;
     let convertFormParamsToString = false;
     // use FormData to transmit files using content-type "multipart/form-data"
     // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
-    useForm = canConsumeForm;
+    let useForm = canConsumeForm;
     if (useForm) {
       formParams = new FormData();
     } else {
@@ -415,11 +393,6 @@ export class OfferingsService {
     if (httpHeaderAcceptSelected != undefined) {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
-
-    // to determine the Content-Type header
-    let consumes: string[] = [
-      'application/json'
-    ];
 
     return this.httpClient.post<any>(`${this.basePath}/placeSavood`,
       null,

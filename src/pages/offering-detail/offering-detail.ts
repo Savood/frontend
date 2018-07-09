@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 import {env} from "../../environment/environment";
 import {Offering} from "../../models/offering";
-import {OfferingsService} from "../../providers/api/offerings.service";
+import {OfferingsService} from "../../providers";
 import {MapsService} from "../../providers/maps/maps";
 import {Location} from "../../models/location";
 import {SuccessObject} from "../../models/successObject";
@@ -70,8 +70,8 @@ export class OfferingDetailPage {
     this._maps.newMarker({
       latitude: offering.location.coordinates[0],
       longitude: offering.location.coordinates[1]
-    }, 'offeringPos', false).then(
-      (marker) => {
+    }, offering.name, false).then(
+      () => {
       });
   }
 

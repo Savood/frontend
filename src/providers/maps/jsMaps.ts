@@ -40,13 +40,11 @@ export class JSMapsService {
   }
 
   getMarkerPosition(marker: Marker): Location {
-    let location: Location = {latitude: marker.getPosition().lat(), longitude: marker.getPosition().lng()};
-    return location;
+    return {latitude: marker.getPosition().lat(), longitude: marker.getPosition().lng()};
   }
 
   setMarkerPosition(marker: Marker, location: Location){
-    let latLng: LatLng = new LatLng(location.latitude, location.longitude);
-    marker.setPosition(latLng);
+    marker.setPosition(new LatLng(location.latitude, location.longitude));
   }
 
   async getAddress(location: Location): Promise<any> {

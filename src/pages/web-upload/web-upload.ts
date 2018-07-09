@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
 import {IonicPage, Loading, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
-import {Upload} from "../../models/upload";
 import {UsersService} from "../../providers";
 import {Camera} from "@ionic-native/camera";
 
@@ -85,7 +84,7 @@ export class WebUploadPage {
         destinationType: this.camera.DestinationType.DATA_URL,
       }).then((data) => {
         this.selectedFile = 'date:image/jpg;base64,' + data;
-      }, (err) => {
+      }, () => {
         alert('Unable to take photo');
       })
     } else {
@@ -96,11 +95,8 @@ export class WebUploadPage {
   processWebImage(event) {
     let reader = new FileReader();
     reader.onload = (readerEvent) => {
-
-      let imageData = (readerEvent.target as any).result;
-      this.selectedFile = imageData;
+      this.selectedFile = (readerEvent.target as any).result;
     };
-
     this.image = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
   }

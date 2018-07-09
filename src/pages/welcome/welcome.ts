@@ -1,10 +1,10 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IonicPage, NavController, Slides, ToastController} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../models/user";
 import {TranslateService} from "@ngx-translate/core";
 import {Address} from "../../models/address";
-import {UsersService} from "../../providers/api/users.service";
+import {UsersService} from "../../providers";
 import {MainPage} from "../index";
 
 /**
@@ -12,7 +12,7 @@ import {MainPage} from "../index";
  * and then directs the user to create an account or log in.
  * If you'd like to immediately put the user onto a login/signup page,
  * we recommend not using the Welcome page.
-*/
+ */
 @IonicPage()
 @Component({
   selector: 'page-welcome',
@@ -21,21 +21,19 @@ import {MainPage} from "../index";
 export class WelcomePage {
   @ViewChild(Slides) slides: Slides;
 
-
-  locationMarker:any;
   nameForm: FormGroup;
 
-  address:Address = {};
-  user:User = {};
+  address: Address = {};
+  user: User = {};
 
-  successfulCreateUser:string = null;
+  successfulCreateUser: string = null;
 
   loading = false;
 
   constructor(public navCtrl: NavController,
               public formBuilder: FormBuilder,
               public translateService: TranslateService,
-              public _user:UsersService,
+              public _user: UsersService,
               public toastCtrl: ToastController) {
 
     this.nameForm = this.formBuilder.group({
@@ -49,21 +47,21 @@ export class WelcomePage {
 
   }
 
-  swipeToName(){
+  swipeToName() {
     this.slides.slideTo(2);
   }
 
-  finishCreation(){
+  finishCreation() {
 
     this.user.address = this.address;
     this.user.firstname = this.nameForm.controls['firstname'].value;
     this.user.lastname = this.nameForm.controls['lastname'].value;
-    this.loading=true;
+    this.loading = true;
 
-    console.log(this.user)
+    console.log(this.user);
 
     this._user.createNewUser(this.user).subscribe(
-      data=> {
+      () => {
         let toast = this.toastCtrl.create({
           message: this.successfulCreateUser,
           duration: 3000,
@@ -73,9 +71,10 @@ export class WelcomePage {
         this.navCtrl.setRoot(MainPage);
 
       },
-          err=>{},
-          ()=>this.loading = false
-      );
+      () => {
+      },
+      () => this.loading = false
+    );
 
   }
 }

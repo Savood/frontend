@@ -13,7 +13,6 @@ import {
 
 import {MapsService} from "../../providers/maps/maps";
 import {UsersService} from '../../providers';
-import {} from '@types/googlemaps';
 import {User} from "../../models/user";
 import {AuthProvider} from "../../providers/auth/auth";
 import {LoginPage} from "../login/login";
@@ -53,7 +52,6 @@ export class SettingsPage {
 
   options: any;
 
-  emailForm: FormGroup;
   phoneForm: FormGroup;
   locationForm: FormGroup;
   nameDescForm: FormGroup;
@@ -183,10 +181,6 @@ export class SettingsPage {
     }
   }
 
-  ngOnChanges() {
-    console.log('Ng All Changes');
-  }
-
   initMap() {
     let loading = this.loadingCtrl.create({
       content: 'Please wait...',
@@ -198,7 +192,7 @@ export class SettingsPage {
         this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
         loading.dismiss();
         this._maps.newMarker(
-          {latitude: position.latitude, longitude: position.longitude}, 'userPos', true).then(
+          {latitude: position.latitude, longitude: position.longitude}, null, true).then(
           (marker) => {
             this.locationMarker = marker;
             this.usePointerLocation();
@@ -364,7 +358,7 @@ export class SettingsPage {
         destinationType: this.camera.DestinationType.DATA_URL,
       }).then((data) => {
         console.log(data);
-      }, (err) => {
+      }, () => {
         alert('Unable to take photo');
       })
     } else {

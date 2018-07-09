@@ -13,7 +13,7 @@
 /* tslint:disable:no-unused-variable member-ordering */
 
 import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Observable} from 'rxjs/Observable';
 import '../rxjs-operators';
@@ -21,7 +21,7 @@ import '../rxjs-operators';
 import {Chat} from '../../models/chat';
 import {Message} from '../../models/message';
 
-import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
+import {BASE_PATH} from '../variables';
 import {Configuration} from '../configuration';
 import {env} from '../../environment/environment';
 
@@ -135,11 +135,6 @@ export class MessagesService {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
 
-    // to determine the Content-Type header
-    let consumes: string[] = [
-      'application/json'
-    ];
-
     return this.httpClient.delete<any>(`${this.basePath}/chats/${encodeURIComponent(String(chatID))}/messages/${encodeURIComponent(String(id))}`,
       {
         headers: headers,
@@ -164,11 +159,6 @@ export class MessagesService {
     if (httpHeaderAcceptSelected != undefined) {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
-
-    // to determine the Content-Type header
-    let consumes: string[] = [
-      'application/json'
-    ];
 
     return this.httpClient.get<any>(`${this.basePath}/chats/`,
       {
@@ -199,9 +189,6 @@ export class MessagesService {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
 
-    // to determine the Content-Type header
-    let consumes: string[] = [];
-
     return this.httpClient.get<any>(`${this.basePath}/offerings/${encodeURIComponent(String(id))}/chats`,
       {
         headers: headers,
@@ -230,9 +217,6 @@ export class MessagesService {
     if (httpHeaderAcceptSelected != undefined) {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
-
-    // to determine the Content-Type header
-    let consumes: string[] = [];
 
     return this.httpClient.get<any>(`${this.basePath}/chats/${encodeURIComponent(String(chatID))}/messages`,
       {
@@ -266,11 +250,6 @@ export class MessagesService {
     if (httpHeaderAcceptSelected != undefined) {
       headers = headers.set("Accept", httpHeaderAcceptSelected);
     }
-
-    // to determine the Content-Type header
-    let consumes: string[] = [
-      'application/json'
-    ];
 
     return this.httpClient.get<any>(`${this.basePath}/chats/${encodeURIComponent(String(chatID))}/messages/${encodeURIComponent(String(id))}`,
       {
