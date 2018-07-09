@@ -429,7 +429,7 @@ export class SettingsPage {
 
     route.splice(0, route.indexOf('profile'));
 
-    let shareUrl: string = 'http://savood.app.chd.cx/#';
+    let shareUrl: string = 'savood.app.chd.cx/#';
     for(let part of route){
       shareUrl += '/' + part;
     }

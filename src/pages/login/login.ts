@@ -49,6 +49,7 @@ export class LoginPage {
 
     this._deeplinks.route({
       '/profile/:profileId': 'SettingsPage',
+      '/savood/:offeringId': 'OfferingDetailPage',
       '/': {}
     }).subscribe(
       (match) => {
@@ -58,12 +59,14 @@ export class LoginPage {
       },
       (nomatch) => {
         if (nomatch !== 'cordova_not_available') {
-          let toast = this.toastCtrl.create({
-            message: "RESSOURCE_NOT_AVAILABLE",
-            duration: 3000,
-            position: 'top'
-          });
-          toast.present();
+          if (nomatch.$route.length() > 0) {
+            let toast = this.toastCtrl.create({
+              message: "RESSOURCE_NOT_AVAILABLE",
+              duration: 3000,
+              position: 'top'
+            });
+            toast.present();
+          }
         }
       }
     )

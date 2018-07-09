@@ -2,7 +2,6 @@
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Savood</name>
     <description>The location based foodsharing app to save the world</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -78,8 +77,6 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
-    <engine name="browser" spec="5.0.3" />
-    <engine name="android" spec="^7.0.0" />
     <plugin name="cordova-plugin-googlemaps" spec="~2.3.3">
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyC9cKJ5mjMP43QPZLwHwPZBPWtX97ljUFc" />
         <variable name="API_KEY_FOR_IOS" value="AIzaSyBhrt6TjIvHcofM1FZY0AXtPadosDq2Dno" />
@@ -97,7 +94,7 @@
     <plugin name="ionic-plugin-deeplinks" spec="^1.0.15">
         <variable name="URL_SCHEME" value="savood" />
         <variable name="DEEPLINK_SCHEME" value="https" />
-        <variable name="DEEPLINK_HOST" value="savood.com" />
+        <variable name="DEEPLINK_HOST" value="savood.app.chd.cx/" />
         <variable name="ANDROID_PATH_PREFIX" value="/" />
         <variable name="ANDROID_2_PATH_PREFIX" value="/" />
         <variable name="ANDROID_3_PATH_PREFIX" value="/" />
@@ -112,8 +109,6 @@
         <variable name="DEEPLINK_5_SCHEME" value=" " />
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
-    <engine name="browser" spec="5.0.3" />
-    <engine name="android" spec="^7.0.0" />
     <allow-navigation href="http://192.168.1.5:8100" />
     <platform name="android">
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -135,4 +130,6 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
+    <engine name="browser" spec="5.0.3" />
+    <engine name="android" spec="^7.0.0" />
 </widget>

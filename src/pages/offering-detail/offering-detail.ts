@@ -88,7 +88,7 @@ export class OfferingDetailPage {
 
     route.splice(0, route.indexOf('savood'));
 
-    let shareUrl: string = 'savood.com/#';
+    let shareUrl: string = 'savood.app.chd.cx/#';
 
     for (let part of route) {
       shareUrl += '/' + part;
