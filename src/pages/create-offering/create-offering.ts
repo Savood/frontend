@@ -1,11 +1,12 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {MapsService} from "../../providers/maps/maps";
 
 import {DatePicker} from "@ionic-native/date-picker";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Camera} from "@ionic-native/camera";
 import {TranslateService} from "@ngx-translate/core";
+import {OfferingsService} from "../../providers";
 
 /**
  * Generated class for the CreateOfferingPage page.
@@ -36,8 +37,10 @@ export class CreateOfferingPage {
               public _maps: MapsService,
               public datePicker: DatePicker,
               public camera: Camera,
+              public toastCtrl: ToastController,
               public formBuilder: FormBuilder,
-              public translate: TranslateService) {
+              public translate: TranslateService,
+              public _offering: OfferingsService) {
 
     this.form = formBuilder.group({
       offeringPic: ['', Validators.required],
@@ -113,6 +116,10 @@ export class CreateOfferingPage {
     alert("created");
   }
 
+  uploadImage(offeringId: string){
+    this._offering.offeringsIdImageJpegPost(offeringId, this.image).subscribe();
+  }
+
   getPicture() {
     if (Camera['installed']()) {
       this.camera.getPicture({
@@ -139,6 +146,17 @@ export class CreateOfferingPage {
   }
 
   createOffering() {
+    //TODO: Fix passing of Offering (getRawValue()) probably wont work
+    this._offering.createNewOffering(this.form.getRawValue()).subscribe(
+      (success) => {
+        this.uploadImage(success._id);
+      },
+      (err) => {
+        this.toastCtrl.create({
+          message: "Konnte nicht erstellt werden"
+        })
+      }
+    );
     alert("Create Offering");
     this.navCtrl.pop();
   }
