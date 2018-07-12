@@ -71,6 +71,7 @@ export class SettingsPage {
     page: 'location',
     pageTitleKey: 'SETTINGS_LOCATION',
     profile: this.profile,
+    profileId: '',
     profileChanged: this.profileChanged
   };
 
@@ -78,6 +79,7 @@ export class SettingsPage {
     page: 'phone',
     pageTitleKey: 'SETTINGS_PHONE',
     profile: this.profile,
+    profileId: '',
     profileChanged: this.profileChanged
   };
 
@@ -85,6 +87,7 @@ export class SettingsPage {
     page: 'nameDesc',
     pageTitleKey: 'SETTINGS_NAME_DESC',
     profile: this.profile,
+    profileId: '',
     profileChanged: this.profileChanged
   };
 
@@ -133,6 +136,12 @@ export class SettingsPage {
               = this.nameDescSettings.profile
               = this.profile
               = profile;
+
+            this.locationSettings.profileId
+              = this.phoneSettings.profileId
+              = this.nameDescSettings.profileId
+              = profile._id;
+
           } else {
             this.profile = profile;
           }
@@ -163,11 +172,12 @@ export class SettingsPage {
 
     if (this.navParams.get('page') == 'location') {
       this.locationForm = this.formBuilder.group({
-        street: [this.profile.address.street],
-        number: [this.profile.address.number],
-        zip: [this.profile.address.zip],
-        city: [this.profile.address.city],
+        street: [this.profile.address ? this.profile.address.street : ''],
+        number: [this.profile.address ? this.profile.address.number : ''],
+        zip: [this.profile.address ? this.profile.address.zip : ''],
+        city: [this.profile.address ? this.profile.address.city : ''],
       });
+      this.locationForm.markAsDirty();
     }
 
     this.translate.get(this.pageTitleKey).subscribe((res) => {
@@ -446,6 +456,6 @@ export class SettingsPage {
   }
 
   getUserAvatar(user: User) {
-    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
+    return `${env.api_endpoint}/users/${user._id}/image.jpeg`;
   }
 }

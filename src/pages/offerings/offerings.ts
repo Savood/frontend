@@ -95,7 +95,7 @@ export class OfferingsPage {
    */
   getImageSource(item:Offering){
     let _id = item._id;
-    let path =  `${env.api_endpoint}/offerings/${_id}/image.jpeg:`;
+    let path =  `${env.api_endpoint}/offerings/${_id}/image.jpeg`;
   }
 
   /**
