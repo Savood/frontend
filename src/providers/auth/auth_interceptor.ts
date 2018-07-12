@@ -53,19 +53,15 @@ export class AuthInterceptorService implements HttpInterceptor {
   }
 
   handle401Error(req: HttpRequest<any>, next: HttpHandler) {
-    console.log("Error 401");
 
     if (!this.isRefreshingToken) {
-      console.log("IT IS NOT REFRESHING TOKEN");
       this.isRefreshingToken = true;
 
       this.tokenSubject.next(null);
 
       if (this.authService.getRefreshToken()) {
-        console.log("THERE IS A REFRESHTOKEN");
         return Observable.fromPromise(this.authService.renewToken())
           .switchMap((newToken: { id_token: string }) => {
-            console.log("Right in refreshing");
             if (newToken) {
               console.log(newToken.id_token);
               this.tokenSubject.next(newToken.id_token);

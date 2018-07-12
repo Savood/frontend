@@ -78,12 +78,8 @@ export class AuthProvider {
     };
     let token = null;
     try{
-      console.log("Get new TOken");
       token = await this._http.post(env.auth_endpoint + 'oauth2/token', body.toString(), options).toPromise();
-      console.log("Got new TOken");
     }catch(err){
-      console.log(err);
-      console.log("Get new Error");
     }
 
     if(token) {
