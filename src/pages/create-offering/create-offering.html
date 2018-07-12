@@ -52,15 +52,19 @@
       <ion-list>
         <ion-item>
           <ion-label stacked>Straße</ion-label>
-          <ion-input type="street" formControlName="street" clearInput (click)="openDatePicker()"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked>Stadt</ion-label>
-          <ion-input type="city" formControlName="city" clearInput (click)="openDatePicker()"></ion-input>
+          <ion-input type="street" formControlName="street" clearInput></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Nummer</ion-label>
-          <ion-input type="number" formControlName="number" clearInput (click)="openDatePicker()"></ion-input>
+          <ion-input type="number" formControlName="number" clearInput></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Stadt</ion-label>
+          <ion-input type="city" formControlName="city" clearInput></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Postleitzahl</ion-label>
+          <ion-input type="number" formControlName="zip" clearInput></ion-input>
         </ion-item>
 
       </ion-list>

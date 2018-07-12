@@ -1,12 +1,13 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {MapsService} from "../../providers/maps/maps";
 
 import {DatePicker} from "@ionic-native/date-picker";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Camera} from "@ionic-native/camera";
 import {TranslateService} from "@ngx-translate/core";
-import {OfferingsService} from "../../providers";
+import {Offering, OfferingsService} from "../../providers";
+import {AuthProvider} from "../../providers/auth/auth";
 
 /**
  * Generated class for the CreateOfferingPage page.
@@ -38,9 +39,11 @@ export class CreateOfferingPage {
               public datePicker: DatePicker,
               public camera: Camera,
               public toastCtrl: ToastController,
+              private loadCtrl: LoadingController,
               public formBuilder: FormBuilder,
               public translate: TranslateService,
-              public _offering: OfferingsService) {
+              public _offering: OfferingsService,
+              public _auth: AuthProvider) {
 
     this.form = formBuilder.group({
       offeringPic: ['', Validators.required],
@@ -49,7 +52,8 @@ export class CreateOfferingPage {
       bestbefore: [''],
       street: [''],
       number: [''],
-      city: ['']
+      city: [''],
+      zip: ['']
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -146,19 +150,55 @@ export class CreateOfferingPage {
   }
 
   createOffering() {
-    //TODO: Fix passing of Offering (getRawValue()) probably wont work
-    this._offering.createNewOffering(this.form.getRawValue()).subscribe(
-      (success) => {
-        this.uploadImage(success._id);
-      },
-      (err) => {
-        this.toastCtrl.create({
-          message: "Konnte nicht erstellt werden"
-        })
+    let loading = this.loadCtrl.create({
+      content: "Angebot wird erstellt",
+      enableBackdropDismiss: true
+    });
+    loading.present();
+
+
+    let formValues = this.form.getRawValue();
+    let newOffering: Offering;
+
+    this._maps.getLocation(formValues.street + " " + formValues.number + ", " + formValues.zip + formValues.city).then(
+      (location) => {
+        newOffering = {
+          name: formValues.name,
+          description: formValues.description,
+          creator: {
+            _id: this._auth.getActiveUserId()
+          },
+          bestByDate: formValues.bestbefore,
+          address: {
+            street: formValues.street,
+            number: formValues.number,
+            city: formValues.city,
+            zip: formValues.zip
+          },
+          location: {
+            type: 'Point',
+            coordinates: [
+              location.longitude,
+              location.latitude
+            ]
+          }
+        };
+        this._offering.createNewOffering(newOffering).subscribe(
+          (success) => {
+            this.uploadImage(success._id);
+            loading.dismiss();
+          },
+          (err) => {
+            this.toastCtrl.create({
+              message: "Konnte nicht erstellt werden"
+            });
+            loading.dismiss();
+          }
+        );
+        alert("Create Offering");
+        this.navCtrl.pop();
       }
     );
-    alert("Create Offering");
-    this.navCtrl.pop();
   }
 }
 
