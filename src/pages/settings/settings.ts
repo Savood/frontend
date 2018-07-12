@@ -168,6 +168,7 @@ export class SettingsPage {
         zip: [this.profile.address.zip],
         city: [this.profile.address.city],
       });
+      this.locationForm.markAsDirty();
     }
 
     this.translate.get(this.pageTitleKey).subscribe((res) => {
@@ -446,6 +447,6 @@ export class SettingsPage {
   }
 
   getUserAvatar(user: User) {
-    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
+    return `${env.api_endpoint}/users/${user._id}/image.jpeg`;
   }
 }

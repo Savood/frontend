@@ -78,11 +78,11 @@ export class OfferingDetailPage {
   }
 
   getImageSource(item: Offering) {
-    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg:`;
+    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg`;
   }
 
   getUserAvatarPath(user: User) {
-    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
+    return `${env.api_endpoint}/users/${user._id}/image.jpeg`;
   }
 
   sharePage() {
