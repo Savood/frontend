@@ -6,7 +6,7 @@ import {DatePicker} from "@ionic-native/date-picker";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Camera} from "@ionic-native/camera";
 import {TranslateService} from "@ngx-translate/core";
-import {Offering, OfferingsService} from "../../providers";
+import {Offering, OfferingsService, UsersService} from "../../providers";
 import {AuthProvider} from "../../providers/auth/auth";
 
 /**
@@ -33,6 +33,11 @@ export class CreateOfferingPage {
   form: FormGroup;
   image: Blob;
 
+  loading = this.loadCtrl.create({
+    content: "Angebot wird erstellt",
+    enableBackdropDismiss: true
+  });
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public _maps: MapsService,
@@ -43,18 +48,28 @@ export class CreateOfferingPage {
               public formBuilder: FormBuilder,
               public translate: TranslateService,
               public _offering: OfferingsService,
-              public _auth: AuthProvider) {
+              public _auth: AuthProvider,
+              public _user: UsersService) {
 
     this.form = formBuilder.group({
-      offeringPic: ['', Validators.required],
+      offeringPic: [''],
       name: ['', Validators.required],
       description: ['', Validators.required],
       bestbefore: [''],
-      street: [''],
-      number: [''],
-      city: [''],
-      zip: ['']
+      street: ['', Validators.required],
+      number: ['', Validators.required],
+      city: ['', Validators.required],
+      zip: ['', Validators.required]
     });
+
+    this._user.getUserById(this._auth.getActiveUserId()).subscribe(
+      (user) => {
+        this.form.controls.street.setValue(user.address ? user.address.street : '');
+        this.form.controls.number.setValue(user.address ? user.address.number : '');
+        this.form.controls.city.setValue(user.address ? user.address.city : '');
+        this.form.controls.zip.setValue(user.address ? user.address.zip : '');
+      }
+    )
 
     this.form.valueChanges.subscribe(() => {
       this.valid = this.form.valid;
@@ -120,7 +135,7 @@ export class CreateOfferingPage {
     alert("created");
   }
 
-  uploadImage(offeringId: string){
+  uploadImage(offeringId: string) {
     this._offering.offeringsIdImageJpegPost(offeringId, this.image).subscribe();
   }
 
@@ -150,11 +165,7 @@ export class CreateOfferingPage {
   }
 
   createOffering() {
-    let loading = this.loadCtrl.create({
-      content: "Angebot wird erstellt",
-      enableBackdropDismiss: true
-    });
-    loading.present();
+    this.loading.present();
 
 
     let formValues = this.form.getRawValue();
@@ -186,17 +197,25 @@ export class CreateOfferingPage {
         this._offering.createNewOffering(newOffering).subscribe(
           (success) => {
             this.uploadImage(success._id);
-            loading.dismiss();
+            this.toastCtrl.create({
+              message: "Angebot erstellt"
+            });
+            this.loading.dismiss();
           },
           (err) => {
+            this.loading.dismiss();
             this.toastCtrl.create({
               message: "Konnte nicht erstellt werden"
             });
-            loading.dismiss();
           }
         );
-        alert("Create Offering");
         this.navCtrl.pop();
+      },
+      (err) => {
+        this.loading.dismiss();
+        this.toastCtrl.create({
+          message: "Konnte nicht erstellt werden"
+        });
       }
     );
   }

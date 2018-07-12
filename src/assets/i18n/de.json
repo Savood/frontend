@@ -28,8 +28,6 @@
   "SETTINGS_NAME_DESC": "Name & Beschreibung",
   "SETTINGS_EMAIL": "Email",
   "SETTINGS_PHONE": "Telefon",
-  "SAVE": "Speichern",
-  "SAVE_NO_CHANGE": "Keine Änderungen gespeichert",
 
   "MESSAGES_OFFERINGS_TITLE": "Aktuelle Savoodchats",
   "MESSAGES_PERSONAL_TITLE": "Chats zu",
@@ -142,5 +140,10 @@
   "OFFERING_MAP_TILE":"Rettungskarte",
   "MAP_LOADING":"Kleinen Moment, wir verteilen kurz das Essen...",
   "OFFERINGS_LOADING":"Unser Detektoren sind dabei nach verlorenem Essen zu suchen...",
-  "RESSOURCE_NOT_FOUND":"Seite nicht gefunden!"
+
+  "RESSOURCE_NOT_FOUND":"Seite nicht gefunden!",
+  "SAVE": "Speichern",
+  "SAVE_NO_CHANGE": "Keine Änderungen gespeichert",
+  "SAVE_SERVER_ERROR":"Ups, da ist bei uns etwas schiefgelaufen! Versuche es in kurzer Zeit erneut!",
+  "SAVE_SUCCESSFUL":"Erfolgreich gespeichert!"
 }
