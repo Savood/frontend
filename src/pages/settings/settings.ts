@@ -393,7 +393,7 @@ export class SettingsPage {
 
   logout() {
     this._auth.logout();
-    this.app.getRootNav().setRoot(LoginPage);
+    this.app.getRootNav().setRoot(LoginPage, {"LOGGED_OUT":true});
   }
 
   getCamera() {

@@ -63,23 +63,34 @@ export class AuthProvider {
   }
 
   async renewToken(){
+
+    let refresh_token =  this.getRefreshToken();
     let body = new URLSearchParams();
 
-    body.set('refresh_token', this.getRefreshToken());
+    if(!refresh_token)
+      return null;
+
+    body.set('refresh_token', refresh_token);
     body.set('grant_type', 'refresh_token');
 
     let options = {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     };
-
-    let token = await this._http.post(env.auth_endpoint + 'oauth2/token', body.toString(), options).toPromise();
-
-    if(token){
-      this.saveToken(token);
-      return token;
-    }else{
-      return null;
+    let token = null;
+    try{
+      console.log("Get new TOken");
+      token = await this._http.post(env.auth_endpoint + 'oauth2/token', body.toString(), options).toPromise();
+      console.log("Got new TOken");
+    }catch(err){
+      console.log(err);
+      console.log("Get new Error");
     }
+
+    if(token) {
+      this.saveToken(token);
+    }
+
+    return token;
 
   }
 

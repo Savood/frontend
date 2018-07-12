@@ -6,6 +6,7 @@ import {User} from '../../providers';
 import {MainPage} from '../';
 import {AuthProvider} from "../../providers/auth/auth";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {UsersService} from "../../providers/api/users.service";
 
 @IonicPage()
 @Component({
@@ -42,11 +43,14 @@ export class SignupPage {
 
 
   constructor(public navCtrl: NavController,
-              public user: User,
+              public user: UsersService,
               public toastCtrl: ToastController,
               public translateService: TranslateService,
               public _auth: AuthProvider,
-              public formBuilder: FormBuilder) {
+              public formBuilder: FormBuilder
+  ) {
+
+    console.log("Actually I tried");
 
     this.translateService.get(['REGISTER_ERROR', 'EMAILREQ', 'EMAILINVALID', 'CONFIRMPASS', 'AREEQUAL', 'PASSREQ', 'PASSMINLEN', 'PASSWORDREPEAT', 'SUCCESSFUL_REGISTER', 'LOGIN_ERROR', 'EMAIL', 'ALREADY_IN_USE', 'PASSWORD']).subscribe((value) => {
       this.registerErrorString = value.REGISTER_ERROR;

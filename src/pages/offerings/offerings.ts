@@ -27,12 +27,12 @@ export class OfferingsPage {
   loading:any = null;
 
   constructor(public navCtrl: NavController,
-              public _auth: AuthProvider,
-              public _offering: OfferingsService,
-              public _user: UsersService,
               private appCtrl: App,
               public _maps: MapsService,
               public _translate: TranslateService,
+              public _auth: AuthProvider,
+              public _offering: OfferingsService,
+              public _user: UsersService,
               public loadingCtrl: LoadingController)
   {
 

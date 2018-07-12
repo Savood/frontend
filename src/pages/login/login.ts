@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {IonicPage, NavController, ToastController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 
 import {MainPage} from '../';
 import {AuthProvider} from "../../providers/auth/auth";
@@ -31,7 +31,8 @@ export class LoginPage {
               public toastCtrl: ToastController,
               public translateService: TranslateService,
               public _auth: AuthProvider,
-              public _deeplinks: Deeplinks) {
+              public _deeplinks: Deeplinks,
+              public navParams: NavParams) {
 
     this.translateService.get(['LOGIN_ERROR', 'EMAIL', 'WRONG_PASSWORD', 'PASSWORD']).subscribe((value) => {
       this.loginErrorString = value.LOGIN_ERROR;
@@ -40,16 +41,17 @@ export class LoginPage {
       this.passwordPlaceholder = value.PASSWORD;
     });
 
-    if(this._auth.isLoggedIn()) {
-      navCtrl.setRoot(MainPage);
-    }else{
-      this._auth.renewToken().then(data=> {
-        if (this._auth.isLoggedIn()) {
-          navCtrl.setRoot(MainPage);
-        }
-      });
+    if (!navParams.get("LOGGED_OUT")) {
+      if (this._auth.isLoggedIn()) {
+        navCtrl.setRoot(MainPage);
+      } else {
+        this._auth.renewToken().then(data => {
+          if(data && this._auth.isLoggedIn()) {
+            navCtrl.setRoot(MainPage);
+          }
+        });
+      }
     }
-
 
     this._deeplinks.route({
       '/profile/:profileId': 'SettingsPage',
