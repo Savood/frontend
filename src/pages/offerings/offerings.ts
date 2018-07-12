@@ -43,7 +43,8 @@ export class OfferingsPage {
     });
 
     this._auth.getActiveUser().subscribe(()=>{}, (err:HttpErrorResponse)=>{
-      if(err.status == 404){
+      if(err.status == 400){
+        this.loading.dismiss();
         this.appCtrl.getRootNav().push("WelcomePage");
       }
     });
@@ -62,7 +63,6 @@ export class OfferingsPage {
     this._offering.getFeed(this.current_location.latitude, this.current_location.longitude, this.default_distance)
       .subscribe((data: Offering[]) => {
           this.feed = data;
-          console.log(data[0].time);
         }, err => {
           console.log("ERROR", err);
         },

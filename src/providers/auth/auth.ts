@@ -25,19 +25,27 @@ export class AuthProvider {
   }
 
   getActiveUserId():string {
-    return this.helper.decodeToken(this.getToken()).userid;
+    if(this.getToken()) {
+      return this.helper.decodeToken(this.getToken()).userid;
+    }
   }
 
   getActiveUserEmail():string {
-    return this.helper.decodeToken(this.getToken()).email;
+    if(this.getToken()) {
+      return this.helper.decodeToken(this.getToken()).email;
+    }
   }
 
   isActiveUser(user:User):boolean{
-    return this.getActiveUserId() === user._id;
+    if(this.getToken()) {
+      return this.getActiveUserId() === user._id;
+    }
   }
 
   getActiveUser(){
-    return this._user.getUserById(this.getActiveUserId());
+    if(this.getToken()) {
+      return this._user.getUserById(this.getActiveUserId());
+    }
   }
 
   getRefreshToken() {
