@@ -25,7 +25,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   }
 
   addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
-    let header = {setHeaders: {Authorization: 'Bearer ' + token}};
+    let header = {setHeaders: {Authorization: token}};
     return req.clone(header);
   }
 
