@@ -10,6 +10,7 @@ import {User} from "../../models/user";
 import {TranslateService} from "@ngx-translate/core";
 import {SocialSharing} from "@ionic-native/social-sharing";
 import {ClipboardService} from "ngx-clipboard";
+import {LaunchNavigator} from "@ionic-native/launch-navigator";
 
 @IonicPage(
   {
@@ -37,6 +38,7 @@ export class OfferingDetailPage {
               public _clipboard: ClipboardService,
               public platform: Platform,
               private _social: SocialSharing,
+              private launchNavigator: LaunchNavigator,
               public _translate: TranslateService) {
     this.offering = navParams.get('offering');
     this.browser_local = navParams.get('browser_lang');
@@ -76,11 +78,11 @@ export class OfferingDetailPage {
   }
 
   getImageSource(item: Offering) {
-    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg:`;
+    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg`;
   }
 
   getUserAvatarPath(user: User) {
-    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
+    return `${env.api_endpoint}/users/${user._id}/image.jpeg`;
   }
 
   sharePage() {
@@ -123,9 +125,9 @@ export class OfferingDetailPage {
 
   openMapsNavigation() {
     if (this.platform.is('cordova')) {
-      window.open("https://www.google.com/maps/dir/?api=1" +
-        "&destination=" + this.offering.location.coordinates,
-        "_blank");
+      this.launchNavigator.navigate(this.offering.location.coordinates, {
+        app: this.launchNavigator.APP.USER_SELECT
+      });
     } else {
       window.open("https://www.google.com/maps/dir/?api=1" +
         "&destination=" + this.offering.location.coordinates,

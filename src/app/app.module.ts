@@ -19,6 +19,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import {Deeplinks} from "@ionic-native/deeplinks";
 import {SocialSharing} from "@ionic-native/social-sharing";
+import {LaunchNavigator} from "@ionic-native/launch-navigator";
 
 
 // The translate loader needs to know where to load i18n files
@@ -67,6 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
     Geolocation,
     MapsService,
     AuthProvider,
+    LaunchNavigator,
     SocialSharing
   ]
 })
