@@ -454,7 +454,7 @@ export class OfferingsService {
    */
   changeOfferingLocationToLocation(location:OfferingLocation){
     if(location)
-      return {latitude: location.coordinates[0], longitude: location.coordinates[1]};
+      return {latitude: location.coordinates[1], longitude: location.coordinates[0]};
     else return {latitude: 0, longitude:0}
   }
 

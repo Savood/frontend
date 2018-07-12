@@ -40,12 +40,16 @@ export class LoginPage {
       this.passwordPlaceholder = value.PASSWORD;
     });
 
-    this._auth.isLoggedIn().then(loggedIn => {
-        if (loggedIn) {
+    if(this._auth.isLoggedIn()) {
+      navCtrl.setRoot(MainPage);
+    }else{
+      this._auth.renewToken().then(data=> {
+        if (this._auth.isLoggedIn()) {
           navCtrl.setRoot(MainPage);
         }
-      }
-    );
+      });
+    }
+
 
     this._deeplinks.route({
       '/profile/:profileId': 'SettingsPage',

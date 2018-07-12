@@ -48,11 +48,19 @@ export class OfferingMapPage {
       content: this.mapLoadingString,
       enableBackdropDismiss: true
     });
+
     loading.present();
+
+    //getPosition
     let position = await this._maps.getGPS();
 
-    this.feed = await this._offering.getFeed(position.latitude,position.longitude, default_radius).toPromise();
-
+    //get offerings
+    try {
+      this.feed = await this._offering.getFeed(position.latitude, position.longitude, default_radius).toPromise();
+    }catch(err){
+      console.log(err);
+    }
+    //init Map
     this._maps.initMap(this.mapElement, {latitude: position.latitude, longitude: position.longitude});
 
     //Set user marker
@@ -62,13 +70,21 @@ export class OfferingMapPage {
     //Set circle
     let circle = await this._maps.createCircle({latitude: position.latitude, longitude: position.longitude},default_radius);
 
-    this.feed.forEach(async (item)=>{
-      let marker = await this._maps.newMarker({latitude: item.location.coordinates[0],
-        longitude: item.location.coordinates[1]},
-        item.name, false, item.savooded?"savood":"offering");
-      this._maps.addListener(marker, 'click', ()=>{console.log("Hallo");this.clickMarker(item);});
-    });
-    loading.dismiss();
+    //Show offerings on map
+    if(this.feed) {
+      this.feed.forEach(async (item) => {
+        let marker = await this._maps.newMarker({
+            latitude: item.location.coordinates[1],
+            longitude: item.location.coordinates[0]
+          },
+          item.name, false, item.savooded ? "savood" : "offering");
+        this._maps.addListener(marker, 'click', () => {
+          console.log("Hallo");
+          this.clickMarker(item);
+        });
+      });
+      loading.dismiss();
+    }
   }
 
   /**

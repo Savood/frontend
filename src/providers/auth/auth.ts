@@ -52,14 +52,14 @@ export class AuthProvider {
     return this.refresh_token || localStorage.getItem('refresh_token') || null;
   }
 
-  async isLoggedIn():Promise<boolean>{
+  isLoggedIn():boolean{
     let token = this.getToken();
 
-    if(this.getRefreshToken() && this.helper.isTokenExpired(this.getToken())){
-      await this.renewToken();
-    }
-
     return token && !this.helper.isTokenExpired(this.getToken());
+  }
+
+  isTokenExpired(){
+    return this.helper.isTokenExpired(this.getToken());
   }
 
   async renewToken(){
@@ -132,7 +132,7 @@ export class AuthProvider {
   }
 
   getToken(){
-    return this.id_token || localStorage.getItem('id_token');
+    return localStorage.getItem('id_token');
   }
 
   saveToken(token) {
