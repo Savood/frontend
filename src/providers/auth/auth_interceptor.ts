@@ -25,8 +25,13 @@ export class AuthInterceptorService implements HttpInterceptor {
   }
 
   addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
-    let header = {setHeaders: {Authorization: token}};
-    return req.clone(header);
+    if(token) {
+      let header = {setHeaders: {Authorization: token}};
+      return req.clone(header);
+    }
+    else{
+      return req;
+    }
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
@@ -34,22 +39,13 @@ export class AuthInterceptorService implements HttpInterceptor {
     //TODO Fix this
     let token = this.authService.getToken();
 
-    return next.handle(this.addToken(req, token)).catch(error => {
-      if (error instanceof HttpErrorResponse) {
-        if ((<HttpErrorResponse>error).status == 401)
-          return this.handle401Error(req, next);
-        else {
-          return next.handle(req);
-        }
-      } else {
-        return next.handle(req);
-      }
+    return next.handle(this.addToken(req, token))
+      .catch(error => {
+        return Observable.throw(error);
     });
   }
 
   handle401Error(req: HttpRequest<any>, next: HttpHandler) {
-    console.log("401 Error");
-
     if (!this.isRefreshingToken) {
       this.isRefreshingToken = true;
 
