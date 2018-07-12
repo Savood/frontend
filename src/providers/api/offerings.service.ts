@@ -178,8 +178,6 @@ export class OfferingsService {
       throw new Error('Required parameter distanceString was null or undefined when calling getFeed.');
     }
 
-    console.log("Feddie");
-
     let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
     if (lat !== undefined) {
       queryParameters = queryParameters.set('lat', <any>lat);
