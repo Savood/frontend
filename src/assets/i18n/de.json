@@ -145,5 +145,24 @@
   "SAVE": "Speichern",
   "SAVE_NO_CHANGE": "Keine Änderungen gespeichert",
   "SAVE_SERVER_ERROR":"Ups, da ist bei uns etwas schiefgelaufen! Versuche es in kurzer Zeit erneut!",
-  "SAVE_SUCCESSFUL":"Erfolgreich gespeichert!"
+  "SAVE_SUCCESSFUL":"Erfolgreich gespeichert!",
+
+  "BADGES": {
+    "SAVOOD_1":"Zum ersten mal savooded!",
+    "SAVOOD_5":"Bereits 5-mal savooded!",
+    "SAVOOD_10":"Krasse 10-mal savooded!",
+    "SAVOOD_25":"Fantastische 25-mal savooded!",
+    "SAVOOD_50":"Unglaubliche 50-mal savooded!",
+    "MESSAGE_1":"Zum ersten mal mit wem rumgechattet!",
+    "MESSAGE_5":"Bereits 5-mal mit wem rumgechattet!",
+    "MESSAGE_10":"Krasse 10-mal mit wem rumgechattet!",
+    "MESSAGE_25":"Fantastische 25-mal mit wem rumgechattet!",
+    "MESSAGE_50":"Unglaubliche 50-mal mit wem rumgechattet!",
+    "OFFERING_1":"Zum ersten mal die Welt gerettet!",
+    "OFFERING_5":"Bereits 5-mal die Welt gerettet!",
+    "OFFERING_10":"Krasse 10-mal die Welt gerettet!",
+    "OFFERING_25":"Fantastische 25-mal die Welt gerettet!",
+    "OFFERING_50":"Unglaubliche 50-mal die Welt gerettet!"
+  }
+
 }

@@ -30,15 +30,19 @@
           <p class="profile-description">{{profile.description}}</p>
         </ion-card-content>
       </ion-card>
-      <ion-card>
+      <ion-card text-center>
         <ion-card-header>{{'PROFILE_BADGES'|translate}}</ion-card-header>
-        <ion-grid text-center class="badges">
+        <ion-grid text-center class="badges" *ngIf="profile.badges.length > 0">
           <ion-row>
-            <ion-col *ngFor="let gotBadge of profile.badges" col-3>
-              <ion-icon name="alarm" [color]="gotBadge ? 'primary' : 'dark'"></ion-icon>
+            <ion-col *ngFor="let badge of profile.badges" col-3>
+              <ion-icon [name]="getBadgeType(badge)" [color]="'primary'" (click)="showBadgeInfo(badge)"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-grid>
+        <span *ngIf="profile.badges.length == 0">
+          <p>Leider hast du noch keine Abzeichen.</p>
+          <p>Savoode weiter um welche zu erhalten!</p>
+        </span>
       </ion-card>
       <ion-card *ngIf="ownProfile">
         <ion-card-header>{{'SETTINGS_PROFILE'|translate}}</ion-card-header>

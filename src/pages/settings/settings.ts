@@ -458,4 +458,31 @@ export class SettingsPage {
   getUserAvatar(user: User) {
     return `${env.api_endpoint}/users/${user._id}/image.jpeg`;
   }
+
+  getBadgeType(badge: string) {
+    let badgeType: string = badge.split('_')[0];
+    switch(badgeType){
+      case 'SAVOOD':
+        return 'restaurant';
+      case 'MESSAGE':
+        return 'mail';
+      case 'OFFERING':
+        return 'globe';
+      default:
+        return 'help';
+    }
+  }
+
+  showBadgeInfo(badge: string) {
+    let key: string = 'BADGES.' + badge;
+    this.translate.get(key).subscribe(
+      (badgeText) => {
+        this.toastCtrl.create({
+          position: 'top',
+          message: badgeText,
+          duration: 3000
+        }).present();
+      }
+    )
+  }
 }

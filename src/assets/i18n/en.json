@@ -144,5 +144,23 @@
   "MAP_LOADING":"One Second, we are just distributing the offerings...",
   "OFFERINGS_LOADING":"Our detectors are looking for lonely food...",
 
-  "NO_RESSOURCE_FOUND":"Page not found"
+  "NO_RESSOURCE_FOUND":"Page not found",
+
+  "BADGES": {
+    "SAVOOD_1":"Savooded for the first time!",
+    "SAVOOD_5":"Savooded 5 times!",
+    "SAVOOD_10":"Savooded 10 times! Crazy!",
+    "SAVOOD_25":"Savooded 25 times! Awesome!",
+    "SAVOOD_50":"Savooded 50 times! Unbelievable!",
+    "MESSAGE_1":"Chatted for the first time!",
+    "MESSAGE_5":"Chatted 5 times!",
+    "MESSAGE_10":"Chatted 10 times! Crazy!",
+    "MESSAGE_25":"Chatted 25 times! Awesome!",
+    "MESSAGE_50":"Chatted 50 times! Unbelievable!",
+    "OFFERING_1":"Saved the world for the first time!",
+    "OFFERING_5":"Saved the world 5 times!",
+    "OFFERING_10":"Saved the world 10 times! Crazy!",
+    "OFFERING_25":"Saved the world 25 times! Awesome!",
+    "OFFERING_50":"Saved the world 50 times! Unbelievable!"
+  }
 }
