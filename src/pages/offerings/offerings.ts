@@ -44,7 +44,6 @@ export class OfferingsPage {
 
     this._auth.getActiveUser().subscribe(()=>{}, (err:HttpErrorResponse)=>{
       if(err.status == 400){
-        this.loading.dismiss();
         this.appCtrl.getRootNav().push("WelcomePage");
       }
     });
