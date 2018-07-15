@@ -46,7 +46,7 @@ export class LoginPage {
         navCtrl.setRoot(MainPage);
       } else {
         this._auth.renewToken().then(data => {
-          if(data && this._auth.isLoggedIn()) {
+          if (data && this._auth.isLoggedIn()) {
             navCtrl.setRoot(MainPage);
           }
         });
@@ -65,14 +65,12 @@ export class LoginPage {
       },
       (nomatch) => {
         if (nomatch !== 'cordova_not_available') {
-          if (nomatch.$route.length() > 0) {
-            let toast = this.toastCtrl.create({
-              message: "RESSOURCE_NOT_AVAILABLE",
-              duration: 3000,
-              position: 'top'
-            });
-            toast.present();
-          }
+          let toast = this.toastCtrl.create({
+            message: "RESSOURCE_NOT_AVAILABLE",
+            duration: 3000,
+            position: 'top'
+          });
+          toast.present();
         }
       }
     )
