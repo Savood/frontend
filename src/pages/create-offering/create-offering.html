@@ -25,7 +25,7 @@
         <div class="offering-image-placeholder" *ngIf="!this.form.controls.offeringPic.value">
           <ion-icon name="camera"></ion-icon>
           <div>
-            {{'CHOOSE_PICTURE' | translate}}
+            {{'CHOOSE_PICTURE'}}
           </div>
         </div>
         <!--<div class="offering-image" [style.backgroundImage]="getOfferingImage()" *ngIf="this.form.controls.offeringPic.value"></div>-->
@@ -44,11 +44,11 @@
       </ion-item>
       <ion-item>
         <ion-label stacked>Best-Before Date</ion-label>
-        <ion-input type="name" formControlName="bestbefore" clearInput (click)="openDatePicker()"></ion-input>
+        <ion-input type="name" formControlName="bestbefore" clearInput (ionFocus)="openDatePicker()"></ion-input>
       </ion-item>
     </ion-card>
     <ion-card>
-      <div #map id="map"></div>
+      <div #map id="map" (focus)="removeFocus()"></div>
       <ion-list>
         <ion-item>
           <ion-label stacked>Straße</ion-label>
