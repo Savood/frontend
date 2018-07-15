@@ -59,7 +59,7 @@
   </div>
   <div [ngSwitch]="whichtab">
     <ion-list *ngSwitchCase="'info'">
-      <ion-card>
+      <ion-card (click)="goToCreator(offering.creator)">
         <ion-item>
           <ion-avatar item-start>
             <img [src]="avatar || 'assets/img/user_fallback_avatar.png'">

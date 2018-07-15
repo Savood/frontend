@@ -103,13 +103,18 @@ export class CreateOfferingPage {
     )
   }
 
+  removeFocus(){
+    const active = <HTMLInputElement>document.activeElement;
+    active.blur();
+  }
+
   openDatePicker() {
     this.datePicker.show({
       date: new Date(),
       mode: 'date',
       androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
     }).then(
-      date => this.form.controls['bestbefore'].setValue(`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`),
+      date => this.form.controls['bestbefore'].setValue(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`),
       err => console.log('Error occurred while getting date: ', err)
     );
   }

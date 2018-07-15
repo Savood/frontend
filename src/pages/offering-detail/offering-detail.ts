@@ -150,4 +150,8 @@ export class OfferingDetailPage {
         "_blank");
     }
   }
+
+  goToCreator(user: User){
+    this.navCtrl.push('SettingsPage', {profileId: user._id, pageTitleKey: 'PROFILE_TITLE'});
+  }
 }
