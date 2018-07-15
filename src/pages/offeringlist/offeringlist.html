@@ -7,10 +7,10 @@
 <ion-header>
 
   <ion-navbar color="secondary">
-    <ion-title>offeringlist</ion-title>
+    <ion-title></ion-title>
 
   </ion-navbar>
-  <ion-segment [(ngModel)]="page">
+  <ion-segment [(ngModel)]="page" color="secondary">
     <ion-segment-button value="owned">
       {{'MY_OFFERINGS' | translate}}
     </ion-segment-button>
@@ -29,13 +29,8 @@
           <img [src]="offeringImages[item._id]" onError="this.src='assets/img/fallback_offering.jpg';">
 
           <ion-fab right bottom edge>
-            <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="placeSavood(feed)">
-              <ion-icon name='restaurant'></ion-icon>
-            </button>
-          </ion-fab>
-          <ion-fab left bottom edge>
-            <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="placeSavood(feed)">
-              <ion-icon name='restaurant'></ion-icon>
+            <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="showDeleteOfferingDialog(item)">
+              <ion-icon name='trash'></ion-icon>
             </button>
           </ion-fab>
         </div>
@@ -72,12 +67,7 @@
           <img [src]="offeringImages[item._id]" onError="this.src='assets/img/fallback_offering.jpg';">
 
           <ion-fab right bottom edge>
-            <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="placeSavood(feed)">
-              <ion-icon name='restaurant'></ion-icon>
-            </button>
-          </ion-fab>
-          <ion-fab left bottom edge>
-            <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="placeSavood(feed)">
+            <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="showUnsavoodDialog(item)">
               <ion-icon name='restaurant'></ion-icon>
             </button>
           </ion-fab>
