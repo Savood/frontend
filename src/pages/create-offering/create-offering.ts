@@ -130,11 +130,6 @@ export class CreateOfferingPage {
     );
   }
 
-
-  itemCreate() {
-    alert("created");
-  }
-
   uploadImage(offeringId: string) {
     this._offering.offeringsIdImageJpegPost(offeringId, this.image).subscribe();
   }
@@ -156,7 +151,6 @@ export class CreateOfferingPage {
   processWebImage(event) {
     let reader = new FileReader();
     reader.onload = (readerEvent) => {
-
       let imageData = (readerEvent.target as any).result;
       this.form.patchValue({'offeringPic': imageData});
     };
@@ -166,7 +160,6 @@ export class CreateOfferingPage {
 
   createOffering() {
     this.loading.present();
-
 
     let formValues = this.form.getRawValue();
     let newOffering: Offering;

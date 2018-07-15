@@ -2,11 +2,12 @@ import {Component} from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
 
 import {Item} from '../../models/item';
-import {Chat, MessagesService, OfferingsService} from '../../providers';
+import {Chat, MessagesService, OfferingsService, UsersService} from '../../providers';
 import {TranslateService} from "@ngx-translate/core";
 import {Offering} from "../../models/offering";
 import {env} from "../../environment/environment";
 import {User} from "../../models/user";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @IonicPage()
 @Component({
@@ -20,8 +21,10 @@ export class ChatOverviewPage {
   tab: string = "offerings";
 
   offerings: Offering[] = [];
+  offeringImages: {};
   currentOffering: Offering;
   offeringChats: Chat[] = [];
+  chatImages: {};
   chats: Chat[] = [];
 
   constructor(public navCtrl: NavController,
@@ -29,8 +32,10 @@ export class ChatOverviewPage {
               public translate: TranslateService,
               public _offerings: OfferingsService,
               public _messages: MessagesService,
+              public _user: UsersService,
               public toastCtrl: ToastController,
-              public loadingCtrl: LoadingController) {
+              public loadingCtrl: LoadingController,
+              private _sanitizer: DomSanitizer) {
 
     let loading = this.loadingCtrl.create({
       content: 'Please wait...',
@@ -41,11 +46,20 @@ export class ChatOverviewPage {
       (offerings) => {
         loading.dismiss();
         this.offerings = offerings;
+        for(let offering of offerings){
+          this.getImageSource(offering);
+        }
+      },
+      () => {
+        loading.dismiss();
       }
     );
     this._messages.getAllChats().subscribe(
       (chats) => {
         this.chats = chats;
+        for(let chat of chats){
+          this.getUserAvatar(chat.partner);
+        }
       }
     );
   }
@@ -65,11 +79,19 @@ export class ChatOverviewPage {
   }
 
   getImageSource(item: Offering) {
-    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg:`;
+    return this._offerings.offeringsIdImageJpegGet(item._id).subscribe(
+      (data) => {
+        this.offeringImages[item._id] = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+      }
+    );
   }
 
   getUserAvatar(user: User) {
-    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
+    return this._user.usersIdImageJpegGet(user._id).subscribe(
+      (data) => {
+        this.chatImages[user._id] = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+      }
+    );
   }
 
   openChat(chatId: string, partner: any) {

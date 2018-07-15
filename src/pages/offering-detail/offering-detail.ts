@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 import {env} from "../../environment/environment";
 import {Offering} from "../../models/offering";
-import {OfferingsService} from "../../providers";
+import {OfferingsService, UsersService} from "../../providers";
 import {MapsService} from "../../providers/maps/maps";
 import {Location} from "../../models/location";
 import {SuccessObject} from "../../models/successObject";
@@ -11,6 +11,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {SocialSharing} from "@ionic-native/social-sharing";
 import {ClipboardService} from "ngx-clipboard";
 import {LaunchNavigator} from "@ionic-native/launch-navigator";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @IonicPage(
   {
@@ -26,6 +27,9 @@ export class OfferingDetailPage {
   offering: Offering;
   whichtab: string;
 
+  image;
+  avatar;
+
   distanceString: string;
   current_location: Location = null;
   browser_local = null;
@@ -38,9 +42,13 @@ export class OfferingDetailPage {
               public _clipboard: ClipboardService,
               public platform: Platform,
               private _social: SocialSharing,
+              public _user: UsersService,
               private launchNavigator: LaunchNavigator,
-              public _translate: TranslateService) {
+              public _translate: TranslateService,
+              private _sanitizer: DomSanitizer) {
     this.offering = navParams.get('offering');
+    this.getImageSource(this.offering);
+    this.getUserAvatar(this.offering.creator);
     this.browser_local = navParams.get('browser_lang');
     if (!this.browser_local) {
       this.browser_local = this._translate.getBrowserLang();
@@ -77,12 +85,20 @@ export class OfferingDetailPage {
       });
   }
 
-  getImageSource(item: Offering) {
-    return `${env.api_endpoint}/offerings/${item._id}/image.jpeg`;
+  getImageSource(offering: Offering) {
+    return this._offering.offeringsIdImageJpegGet(offering._id).subscribe(
+      (data) => {
+        this.image = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+      }
+    );
   }
 
-  getUserAvatarPath(user: User) {
-    return `${env.api_endpoint}/users/${user._id}/image.jpeg`;
+  getUserAvatar(user: User) {
+    return this._user.usersIdImageJpegGet(user._id).subscribe(
+      (data) => {
+        this.avatar = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+      }
+    );
   }
 
   sharePage() {

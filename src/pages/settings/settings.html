@@ -59,8 +59,8 @@
           </button>
           <button ion-item [navPush]="subSettings" [navParams]="phoneSettings">
             <ion-icon name="call" item-start></ion-icon>
-            <span>{{profile.phone}}</span>
-            <span>{{'SETTINGS.PHONE'|translate}}</span>
+            <span *ngIf="profile.phone">{{profile.phone}}</span>
+            <span *ngIf="!profile.phone">{{'SETTINGS.PHONE'|translate}}</span>
           </button>
           <button ion-item [navPush]="subSettings" [navParams]="locationSettings">
             <ion-icon name="map" item-start></ion-icon>

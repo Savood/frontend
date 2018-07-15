@@ -1,6 +1,9 @@
 page-web-upload{
   #image-upload{
-    visibility: hidden;
-    height: 0;
+    display: none;
+  }
+
+  .image-placeholder{
+    padding: 12px 0;
   }
 }

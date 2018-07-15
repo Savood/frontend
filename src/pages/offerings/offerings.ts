@@ -10,6 +10,7 @@ import {Offering} from "../../models/offering";
 import {env} from "../../environment/environment";
 import {SuccessObject} from "../../models/successObject";
 import {TranslateService} from "@ngx-translate/core";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @IonicPage()
 @Component({
@@ -23,6 +24,8 @@ export class OfferingsPage {
   browser_local = null;
   current_location: Location = null;
 
+  offeringImages = {};
+
   offeringsLoadingString:string = null;
   loading:any = null;
 
@@ -33,7 +36,8 @@ export class OfferingsPage {
               public _auth: AuthProvider,
               public _offering: OfferingsService,
               public _user: UsersService,
-              public loadingCtrl: LoadingController)
+              public loadingCtrl: LoadingController,
+              private _sanitizer: DomSanitizer)
   {
 
     this.browser_local = _translate.getBrowserLang();
@@ -92,9 +96,12 @@ export class OfferingsPage {
    * Gets source of offering image
    * @param item
    */
-  getImageSource(item:Offering){
-    let _id = item._id;
-    let path =  `${env.api_endpoint}/offerings/${_id}/image.jpeg`;
+  getImageSource(item: Offering) {
+    return this._offering.offeringsIdImageJpegGet(item._id).subscribe(
+      (data) => {
+        this.offeringImages[item._id] = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+      }
+    );
   }
 
   /**

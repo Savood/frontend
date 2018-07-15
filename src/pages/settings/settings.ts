@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {
-  ActionSheetController, App,
+  App,
   IonicPage,
   LoadingController,
   NavController,
@@ -17,7 +17,6 @@ import {User} from "../../models/user";
 import {AuthProvider} from "../../providers/auth/auth";
 import {LoginPage} from "../login/login";
 import {SocialSharing} from "@ionic-native/social-sharing";
-import {env} from "../../environment/environment";
 import {ClipboardService} from "ngx-clipboard";
 import {Camera} from "@ionic-native/camera";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -42,11 +41,16 @@ export class SettingsPage {
   // Our local settings object
   ownProfile: boolean = false;
   profile: User;
-  profileChanged = (newSettings) => {
+  profileChanged = (newSettings: User) => {
     this.phoneSettings.profile
       = this.nameDescSettings.profile
       = this.profile
       = newSettings;
+  };
+
+  imageChanged = () => {
+    this.getUserAvatar(this.profile);
+    this.getUserHeader(this.profile);
   };
 
   avatar;
@@ -61,7 +65,7 @@ export class SettingsPage {
   nameDescForm: FormGroup;
 
   page: string = 'main';
-  pageTitleKey: string = 'SETTINGS_TITLE';
+  pageTitleKey: string = 'SETTINGS.TITLE';
   pageTitle: string;
 
   // emailSettings = {
@@ -73,7 +77,7 @@ export class SettingsPage {
 
   locationSettings = {
     page: 'location',
-    pageTitleKey: 'SETTINGS_LOCATION',
+    pageTitleKey: 'SETTINGS.LOCATION',
     profile: this.profile,
     profileId: '',
     profileChanged: this.profileChanged
@@ -81,7 +85,7 @@ export class SettingsPage {
 
   phoneSettings = {
     page: 'phone',
-    pageTitleKey: 'SETTINGS_PHONE',
+    pageTitleKey: 'SETTINGS.PHONE',
     profile: this.profile,
     profileId: '',
     profileChanged: this.profileChanged
@@ -89,7 +93,7 @@ export class SettingsPage {
 
   nameDescSettings = {
     page: 'nameDesc',
-    pageTitleKey: 'SETTINGS_NAME_DESC',
+    pageTitleKey: 'SETTINGS.NAME_DESC',
     profile: this.profile,
     profileId: '',
     profileChanged: this.profileChanged
@@ -107,7 +111,6 @@ export class SettingsPage {
               public _user: UsersService,
               public _maps: MapsService,
               public loadingCtrl: LoadingController,
-              public actionSheetCtrl: ActionSheetController,
               public platform: Platform,
               public _auth: AuthProvider,
               private app: App,
@@ -291,150 +294,13 @@ export class SettingsPage {
     }
   }
 
-  changeHeader() {
-    console.log("Header click!");
-    if (this.platform.is('cordova')) {
-      let actionSheet = this.actionSheetCtrl.create({
-        title: 'Upload Picture from',
-        buttons: [
-          {
-            text: 'Gallery',
-            handler: () => {
-              this.getImage()
-            }
-          }, {
-            text: 'Camera',
-            handler: () => {
-              this.getCamera()
-            }
-          }, {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          }
-        ]
-      });
-      actionSheet.present();
-    } else {
-      this.navCtrl.push('WebUploadPage', {type: 'header'})
-    }
-  }
-
-  changeAvatar() {
-    if (this.platform.is('cordova')) {
-      let actionSheet = this.actionSheetCtrl.create({
-        title: 'Upload Picture from',
-        buttons: [
-          {
-            text: 'Gallery',
-            handler: () => {
-              this.getImage()
-            }
-          }, {
-            text: 'Camera',
-            handler: () => {
-              this.getCamera()
-            }
-          }, {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          }
-        ]
-      });
-      actionSheet.present();
-
-    } else {
-      this.navCtrl.push('WebUploadPage', {type: 'avatar', user: this.profile._id});
-    }
-  }
-
-  uploadFile() {
-    //   let loader = this.loadingCtrl.create({
-    //     content: "Uploading..."
-    //   });
-    //   loader.present();
-    //
-    //   this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
-    //
-    //   this.uploadPic.uploadFile(this.imageURI, this.imageFileName)
-    //     .then((data) => {
-    //       loader.dismiss();
-    //       this.presentToast("Image uploaded successfully");
-    //     }, (err) => {
-    //       loader.dismiss();
-    //       this.presentToast(err);
-    //     });
-  }
-
   getPicture() {
-    if (Camera['installed']()) {
-      this.camera.getPicture({
-        destinationType: this.camera.DestinationType.DATA_URL,
-      }).then((data) => {
-        console.log(data);
-      }, () => {
-        alert('Unable to take photo');
-      })
-    } else {
-      this.navCtrl.push('WebUploadPage', {type: 'avatar', userId: this.profile._id});
-    }
-  }
-
-  getImage() {
-    this.translate.get("IMG_CHANGE_WEB_ONLY").subscribe((message) => {
-      this.toastCtrl.create({
-        position: 'top',
-        message: message,
-        duration: 3000
-      }).present();
-    });
-    //   this.uploadPic.getImage()
-    //     .then(
-    //       (imageData) => {
-    //         let alert = this.alertCtrl.create({
-    //           title: 'Picture',
-    //           subTitle: imageData,
-    //           buttons: ['OK']
-    //         });
-    //         alert.present()
-    //         // this.imageURI = imageData;
-    //       },
-    //       (err) => {
-    //         this.presentToast(err);
-    //       }
-    //     );
+    this.navCtrl.push('WebUploadPage', {type: 'avatar', callback: this.imageChanged, userId: this.profile._id});
   }
 
   logout() {
     this._auth.logout();
     this.app.getRootNav().setRoot(LoginPage, {"LOGGED_OUT": true});
-  }
-
-  getCamera() {
-    this.translate.get("IMG_CHANGE_WEB_ONLY").subscribe((message) => {
-      this.toastCtrl.create({
-        position: 'top',
-        message: message,
-        duration: 3000
-      }).present();
-    });
-    //   this.uploadPic.getCamera()
-    //     .then((imageData) => {
-    //       let alert = this.alertCtrl.create({
-    //         title: 'Picture',
-    //         subTitle: imageData,
-    //         buttons: ['OK']
-    //       });
-    //       alert.present()
-    //
-    //     }, (err) => {
-    //       this.presentToast(err);
-    //     });
   }
 
   sharePage() {

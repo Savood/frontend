@@ -8,11 +8,12 @@
   "CANCEL_BUTTON": "Schließen",
   "SLOGAN": "Nur lebendiges Food tut gut",
 
-
-  "TAB1_TITLE": "Items",
-  "TAB2_TITLE": "Rettungskarte",
-  "TAB3_TITLE": "Nachrichten",
-  "TAB4_TITLE": "Account",
+  "TAB": {
+    "TITLE1": "Items",
+    "TITLE2": "Rettungskarte",
+    "TITLE3": "Nachrichten",
+    "TITLE4": "Account"
+  },
 
   "MAP_TITLE": "Karte",
 
@@ -29,7 +30,7 @@
     "EMAIL": "Email",
     "PHONE": "Handynummer",
     "NO_DESCRIPTION": "Füge deine Beschreibung hinzu!",
-    "NO_BADGES_1": "Leider hast du noch keine Abzeichen. Savoode weiter um welche zu erhalten!",
+    "NO_BADGES_1": "Leider hast du noch keine Abzeichen.",
     "NO_BADGES_2": "Savoode weiter um welche zu erhalten!"
   },
 
@@ -42,7 +43,7 @@
     "PHONE": "Telefon",
     "DELETE_ACCOUNT": "Konto löschen",
     "NO_DESCRIPTION": "Keine Beschreibung vorhanden",
-    "NO_CHANGES": " hat noch keine Abzeichen"
+    "NO_BADGES": " hat noch keine Abzeichen"
   },
 
   "MESSAGES_OFFERINGS_TITLE": "Aktuelle Savoodchats",
