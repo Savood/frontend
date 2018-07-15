@@ -172,5 +172,8 @@
     "OFFERING_10":"Saved the world 10 times! Crazy!",
     "OFFERING_25":"Saved the world 25 times! Awesome!",
     "OFFERING_50":"Saved the world 50 times! Unbelievable!"
-  }
+  },
+
+  "MY_OFFERINGS": "My Offerings",
+  "MY_SAVOODS": "My Savoods"
 }

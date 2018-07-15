@@ -455,4 +455,7 @@ export class OfferingsService {
     else return {latitude: 0, longitude:0}
   }
 
+  getImagePath(offering:Offering){
+    return `${env.api_endpoint}/offerings/${offering._id}/image.jpeg`;
+  }
 }

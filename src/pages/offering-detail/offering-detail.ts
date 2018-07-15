@@ -150,4 +150,6 @@ export class OfferingDetailPage {
         "_blank");
     }
   }
+
+
 }
