@@ -102,7 +102,6 @@ export class OfferingsPage {
     this._offering.offeringsIdImageJpegGet(item._id).subscribe(
       (data) => {
         this.offeringImages[item._id] = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
-        console.log(this.offeringImages[item._id]);
       }
     );
   }

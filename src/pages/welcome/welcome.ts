@@ -58,8 +58,6 @@ export class WelcomePage {
     this.user.lastname = this.nameForm.controls['lastname'].value;
     this.loading = true;
 
-    console.log(this.user);
-
     this._user.createNewUser(this.user).subscribe(
       () => {
         let toast = this.toastCtrl.create({

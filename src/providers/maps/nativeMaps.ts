@@ -127,12 +127,9 @@ export class NativeMapsService {
       default: nativeEvent = null;
     }
 
-    console.log(nativeEvent);
-
     if (nativeEvent) {
       marker.on(nativeEvent).subscribe(
         () => {
-          console.log(nativeEvent);
           desiredFunction()
         }
       )
