@@ -20,6 +20,7 @@ import {SocialSharing} from "@ionic-native/social-sharing";
 import {env} from "../../environment/environment";
 import {ClipboardService} from "ngx-clipboard";
 import {Camera} from "@ionic-native/camera";
+import {DomSanitizer} from "@angular/platform-browser";
 
 /**
  * The Settings page is a simple form that syncs with a Settings provider
@@ -47,6 +48,9 @@ export class SettingsPage {
       = this.profile
       = newSettings;
   };
+
+  avatar;
+  header;
 
   locationMarker: any;
 
@@ -107,7 +111,8 @@ export class SettingsPage {
               public platform: Platform,
               public _auth: AuthProvider,
               private app: App,
-              private _social: SocialSharing) {
+              private _social: SocialSharing,
+              private _sanitizer: DomSanitizer) {
   }
 
   ionViewDidLoad() {
@@ -142,8 +147,12 @@ export class SettingsPage {
               = this.nameDescSettings.profileId
               = profile._id;
 
+            this.getUserAvatar(this.profile);
+            this.getUserHeader(this.profile);
           } else {
             this.profile = profile;
+            this.getUserAvatar(this.profile);
+            this.getUserHeader(this.profile);
           }
           loading.dismiss();
         }
@@ -403,7 +412,7 @@ export class SettingsPage {
 
   logout() {
     this._auth.logout();
-    this.app.getRootNav().setRoot(LoginPage, {"LOGGED_OUT":true});
+    this.app.getRootNav().setRoot(LoginPage, {"LOGGED_OUT": true});
   }
 
   getCamera() {
@@ -428,19 +437,19 @@ export class SettingsPage {
     //     });
   }
 
-  sharePage(){
+  sharePage() {
     let route: string[] = this.platform.url().split('/');
 
     route.splice(0, route.indexOf('profile'));
 
     let shareUrl: string = 'savood.app.chd.cx/#';
-    for(let part of route){
+    for (let part of route) {
       shareUrl += '/' + part;
     }
 
     if (this.platform.is('cordova') &&
       (this.platform.is('ios') || this.platform.is('android'))) {
-      this._social.share('','','',shareUrl)
+      this._social.share('', '', '', shareUrl)
     } else {
       this._clipboard.copyFromContent(shareUrl);
       this.toastCtrl.create({
@@ -452,16 +461,24 @@ export class SettingsPage {
   }
 
   getUserHeader(user: User) {
-    return `${env.api_endpoint}/users/${user._id}/backgroundimage.jpeg`;
+    return this._user.usersIdBackgroundimageJpegGet(user._id).subscribe(
+      (data) => {
+        this.header = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+      }
+    );
   }
 
   getUserAvatar(user: User) {
-    return `${env.api_endpoint}/users/${user._id}/image.jpeg`;
+    return this._user.usersIdImageJpegGet(user._id).subscribe(
+      (data) => {
+        this.avatar = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+      }
+    );
   }
 
   getBadgeType(badge: string) {
     let badgeType: string = badge.split('_')[0];
-    switch(badgeType){
+    switch (badgeType) {
       case 'SAVOOD':
         return 'restaurant';
       case 'MESSAGE':

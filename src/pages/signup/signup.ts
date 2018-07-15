@@ -2,11 +2,10 @@ import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {IonicPage, NavController, ToastController} from 'ionic-angular';
 
-import {User} from '../../providers';
 import {MainPage} from '../';
 import {AuthProvider} from "../../providers/auth/auth";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UsersService} from "../../providers/api/users.service";
+import {UsersService} from "../../providers";
 
 @IonicPage()
 @Component({
