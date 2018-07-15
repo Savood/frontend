@@ -22,7 +22,7 @@
   <ion-list *ngIf="page == 'startOverview' && offerings && tab == 'offerings'">
     <button *ngFor="let offering of offerings" ion-item (click)="openChatOverview(offering)">
       <ion-avatar item-start>
-        <img [src]="getImageSource(offering)" onError="this.src='assets/img/fallback_offering.jpg';">
+        <img [src]="offeringImages[offering._id]" onError="this.src='assets/img/fallback_offering.jpg';">
       </ion-avatar>
       <h2>{{offering.name | slice:0:20}}<span *ngIf="offering.name.length > 20">...</span></h2>
       <h3 class="chat-info" item-end [ngPlural]="3">
@@ -37,7 +37,7 @@
   <ion-list *ngIf="page == 'startOverview' && tab == 'chats' && chats">
     <button *ngFor="let chat of chats" ion-item (click)="openChat(chat._id, chat.partner)">
       <ion-avatar item-start>
-        <img [src]="getUserAvatar(chat.partner._id)" onError="this.src='assets/img/user_fallback_avatar.png';">
+        <img [src]="chatImages[chat.partner._id]" onError="this.src='assets/img/user_fallback_avatar.png';">
       </ion-avatar>
       <h2>{{chat.partner.firstname}} {{chat.partner.lastname}}</h2>
       <h3 class="chat-info" item-end [ngPlural]="chat.offeringId.length">
@@ -52,7 +52,7 @@
   <ion-list *ngIf="page == 'chats' && offeringChats">
     <button *ngFor="let chat of offeringChats" ion-item (click)="openChat(chat._id, chat.partner)">
       <ion-avatar item-start>
-        <img [src]="getUserAvatar(chat.partner._id)" onError="this.src='assets/img/user_fallback_avatar.png';">
+        <img [src]="chatImages[chat.partner._id]" onError="this.src='assets/img/user_fallback_avatar.png';">
       </ion-avatar>
       <h2>{{chat.partner.firstname}} {{chat.partner.lastname}}</h2>
       <h3 class="chat-info" item-end [ngPlural]="chat.offeringId.length">

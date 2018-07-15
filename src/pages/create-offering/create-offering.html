@@ -20,7 +20,7 @@
 
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="createOffering()">
     <ion-card>
-      <input type="file" #fileInput style="visibility: hidden; height: 0" name="files[]" (change)="processWebImage($event)" />
+      <input type="file" #fileInput class="offering-image-input" name="files[]" (change)="processWebImage($event)" />
       <div class="offering-image-wrapper" (click)="getPicture()">
         <div class="offering-image-placeholder" *ngIf="!this.form.controls.offeringPic.value">
           <ion-icon name="camera"></ion-icon>

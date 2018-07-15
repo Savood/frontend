@@ -24,11 +24,11 @@ export class TabsPage {
   profileId = this._auth.getActiveUserId();
 
   constructor(public navCtrl: NavController, public translateService: TranslateService, public _auth: AuthProvider) {
-    translateService.get(['TAB1_TITLE', 'TAB2_TITLE', 'TAB3_TITLE', 'TAB4_TITLE']).subscribe(values => {
-      this.tab1Title = values['TAB1_TITLE'];
-      this.tab2Title = values['TAB2_TITLE'];
-      this.tab3Title = values['TAB3_TITLE'];
-      this.tab4Title = values['TAB4_TITLE'];
+    translateService.get(['TAB.TITLE1', 'TAB.TITLE2', 'TAB.TITLE3', 'TAB.TITLE4']).subscribe(values => {
+      this.tab1Title = values['TAB.TITLE1'];
+      this.tab2Title = values['TAB.TITLE2'];
+      this.tab3Title = values['TAB.TITLE3'];
+      this.tab4Title = values['TAB.TITLE4'];
     });
   }
 }

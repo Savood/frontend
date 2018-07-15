@@ -8,37 +8,46 @@
   "CANCEL_BUTTON": "Schließen",
   "SLOGAN": "Nur lebendiges Food tut gut",
 
-
-  "TAB1_TITLE": "Items",
-  "TAB2_TITLE": "Rettungskarte",
-  "TAB3_TITLE": "Nachrichten",
-  "TAB4_TITLE": "Account",
+  "TAB": {
+    "TITLE1": "Items",
+    "TITLE2": "Rettungskarte",
+    "TITLE3": "Nachrichten",
+    "TITLE4": "Account"
+  },
 
   "MAP_TITLE": "Karte",
 
   "WELCOME_INTRO": "Der Startpunkt für Deine nächste tolle Ionic App",
 
-  "SETTINGS_TITLE": "Mein Savood",
-  "SETTINGS_PAGE_PROFILE": "Profil ändern",
+  "SETTINGS": {
+    "TITLE": "Mein Savood",
+    "PAGE_PROFILE": "Profil ändern",
+    "NOTIFICATIONS": "Benachrichtigungen",
+    "PROFILE": "Profil ändern",
+    "LOCATION": "Standardstandort",
+    "LOGOUT": "Abmelden",
+    "NAME_DESC": "Name & Beschreibung",
+    "EMAIL": "Email",
+    "PHONE": "Handynummer",
+    "NO_DESCRIPTION": "Füge deine Beschreibung hinzu!",
+    "NO_BADGES_1": "Leider hast du noch keine Abzeichen.",
+    "NO_BADGES_2": "Savoode weiter um welche zu erhalten!"
+  },
 
-  "SETTINGS_NOTIFICATIONS": "Benachrichtigungen",
-  "SETTINGS_PROFILE": "Profil ändern",
-  "SETTINGS_LOCATION": "Standardstandort",
-  "SETTINGS_LOGOUT": "Abmelden",
-  "SETTINGS_NAME_DESC": "Name & Beschreibung",
-  "SETTINGS_EMAIL": "Email",
-  "SETTINGS_PHONE": "Telefon",
+  "PROFILE": {
+    "BADGES": "Abzeichen",
+    "FIRSTNAME": "Vorname",
+    "LASTNAME": "Nachname",
+    "EMAIL": "E-Mail",
+    "DESCRIPTION": "Beschreibung",
+    "PHONE": "Telefon",
+    "DELETE_ACCOUNT": "Konto löschen",
+    "NO_DESCRIPTION": "Keine Beschreibung vorhanden",
+    "NO_BADGES": " hat noch keine Abzeichen"
+  },
 
   "MESSAGES_OFFERINGS_TITLE": "Aktuelle Savoodchats",
   "MESSAGES_PERSONAL_TITLE": "Chats zu",
-
-  "PROFILE_BADGES": "Abzeichen",
-  "PROFILE_FIRSTNAME": "Vorname",
-  "PROFILE_LASTNAME": "Nachname",
-  "PROFILE_EMAIL": "E-Mail",
-  "PROFILE_DESCRIPTION": "Beschreibung",
-  "PROFILE_PHONE": "Telefon",
-  "PROFILE_DELETE_ACCOUNT": "Konto löschen",
   "STREET": "Straße",
   "NUMBER": "Hausnummer",
   "ZIP": "Postleitzahl",
@@ -145,5 +154,24 @@
   "SAVE": "Speichern",
   "SAVE_NO_CHANGE": "Keine Änderungen gespeichert",
   "SAVE_SERVER_ERROR":"Ups, da ist bei uns etwas schiefgelaufen! Versuche es in kurzer Zeit erneut!",
-  "SAVE_SUCCESSFUL":"Erfolgreich gespeichert!"
+  "SAVE_SUCCESSFUL":"Erfolgreich gespeichert!",
+
+  "BADGES": {
+    "SAVOOD_1":"Zum ersten mal savooded!",
+    "SAVOOD_5":"Bereits 5-mal savooded!",
+    "SAVOOD_10":"Krasse 10-mal savooded!",
+    "SAVOOD_25":"Fantastische 25-mal savooded!",
+    "SAVOOD_50":"Unglaubliche 50-mal savooded!",
+    "MESSAGE_1":"Zum ersten mal mit wem rumgechattet!",
+    "MESSAGE_5":"Bereits 5-mal mit wem rumgechattet!",
+    "MESSAGE_10":"Krasse 10-mal mit wem rumgechattet!",
+    "MESSAGE_25":"Fantastische 25-mal mit wem rumgechattet!",
+    "MESSAGE_50":"Unglaubliche 50-mal mit wem rumgechattet!",
+    "OFFERING_1":"Zum ersten mal die Welt gerettet!",
+    "OFFERING_5":"Bereits 5-mal die Welt gerettet!",
+    "OFFERING_10":"Krasse 10-mal die Welt gerettet!",
+    "OFFERING_25":"Fantastische 25-mal die Welt gerettet!",
+    "OFFERING_50":"Unglaubliche 50-mal die Welt gerettet!"
+  }
+
 }

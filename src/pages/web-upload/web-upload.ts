@@ -41,6 +41,7 @@ export class WebUploadPage {
         this._user.usersIdImageJpegPost(this.navParams.get('userId'), this.image).subscribe(
           () => {
             this.loading.dismiss();
+            this.navParams.get('callback')();
             this.navCtrl.pop();
             this.toastCtrl.create({
               position: 'top',
@@ -55,6 +56,7 @@ export class WebUploadPage {
         this._user.usersIdBackgroundimageJpegPost(this.navParams.get('userId'), this.image).subscribe(
           () => {
             this.loading.dismiss();
+            this.navParams.get('callback')();
             this.navCtrl.pop();
             this.toastCtrl.create({
               position: 'top',

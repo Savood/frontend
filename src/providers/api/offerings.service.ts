@@ -298,7 +298,6 @@ export class OfferingsService {
     // to determine the Accept header
     let httpHeaderAccepts: string[] = [
       'image/jpeg',
-      'application/json'
     ];
     let httpHeaderAcceptSelected: string = this.configuration.selectHeaderAccept(httpHeaderAccepts);
     if (httpHeaderAcceptSelected != undefined) {

@@ -10,6 +10,7 @@ import {Offering} from "../../models/offering";
 import {env} from "../../environment/environment";
 import {SuccessObject} from "../../models/successObject";
 import {TranslateService} from "@ngx-translate/core";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @IonicPage()
 @Component({
@@ -23,6 +24,8 @@ export class OfferingsPage {
   browser_local = null;
   current_location: Location = null;
 
+  offeringImages = {};
+
   offeringsLoadingString:string = null;
   loading:any = null;
 
@@ -33,7 +36,8 @@ export class OfferingsPage {
               public _auth: AuthProvider,
               public _offering: OfferingsService,
               public _user: UsersService,
-              public loadingCtrl: LoadingController)
+              public loadingCtrl: LoadingController,
+              private _sanitizer: DomSanitizer)
   {
 
     this.browser_local = _translate.getBrowserLang();
@@ -44,7 +48,6 @@ export class OfferingsPage {
 
     this._auth.getActiveUser().subscribe(()=>{}, (err:HttpErrorResponse)=>{
       if(err.status == 400){
-        this.loading.dismiss();
         this.appCtrl.getRootNav().push("WelcomePage");
       }
     });
@@ -63,6 +66,9 @@ export class OfferingsPage {
     this._offering.getFeed(this.current_location.latitude, this.current_location.longitude, this.default_distance)
       .subscribe((data: Offering[]) => {
           this.feed = data;
+          for(let offering of data){
+            this.getImageSource(offering);
+          }
         }, err => {
           console.log("ERROR", err);
         },
@@ -74,7 +80,6 @@ export class OfferingsPage {
    * Navigate to the detail page for this item.
    */
   openItem(item: Offering) {
-    console.log(item);
     this.navCtrl.push('OfferingDetailPage', {
       offering: item,
       offeringId: item._id,
@@ -93,9 +98,12 @@ export class OfferingsPage {
    * Gets source of offering image
    * @param item
    */
-  getImageSource(item:Offering){
-    let _id = item._id;
-    let path =  `${env.api_endpoint}/offerings/${_id}/image.jpeg`;
+  getImageSource(item: Offering) {
+    this._offering.offeringsIdImageJpegGet(item._id).subscribe(
+      (data) => {
+        this.offeringImages[item._id] = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+      }
+    );
   }
 
   /**

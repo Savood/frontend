@@ -103,9 +103,7 @@
         "DEEPLINK_5_HOST": " "
       },
       "cordova-plugin-x-socialsharing": {},
-      "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-        "OKHTTP_VERSION": "3.+"
-      }
+      "uk.co.workingedge.phonegap.plugin.launchnavigator": {}
     },
     "platforms": [
       "browser",
