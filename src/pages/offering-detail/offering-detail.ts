@@ -74,12 +74,12 @@ export class OfferingDetailPage {
     let offering = this.offering;
 
     this._maps.initMap(this.mapElement, {
-      latitude: offering.location.coordinates[0],
-      longitude: offering.location.coordinates[1]
+      latitude: offering.location.coordinates[1],
+      longitude: offering.location.coordinates[0]
     });
     this._maps.newMarker({
-      latitude: offering.location.coordinates[0],
-      longitude: offering.location.coordinates[1]
+      latitude: offering.location.coordinates[1],
+      longitude: offering.location.coordinates[0]
     }, offering.name, false).then(
       () => {
       });

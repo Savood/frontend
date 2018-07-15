@@ -120,7 +120,8 @@ export class CreateOfferingPage {
         this.form.controls['street'].setValue(address.street);
         this.form.controls['number'].setValue(address.number);
         this.form.controls['city'].setValue(address.city);
-        console.log(address);
+        this.form.controls['zip'].setValue(address.zip);
+        this.form.markAsDirty();
       },
       (error) => {
         this.translate.get(error).subscribe((res) => {
@@ -164,45 +165,34 @@ export class CreateOfferingPage {
     let formValues = this.form.getRawValue();
     let newOffering: Offering;
 
-    this._maps.getLocation(formValues.street + " " + formValues.number + ", " + formValues.zip + formValues.city).then(
-      (location) => {
-        newOffering = {
-          name: formValues.name,
-          description: formValues.description,
-          creator: {
-            _id: this._auth.getActiveUserId()
-          },
-          bestByDate: formValues.bestbefore,
-          address: {
-            street: formValues.street,
-            number: formValues.number,
-            city: formValues.city,
-            zip: formValues.zip
-          },
-          location: {
-            type: 'Point',
-            coordinates: [
-              location.latitude,
-              location.longitude
-            ]
-          }
-        };
-        this._offering.createNewOffering(newOffering).subscribe(
-          (success) => {
-            this.uploadImage(success._id);
-            this.toastCtrl.create({
-              message: "Angebot erstellt"
-            });
-            this.loading.dismiss();
-          },
-          (err) => {
-            this.loading.dismiss();
-            this.toastCtrl.create({
-              message: "Konnte nicht erstellt werden"
-            });
-          }
-        );
-        this.navCtrl.pop();
+    newOffering = {
+      name: formValues.name,
+      description: formValues.description,
+      creator: {
+        _id: this._auth.getActiveUserId()
+      },
+      bestByDate: formValues.bestbefore,
+      address: {
+        street: formValues.street,
+        number: formValues.number,
+        city: formValues.city,
+        zip: formValues.zip
+      },
+      location: {
+        type: 'Point',
+        coordinates: [
+          this._maps.getMarkerPosition(this.locationMarker).longitude,
+          this._maps.getMarkerPosition(this.locationMarker).latitude
+        ]
+      }
+    };
+    this._offering.createNewOffering(newOffering).subscribe(
+      (success) => {
+        this.uploadImage(success._id);
+        this.toastCtrl.create({
+          message: "Angebot erstellt"
+        });
+        this.loading.dismiss();
       },
       (err) => {
         this.loading.dismiss();
@@ -211,6 +201,7 @@ export class CreateOfferingPage {
         });
       }
     );
+    this.navCtrl.pop();
   }
 }
 
