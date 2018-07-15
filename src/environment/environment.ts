@@ -6,5 +6,5 @@ export const env = {
   api_endpoint: 'https://savood.app.chd.cx/v2',
   auth_endpoint: 'https://savood.app.chd.cx/',
   //default radius in meter
-  default_radius: 100000
+  default_radius: 10000
 };
