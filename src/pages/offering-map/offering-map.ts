@@ -79,7 +79,6 @@ export class OfferingMapPage {
           },
           item.name, false, item.savooded ? "savood" : "offering");
         this._maps.addListener(marker, 'click', () => {
-          console.log("Hallo");
           this.clickMarker(item);
         });
       });
