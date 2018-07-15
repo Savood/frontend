@@ -66,6 +66,9 @@ export class OfferingsPage {
     this._offering.getFeed(this.current_location.latitude, this.current_location.longitude, this.default_distance)
       .subscribe((data: Offering[]) => {
           this.feed = data;
+          for(let offering of data){
+            this.getImageSource(offering);
+          }
         }, err => {
           console.log("ERROR", err);
         },
@@ -77,7 +80,6 @@ export class OfferingsPage {
    * Navigate to the detail page for this item.
    */
   openItem(item: Offering) {
-    console.log(item);
     this.navCtrl.push('OfferingDetailPage', {
       offering: item,
       offeringId: item._id,
@@ -97,9 +99,10 @@ export class OfferingsPage {
    * @param item
    */
   getImageSource(item: Offering) {
-    return this._offering.offeringsIdImageJpegGet(item._id).subscribe(
+    this._offering.offeringsIdImageJpegGet(item._id).subscribe(
       (data) => {
         this.offeringImages[item._id] = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+        console.log(this.offeringImages[item._id]);
       }
     );
   }
