@@ -174,5 +174,22 @@
     "OFFERING_10":"Saved the world 10 times! Crazy!",
     "OFFERING_25":"Saved the world 25 times! Awesome!",
     "OFFERING_50":"Saved the world 50 times! Unbelievable!"
-  }
+  },
+
+  "MY_OFFERINGS": "My Offerings",
+  "MY_SAVOODS": "My Savoods",
+
+  "UNSAVOOD_CONFIRM":"I am pretty sure!",
+  "UNSAVOOD_TITLE":"If you really want to revoke your savood, write: 'Yes, I do!",
+  "UNSAVOOD_CANCEL":"Okay, I changed my mind",
+  "UNSAVOOD_PLACEHOLDER":"Yes, I do!",
+  "UNSAVOOD_SUCCESSFUL":"Successfully revoked your Savood",
+  "UNSAVOOD_WRONG_TEXT":"It looks like you are not sure enough",
+
+  "DELETE_OFFERING__CONFIRM":"I am pretty sure!",
+  "DELETE_OFFERING__TITLE":"If you really want to delete your offering, write: 'Yes, I do!",
+  "DELETE_OFFERING__CANCEL":"Okay, I changed my mind",
+  "DELETE_OFFERING__PLACEHOLDER":"Yes, I do!",
+  "DELETE_OFFERING__SUCCESSFUL":"Successfully deleted your Offering",
+  "DELETE_OFFERING__WRONG_TEXT":"It looks like you are not sure enough"
 }

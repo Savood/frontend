@@ -20,6 +20,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import {Deeplinks} from "@ionic-native/deeplinks";
 import {SocialSharing} from "@ionic-native/social-sharing";
 import {LaunchNavigator} from "@ionic-native/launch-navigator";
+import {Dialogs} from "@ionic-native/dialogs";
 
 
 // The translate loader needs to know where to load i18n files

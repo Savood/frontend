@@ -26,6 +26,7 @@
     "@ionic-native/core": "^4.7.0",
     "@ionic-native/date-picker": "^4.7.0",
     "@ionic-native/deeplinks": "^4.8.0",
+    "@ionic-native/dialogs": "^4.9.2",
     "@ionic-native/file-transfer": "^4.8.0",
     "@ionic-native/geolocation": "^4.7.0",
     "@ionic-native/google-maps": "^4.8.2",
@@ -103,7 +104,8 @@
         "DEEPLINK_5_HOST": " "
       },
       "cordova-plugin-x-socialsharing": {},
-      "uk.co.workingedge.phonegap.plugin.launchnavigator": {}
+      "uk.co.workingedge.phonegap.plugin.launchnavigator": {},
+      "cordova-plugin-dialogs": {}
     },
     "platforms": [
       "browser",
