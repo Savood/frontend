@@ -14,7 +14,7 @@
 
   <ion-card *ngFor="let item of feed" (click)="openItem(item)" class="savooded">
     <div style="position: relative;">
-      <img [src]="offeringImages[item._id]"  onError="this.src='assets/img/fallback_offering.jpg';">
+      <img [src]="offeringImages[item._id] || 'assets/img/fallback_offering.jpg'">
 
       <ion-fab right bottom edge>
         <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="placeSavood(feed)">

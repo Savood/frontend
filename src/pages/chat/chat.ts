@@ -1,9 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
 import {Content, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {MessagesService} from "../../providers";
+import {MessagesService, UsersService} from "../../providers";
 import {TranslateService} from "@ngx-translate/core";
 import {env} from "../../environment/environment";
 import {User} from "../../models/user";
+import {AuthProvider} from "../../providers/auth/auth";
 
 /**
  * Generated class for the ChatPage page.
@@ -22,6 +23,9 @@ export class ChatPage {
   chatId: string;
   partner: any;
   newMessage: string;
+
+  partnerImage;
+  userImage;
 
   toUser = {
     _id: '534b8e5aaa5e7afc1b23e69b',
@@ -66,12 +70,19 @@ export class ChatPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public _message: MessagesService,
+    public _auth: AuthProvider,
+    public _user: UsersService,
     public translate: TranslateService) {
     translate.get('SEND_A_MESSAGE').subscribe(
       (trans) => this.sendMessagePlaceholder = trans
     );
     this.chatId = this.navParams.get("chatId");
     this.partner = this.navParams.get("partner");
+    _message.getAllMessagesForChat(this.chatId).subscribe(
+      (messages) => this.messages = messages
+    );
+    this.getPartnerAvatar(this.partner._id);
+    this.getUserAvatar(_auth.getActiveUserId())
   }
 
   sendMessage() {
@@ -82,7 +93,15 @@ export class ChatPage {
     this.navCtrl.push('SettingsPage', {profileId: id, pageTitleKey: 'PROFILE_TITLE'});
   }
 
-  getUserAvatar(user: User) {
-    return `${env.api_endpoint}/users/${user._id}/image.jpeg:`;
+  getPartnerAvatar(userId: string) {
+    this._user.usersIdImageJpegGet(userId).subscribe(
+      (avatar) => this.partnerImage = avatar
+    )
+  }
+
+  getUserAvatar(userId: string) {
+    this._user.usersIdImageJpegGet(userId).subscribe(
+      (avatar) => this.userImage = avatar
+    )
   }
 }

@@ -7,7 +7,7 @@
 <ion-content>
   <div *ngFor="let message of messages" class="message-wrapper" on-hold="onMessageHold($event, $index, message)">
     <div *ngIf="user._id !== message.from._id">
-      <img (click)="viewProfile(message.from._id)" class="profile-pic left" [src]="getUserAvatar(message.from._id)" onError="this.src='assets/img/user_fallback_avatar.png';">
+      <img (click)="viewProfile(message.from._id)" class="profile-pic left" [src]="partnerImage || 'assets/img/user_fallback_avatar.png'">
       <div class="chat-bubble left slide-left">
         <div class="message">{{message.content}}
         </div>
@@ -18,7 +18,7 @@
     </div>
 
     <div *ngIf="user._id === message.from._id">
-      <img (click)="viewProfile(message.from._id)" class="profile-pic right" [src]="getUserAvatar(message.from._id)" onError="this.src='assets/img/user_fallback_avatar.png';">
+      <img (click)="viewProfile(message.from._id)" class="profile-pic right" [src]="userImage || 'assets/img/user_fallback_avatar.png'">
       <div class="chat-bubble right slide-right">
         <div class="message">{{message.content}}
         </div>
