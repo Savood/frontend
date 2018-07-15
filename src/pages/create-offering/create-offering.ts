@@ -189,8 +189,8 @@ export class CreateOfferingPage {
           location: {
             type: 'Point',
             coordinates: [
-              location.longitude,
-              location.latitude
+              location.latitude,
+              location.longitude
             ]
           }
         };
