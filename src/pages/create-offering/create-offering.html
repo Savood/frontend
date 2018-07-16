@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Create new Offering</ion-title>
+    <ion-title>{{'NEW_OFFERING' | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -25,7 +25,7 @@
         <div class="offering-image-placeholder" *ngIf="!this.form.controls.offeringPic.value">
           <ion-icon name="camera"></ion-icon>
           <div>
-            {{'CHOOSE_PICTURE'}}
+            {{'CHOOSE_PICTURE' | translate}}
           </div>
         </div>
         <!--<div class="offering-image" [style.backgroundImage]="getOfferingImage()" *ngIf="this.form.controls.offeringPic.value"></div>-->

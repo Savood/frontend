@@ -160,6 +160,8 @@
   "SAVE_SERVER_ERROR":"Ups, da ist bei uns etwas schiefgelaufen! Versuche es in kurzer Zeit erneut!",
   "SAVE_SUCCESSFUL":"Erfolgreich gespeichert!",
 
+  "NEW_OFFERING": "Neues Angebot",
+
   "BADGES": {
     "SAVOOD_1":"Zum ersten mal savooded!",
     "SAVOOD_5":"Bereits 5-mal savooded!",
