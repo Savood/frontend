@@ -120,7 +120,12 @@ export class SettingsPage {
     this.profile = this.navParams.get('profile') || this.profile;
     this.profileChanged = this.navParams.get('profileChanged') || this.profileChanged;
 
-    this.ownProfile = this._auth.isActiveUser({_id: this.navParams.get('profileId')});
+    if (this.navParams.get('ownProfile') != null) {
+      console.log(this.navParams.get('ownProfile'));
+      this.ownProfile = this.navParams.get('ownProfile');
+    } else {
+      this.ownProfile = this._auth.isActiveUser({_id: this.navParams.get('profileId')});
+    }
 
     if (!this.profile && this.page == "main") {
       let loading = this.loadingCtrl.create({
