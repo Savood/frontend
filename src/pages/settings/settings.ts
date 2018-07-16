@@ -287,6 +287,10 @@ export class SettingsPage {
     }
   }
 
+  getHeader() {
+    this.navCtrl.push('WebUploadPage', {type: 'header', callback: this.imageChanged, userId: this.profile._id});
+  }
+
   getPicture() {
     this.navCtrl.push('WebUploadPage', {type: 'avatar', callback: this.imageChanged, userId: this.profile._id});
   }
@@ -323,6 +327,7 @@ export class SettingsPage {
     return this._user.usersIdBackgroundimageJpegGet(user._id).subscribe(
       (data) => {
         this.header = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
+        console.log(this.header);
       }
     );
   }

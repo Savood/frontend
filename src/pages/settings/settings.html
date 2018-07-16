@@ -11,8 +11,9 @@
 
 <ion-content>
   <div *ngIf="profile">
-    <img *ngIf="page == 'main'" class="header-image" [src]="header || 'assets/img/user_fallback_avatar.png'"
-         (click)="getPicture()">
+
+    <img *ngIf="page == 'main'" class="header-image" [src]="header || 'assets/img/user_fallback_avatar.png'">
+    <button ion-fab mini class="header-fab" (click)="getHeader()"><ion-icon name="build"></ion-icon></button>
 
     <div *ngIf="page == 'main'" class="content-main" text-wrap>
       <!-- Avatar -->
@@ -24,6 +25,7 @@
           </a>
         </div>
       </div>
+
       <!-- Settings name & desc  -->
       <ion-card *ngIf="ownProfile" text-center [navPush]="subSettings" [navParams]="nameDescSettings">
         <ion-card-header>
