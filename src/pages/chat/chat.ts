@@ -5,6 +5,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {env} from "../../environment/environment";
 import {User} from "../../models/user";
 import {AuthProvider} from "../../providers/auth/auth";
+import {DomSanitizer} from "@angular/platform-browser";
 
 /**
  * Generated class for the ChatPage page.
@@ -26,43 +27,9 @@ export class ChatPage {
 
   partnerImage;
   userImage;
-
-  toUser = {
-    _id: '534b8e5aaa5e7afc1b23e69b',
-    pic: 'assets/img/speakers/bear.jpg',
-    username: 'Venkman',
-  };
-
-  user = {
-    _id: '534b8fb2aa5e7afc1b23e69c',
-    pic: 'assets/img/speakers/iguana.jpg',
-    username: 'Marty',
-  };
+  messages;
 
   sendMessagePlaceholder: string = "";
-
-  messages: any = [
-    {
-      from: {
-        _id: this.toUser._id,
-        firstname: "John",
-        lastname: "Johnson",
-        avatarId: "assets/img/speakers/bear.jpg"
-      },
-      content: "Hallo 1",
-      timestamp: "1985-04-12T23:20:50.52Z"
-    },
-    {
-      content: "Hallo 2",
-      from: {
-        _id: this.user._id,
-        firstname: "Bert",
-        lastname: "Likerson",
-        avatarId: "assets/img/speakers/iguana.jpg"
-      },
-      timestamp: "1985-04-12T23:23:50.52Z"
-    }
-  ];
 
   @ViewChild(Content) content: Content;
 
@@ -72,6 +39,7 @@ export class ChatPage {
     public _message: MessagesService,
     public _auth: AuthProvider,
     public _user: UsersService,
+    private _sanitizer: DomSanitizer,
     public translate: TranslateService) {
     translate.get('SEND_A_MESSAGE').subscribe(
       (trans) => this.sendMessagePlaceholder = trans
@@ -104,13 +72,13 @@ export class ChatPage {
 
   getPartnerAvatar(userId: string) {
     this._user.usersIdImageJpegGet(userId).subscribe(
-      (avatar) => this.partnerImage = avatar
+      (avatar) => this.partnerImage = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(avatar))
     )
   }
 
   getUserAvatar(userId: string) {
     this._user.usersIdImageJpegGet(userId).subscribe(
-      (avatar) => this.userImage = avatar
+      (avatar) => this.userImage = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(avatar))
     )
   }
 }
