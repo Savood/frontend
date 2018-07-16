@@ -70,7 +70,7 @@
             <p>{{'SETTINGS.NO_BADGES_1'|translate}}</p>
             <p>{{'SETTINGS.NO_BADGES_2'|translate}}</p>
           </span>
-          <span *ngIf="profile.badges.length === 0 && !ownProfile">
+          <span *ngIf="!ownProfile">
             <p>{{user.firstname}} {{'PROFILE.NO_BADGES'|translate}}</p>
           </span>
         </div>
