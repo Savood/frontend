@@ -1,5 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 import {env} from "../../environment/environment";
 import {Offering} from "../../models/offering";
 import {OfferingsService, UsersService} from "../../providers";
@@ -12,6 +12,7 @@ import {SocialSharing} from "@ionic-native/social-sharing";
 import {ClipboardService} from "ngx-clipboard";
 import {LaunchNavigator} from "@ionic-native/launch-navigator";
 import {DomSanitizer} from "@angular/platform-browser";
+import {AuthProvider} from "../../providers/auth/auth";
 
 @IonicPage(
   {
@@ -27,12 +28,22 @@ export class OfferingDetailPage {
   offering: Offering;
   whichtab: string;
 
+  own_offering: boolean;
+
   image;
   avatar;
 
   distanceString: string;
   current_location: Location = null;
   browser_local = null;
+
+
+  delete_offering_title: string = null;
+  delete_offering_placeholder: string = null;
+  delete_offering_confirm: string = null;
+  delete_offering_cancel: string = null;
+  delete_offering_wrong_text: string = null;
+  delete_offering_successful: string = null;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -45,14 +56,34 @@ export class OfferingDetailPage {
               public _user: UsersService,
               private launchNavigator: LaunchNavigator,
               public _translate: TranslateService,
-              private _sanitizer: DomSanitizer) {
+              private _sanitizer: DomSanitizer,
+              private alertCtrl: AlertController,
+              private _toast: ToastController,
+              private _auth: AuthProvider
+  ) {
     this.offering = navParams.get('offering');
+    this.own_offering = this._auth.isActiveUser(this.offering.creator);
+
     this.getImageSource(this.offering);
     this.getUserAvatar(this.offering.creator);
     this.browser_local = navParams.get('browser_lang');
     if (!this.browser_local) {
       this.browser_local = this._translate.getBrowserLang();
     }
+
+
+
+    this._translate.get([
+      'DELETE_OFFERING_TITLE', 'DELETE_OFFERING_SUCCESSFUL', 'DELETE_OFFERING_WRONG_TEXT', 'DELETE_OFFERING_PLACEHOLDER', 'DELETE_OFFERING_CONFIRM', 'DELETE_OFFERING_CANCEL'
+    ]).subscribe(data => {
+      this.delete_offering_cancel = data.DELETE_OFFERING_CANCEL;
+      this.delete_offering_placeholder = data.DELETE_OFFERING_PLACEHOLDER;
+      this.delete_offering_title = data.DELETE_OFFERING_TITLE;
+      this.delete_offering_confirm = data.DELETE_OFFERING_CONFIRM;
+      this.delete_offering_wrong_text = data.DELETE_OFFERING_WRONG_TEXT;
+      this.delete_offering_successful = data.DELETE_OFFERING_SUCCESSFUL;
+    });
+
   }
 
   async ionViewWillEnter() {
@@ -154,4 +185,64 @@ export class OfferingDetailPage {
   goToCreator(user: User){
     this.navCtrl.push('SettingsPage', {profileId: user._id, pageTitleKey: 'PROFILE_TITLE'});
   }
+
+
+
+  showDeleteOfferingDialog() {
+    let item = this.offering;
+    let alert = this.alertCtrl.create({
+      title: this.delete_offering_title,
+      inputs: [
+        {
+          name: 'text',
+          placeholder: this.delete_offering_placeholder,
+          type: 'text'
+        }
+      ],
+      buttons: [
+        {
+          text: this.delete_offering_cancel,
+          role: 'cancel'
+        },
+        {
+          text: this.delete_offering_confirm,
+          handler: data => {
+            let text: string = data.text;
+            text = text.toLowerCase().trim();
+            let val_text: string = this.delete_offering_placeholder.toLowerCase().trim();
+            if (val_text === text) {
+              this.deleteOffering(item);
+            } else {
+              this.revokeDeletionOfOffering();
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  deleteOffering(item: Offering) {
+    this._offering.deleteOfferingById(item._id).subscribe(() => {
+      let toast = this._toast.create({
+        message: this.delete_offering_successful,
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
+    });
+
+  }
+
+  revokeDeletionOfOffering() {
+
+    let toast = this._toast.create({
+      message: this.delete_offering_wrong_text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+
+  }
+
 }

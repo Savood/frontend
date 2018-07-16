@@ -124,8 +124,6 @@ export class OfferingsPage {
   }
 
   getDistanceString(item): string {
-
-    console.log(this.current_location);
     let dist = this._maps.getDistance(this.current_location, this._offering.changeOfferingLocationToLocation(item.location));
     return `${dist.amount} ${dist.unit}`;
   }

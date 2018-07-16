@@ -191,6 +191,7 @@
   "DELETE_OFFERING_CANCEL":"Ich habe es anders überlegt",
   "DELETE_OFFERING_PLACEHOLDER":"Ja, ich will!",
   "DELETE_OFFERING_SUCCESSFUL":"Dein Offering wurde gelöscht",
-  "DELETE_OFFERING_WRONG_TEXT":"Ups das hat leider nicht geklappt."
+  "DELETE_OFFERING_WRONG_TEXT":"Ups das hat leider nicht geklappt.",
 
+  "DELETE_OFFERING" : "Offering löschen"
 }

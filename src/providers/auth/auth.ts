@@ -4,6 +4,7 @@ import {env} from '../../environment/environment';
 import {JwtHelper} from 'angular2-jwt';
 import {User} from "../../models/user";
 import {UsersService} from "../api/users.service";
+import {UserShort} from "../../models/userShort";
 /*
   Generated class for the AuthProvider provider.
 
