@@ -38,32 +38,39 @@ export class ChatOverviewPage {
               public toastCtrl: ToastController,
               public loadingCtrl: LoadingController,
               private _sanitizer: DomSanitizer) {
+  }
 
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-      enableBackdropDismiss: true
-    });
-    loading.present();
-    this._offerings.getOfferings().subscribe(
-      (offerings) => {
-        loading.dismiss();
-        this.offerings = offerings;
-        for(let offering of offerings){
-          this.getImageSource(offering);
+  ionViewDidEnter(){
+
+    if(this.page === 'startOverview'){
+
+      let loading = this.loadingCtrl.create({
+        content: 'Please wait...',
+        enableBackdropDismiss: true
+      });
+      loading.present();
+
+      this._offerings.getOfferings().subscribe(
+        (offerings) => {
+          loading.dismiss();
+          this.offerings = offerings;
+          for(let offering of offerings){
+            this.getImageSource(offering);
+          }
+        },
+        () => {
+          loading.dismiss();
         }
-      },
-      () => {
-        loading.dismiss();
-      }
-    );
-    this._messages.getAllChats().subscribe(
-      (chats) => {
-        this.chats = chats;
-        for(let chat of chats){
-          this.getUserAvatar(chat.partner);
+      );
+      this._messages.getAllChats().subscribe(
+        (chats) => {
+          this.chats = chats;
+          for(let chat of chats){
+            this.getUserAvatar(chat.partner);
+          }
         }
-      }
-    );
+      );
+    }
   }
 
   ionViewDidLoad() {
@@ -116,11 +123,13 @@ export class ChatOverviewPage {
     } else {
       this._messages.getAllChatsForOffering(offering._id).subscribe(
         (chats: Chat[]) => {
-          this.navCtrl.push('ChatPage',
-            {
-              chatId: chats[0]._id,
-              partner: chats[0].partner
-            });
+          if(chats.length > 0){
+            this.navCtrl.push('ChatPage',
+              {
+                chatId: chats[0]._id,
+                partner: chats[0].partner
+              });
+          }
         }
       )
     }

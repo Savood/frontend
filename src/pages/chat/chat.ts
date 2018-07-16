@@ -78,15 +78,24 @@ export class ChatPage {
     );
     this.chatId = this.navParams.get("chatId");
     this.partner = this.navParams.get("partner");
-    _message.getAllMessagesForChat(this.chatId).subscribe(
-      (messages) => this.messages = messages
-    );
+    this.refreshMessages();
     this.getPartnerAvatar(this.partner._id);
     this.getUserAvatar(_auth.getActiveUserId())
   }
 
+  refreshMessages(){
+    this._message.getAllMessagesForChat(this.chatId).subscribe(
+      (messages) => this.messages = messages
+    );
+  }
+
   sendMessage() {
-    this._message.createNewMessage(this.chatId, {content: this.newMessage});
+    this._message.createNewMessage(this.chatId, {content: this.newMessage}).subscribe(
+      (created) => {
+        console.log(created);
+        this.refreshMessages();
+      }
+    );
   }
 
   viewProfile(id: string) {
