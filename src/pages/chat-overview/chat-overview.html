@@ -25,11 +25,13 @@
         <img [src]="offeringImages[offering._id] || 'assets/img/fallback_offering.jpg'">
       </ion-avatar>
       <h2>{{offering.name | slice:0:20}}<span *ngIf="offering.name.length > 20">...</span></h2>
-      <h3 class="chat-info" item-end [ngPlural]="3">
-        <ng-template ngPluralCase="=0">keine {{"CHATS"|translate}}</ng-template>
-        <ng-template ngPluralCase="=1">1 {{"CHAT"|translate}}</ng-template>
-        <ng-template ngPluralCase="other">3 {{"CHATS"|translate}}</ng-template>
-      </h3>
+      <ng-template *ngIf="offering.creator._id === _auth.getActiveUserId()">
+        <h3 class="chat-info" item-end [ngPlural]="offering.requestedBy">
+          <ng-template ngPluralCase="=0">{{offering.requestedBy}} {{"CHATS"|translate}}</ng-template>
+          <ng-template ngPluralCase="=1">{{offering.requestedBy}} {{"CHAT"|translate}}</ng-template>
+          <ng-template ngPluralCase="other">{{offering.requestedBy}} {{"CHATS"|translate}}</ng-template>
+        </h3>
+      </ng-template>
     </button>
   </ion-list>
 

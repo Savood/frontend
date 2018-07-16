@@ -8,6 +8,7 @@ import {Offering} from "../../models/offering";
 import {env} from "../../environment/environment";
 import {User} from "../../models/user";
 import {DomSanitizer} from "@angular/platform-browser";
+import {AuthProvider} from "../../providers/auth/auth";
 
 @IonicPage()
 @Component({
@@ -21,10 +22,10 @@ export class ChatOverviewPage {
   tab: string = "offerings";
 
   offerings: Offering[] = [];
-  offeringImages: {};
+  offeringImages = {};
   currentOffering: Offering;
   offeringChats: Chat[] = [];
-  chatImages: {};
+  chatImages = {};
   chats: Chat[] = [];
 
   constructor(public navCtrl: NavController,
@@ -33,6 +34,7 @@ export class ChatOverviewPage {
               public _offerings: OfferingsService,
               public _messages: MessagesService,
               public _user: UsersService,
+              public _auth: AuthProvider,
               public toastCtrl: ToastController,
               public loadingCtrl: LoadingController,
               private _sanitizer: DomSanitizer) {
@@ -103,13 +105,25 @@ export class ChatOverviewPage {
   }
 
   openChatOverview(offering: Offering) {
-    this.navCtrl.push('ChatOverviewPage',
-      {
-        page: "chats",
-        pageTitleKey: " ",
-        offering: offering,
-      }
-    );
+    if(offering.creator._id === this._auth.getActiveUserId()){
+      this.navCtrl.push('ChatOverviewPage',
+        {
+          page: "chats",
+          pageTitleKey: " ",
+          offering: offering,
+        }
+      );
+    } else {
+      this._messages.getAllChatsForOffering(offering._id).subscribe(
+        (chats: Chat[]) => {
+          this.navCtrl.push('ChatPage',
+            {
+              chatId: chats[0]._id,
+              partner: chats[0].partner
+            });
+        }
+      )
+    }
   }
 
   getChats(offeringId: string) {
