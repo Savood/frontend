@@ -160,8 +160,10 @@ export class CreateOfferingPage {
       let imageData = (readerEvent.target as any).result;
       this.form.patchValue({'offeringPic': imageData});
     };
-    this.image = event.target.files[0];
-    reader.readAsDataURL(event.target.files[0]);
+    if(event.target.files[0]){
+      this.image = event.target.files[0];
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
   createOffering() {

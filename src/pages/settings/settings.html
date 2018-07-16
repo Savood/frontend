@@ -12,7 +12,7 @@
 <ion-content>
   <div *ngIf="profile">
 
-    <img *ngIf="page == 'main'" class="header-image" [src]="header || 'assets/img/user_fallback_avatar.png'">
+    <img *ngIf="page == 'main'" class="header-image" [src]="header || 'assets/img/fallback_offering.jpg'">
     <button ion-fab mini class="header-fab" (click)="getHeader()"><ion-icon name="build"></ion-icon></button>
 
     <div *ngIf="page == 'main'" class="content-main" text-wrap>

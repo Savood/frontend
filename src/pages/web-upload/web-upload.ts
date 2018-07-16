@@ -119,8 +119,10 @@ export class WebUploadPage {
     reader.onload = (readerEvent) => {
       this.selectedFile = (readerEvent.target as any).result;
     };
-    this.image = event.target.files[0];
-    reader.readAsDataURL(event.target.files[0]);
+    if(event.target.files[0]){
+      this.image = event.target.files[0];
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
 }
