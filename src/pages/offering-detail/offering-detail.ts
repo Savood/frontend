@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {AlertController, IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 import {env} from "../../environment/environment";
 import {Offering} from "../../models/offering";
-import {OfferingsService, UsersService} from "../../providers";
+import {Chat, MessagesService, OfferingsService, UsersService} from "../../providers";
 import {MapsService} from "../../providers/maps/maps";
 import {Location} from "../../models/location";
 import {SuccessObject} from "../../models/successObject";
@@ -56,11 +56,11 @@ export class OfferingDetailPage {
               public _user: UsersService,
               private launchNavigator: LaunchNavigator,
               public _translate: TranslateService,
+              private _messages: MessagesService,
               private _sanitizer: DomSanitizer,
               private alertCtrl: AlertController,
               private _toast: ToastController,
-              private _auth: AuthProvider
-  ) {
+              private _auth: AuthProvider) {
     this.offering = navParams.get('offering');
     this.own_offering = this._auth.isActiveUser(this.offering.creator);
 
@@ -70,7 +70,6 @@ export class OfferingDetailPage {
     if (!this.browser_local) {
       this.browser_local = this._translate.getBrowserLang();
     }
-
 
 
     this._translate.get([
@@ -158,8 +157,19 @@ export class OfferingDetailPage {
 
   placeSavood() {
     this._offering.placeSavood(this.offering._id).subscribe((data: SuccessObject) => {
-      if (data.success)
-        console.log("Wuhu");
+      if (data.success) {
+        this._messages.getAllChatsForOffering(this.offering._id).subscribe(
+          (chats: Chat[]) => {
+            if (chats.length > 0) {
+              this.navCtrl.push('ChatPage',
+                {
+                  chatId: chats[0]._id,
+                  partner: chats[0].partner
+                });
+            }
+          }
+        )
+      }
     }, (err) => {
       console.log(err);
     });
@@ -182,10 +192,9 @@ export class OfferingDetailPage {
     }
   }
 
-  goToCreator(user: User){
+  goToCreator(user: User) {
     this.navCtrl.push('SettingsPage', {profileId: user._id, pageTitleKey: 'PROFILE_TITLE'});
   }
-
 
 
   showDeleteOfferingDialog() {

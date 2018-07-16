@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {App, IonicPage, LoadingController, NavController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
 import {OfferingsService} from "../../providers";
@@ -20,14 +20,14 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class OfferingsPage {
   feed: Offering[] = null;
   toggle = false;
-  default_distance:number = env.default_radius;
+  default_distance: number = env.default_radius;
   browser_local = null;
   current_location: Location = null;
 
   offeringImages = {};
 
-  offeringsLoadingString:string = null;
-  loading:any = null;
+  offeringsLoadingString: string = null;
+  loading: any = null;
 
   constructor(public navCtrl: NavController,
               private appCtrl: App,
@@ -37,8 +37,7 @@ export class OfferingsPage {
               public _offering: OfferingsService,
               public _user: UsersService,
               public loadingCtrl: LoadingController,
-              private _sanitizer: DomSanitizer)
-  {
+              private _sanitizer: DomSanitizer) {
 
     this.browser_local = _translate.getBrowserLang();
 
@@ -46,34 +45,37 @@ export class OfferingsPage {
       this.offeringsLoadingString = value.OFFERINGS_LOADING;
     });
 
-    this._auth.getActiveUser().subscribe((user)=>{console.log(user)}, (err:HttpErrorResponse)=>{
-      if(err.status == 400){
-        this.appCtrl.getRootNav().push("WelcomePage");
-      }
-    });
+    this._auth.getActiveUser().subscribe(
+      (user) => {
+        this.loading = this.loadingCtrl.create({
+          content: this.offeringsLoadingString,
+          enableBackdropDismiss: true
+        });
+        this.loading.present();
 
-  }
-
-  async ionViewWillEnter(){
-    this.loading = this.loadingCtrl.create({
-      content: this.offeringsLoadingString,
-      enableBackdropDismiss: true
-    });
-    this.loading.present();
-
-    this.current_location  = await this._maps.getGPS();
-
-    this._offering.getFeed(this.current_location.latitude, this.current_location.longitude, this.default_distance)
-      .subscribe((data: Offering[]) => {
-          this.feed = data;
-          for(let offering of data){
-            this.getImageSource(offering);
+        this._maps.getGPS().then(
+          (location) => {
+            this.current_location = location;
+            this._offering.getFeed(this.current_location.latitude, this.current_location.longitude, this.default_distance)
+              .subscribe((data: Offering[]) => {
+                  this.feed = data;
+                  for (let offering of data) {
+                    this.getImageSource(offering);
+                  }
+                }, err => {
+                  console.log("ERROR", err);
+                },
+                () => this.loading.dismiss()
+              );
           }
-        }, err => {
-          console.log("ERROR", err);
-        },
-        ()=> this.loading.dismiss()
-      );
+        );
+      },
+      (err: HttpErrorResponse) => {
+        if (err.status == 400) {
+          this.appCtrl.getRootNav().push("WelcomePage");
+        }
+      });
+
   }
 
   /**
@@ -90,7 +92,7 @@ export class OfferingsPage {
   /**
    * Link to Creation Modal
    */
-  startCreationModal(){
+  startCreationModal() {
     this.navCtrl.push('CreateOfferingPage');
   }
 
@@ -110,8 +112,8 @@ export class OfferingsPage {
    * Place savood on offering
    * @param feed
    */
-  placeSavood(feed){
-    if(feed.savooded){
+  placeSavood(feed) {
+    if (feed.savooded) {
       //TODO Send to message side
     } else {
       this._offering.placeSavood(feed.id).subscribe((data: SuccessObject) => {
@@ -128,7 +130,7 @@ export class OfferingsPage {
     return `${dist.amount} ${dist.unit}`;
   }
 
-  openOfferingList(){
+  openOfferingList() {
     this.navCtrl.push("OfferinglistPage", {currLocation: this.current_location, browserLang: this.browser_local});
   }
 }
