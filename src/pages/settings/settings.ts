@@ -68,13 +68,6 @@ export class SettingsPage {
   pageTitleKey: string = 'SETTINGS.TITLE';
   pageTitle: string;
 
-  // emailSettings = {
-  //   page: 'email',
-  //   pageTitleKey: 'SETTINGS_EMAIL',
-  //   profile: this.profile,
-  //   profileChanged: this.profileChanged
-  // };
-
   locationSettings = {
     page: 'location',
     pageTitleKey: 'SETTINGS.LOCATION',
