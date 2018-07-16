@@ -92,7 +92,7 @@ export class ChatPage {
   sendMessage() {
     this._message.createNewMessage(this.chatId, {content: this.newMessage}).subscribe(
       (created) => {
-        console.log(created);
+        this.newMessage = '';
         this.refreshMessages();
       }
     );
