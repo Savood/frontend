@@ -67,7 +67,7 @@ export class ChatPage {
   }
 
   viewProfile(id: string) {
-    this.navCtrl.push('SettingsPage', {profileId: id, pageTitleKey: 'PROFILE_TITLE', ownProfile: false});
+    this.navCtrl.push('SettingsPage', {profileId: id, pageTitleKey: 'PROFILE.TITLE', ownProfile: false});
   }
 
   getPartnerAvatar(userId: string) {

@@ -38,6 +38,7 @@
   },
 
   "PROFILE": {
+    "TITLE": "Savooder-Profil",
     "BADGES": "Abzeichen",
     "FIRSTNAME": "Vorname",
     "LASTNAME": "Nachname",
@@ -108,7 +109,6 @@
   "OPENED_ONLY_CHAT": "Einzigen Chat geöffnet",
   "CHAT": "Chat",
   "CHATS": "Chats",
-  "PROFILE_TITLE": "Savooder-Profil",
 
   "SEARCH_TITLE": "Suche",
   "SEARCH_PLACEHOLDER": "Suche in der Artikel-Liste, z.B. \"Donald Duck\"",
