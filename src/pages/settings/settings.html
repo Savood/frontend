@@ -37,7 +37,7 @@
           <p class="profile-description" *ngIf="!profile.description">{{'SETTINGS.NO_DESCRIPTION'|translate}}</p>
         </ion-card-content>
       </ion-card>
-      <!-- Name & Desc for profiles -->
+      <!-- Profile name & desc -->
       <ion-card *ngIf="!ownProfile" text-center>
         <ion-card-header>
           <h1 *ngIf="profile.firstname || profile.lastname">{{profile.firstname}} {{profile.lastname}}</h1>
@@ -51,7 +51,7 @@
       <!-- Badges -->
       <ion-card text-center>
         <ion-card-header>{{'PROFILE.BADGES'|translate}}</ion-card-header>
-        <div *ngIf="profile.badges">
+        <ion-card-content *ngIf="profile.badges">
           <ion-grid text-center class="badges" *ngIf="profile.badges.length > 0">
             <ion-row>
               <ion-col *ngFor="let badge of profile.badges" col-3>
@@ -64,18 +64,18 @@
             <p>{{'SETTINGS.NO_BADGES_2'|translate}}</p>
           </span>
           <span *ngIf="profile.badges.length === 0 && !ownProfile">
-            <p>{{user.firstname}} {{'PROFILE.NO_BADGES'|translate}}</p>
+            <p>{{profile.firstname}} {{'PROFILE.NO_BADGES'|translate}}</p>
           </span>
-        </div>
-        <div *ngIf="!profile.badges">
+        </ion-card-content>
+        <ion-card-content *ngIf="!profile.badges">
           <span *ngIf="ownProfile">
             <p>{{'SETTINGS.NO_BADGES_1'|translate}}</p>
             <p>{{'SETTINGS.NO_BADGES_2'|translate}}</p>
           </span>
           <span *ngIf="!ownProfile">
-            <p>{{user.firstname}} {{'PROFILE.NO_BADGES'|translate}}</p>
+            <p>{{profile.firstname}} {{'PROFILE.NO_BADGES'|translate}}</p>
           </span>
-        </div>
+        </ion-card-content>
       </ion-card>
       <!-- Settings settings -->
       <ion-card *ngIf="ownProfile">
