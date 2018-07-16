@@ -6,7 +6,7 @@
 
 <ion-content padding text-center>
   <ion-card>
-    <input type="file" #fileInput id="image-upload"
+    <input type="file" #fileInput id="image-upload" accept=".jpeg, .jpg"
            (change)="processWebImage($event)"/>
     <div class="image-wrapper" (click)="getPicture()">
       <div class="image-placeholder" *ngIf="!this.image">

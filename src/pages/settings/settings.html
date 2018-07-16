@@ -11,9 +11,12 @@
 
 <ion-content>
   <div *ngIf="profile">
-    <img *ngIf="page == 'main'" class="header-image" [src]="header || 'assets/img/user_fallback_avatar.png'" (click)="changeHeader()">
+
+    <img *ngIf="page == 'main'" class="header-image" [src]="header || 'assets/img/user_fallback_avatar.png'">
+    <button ion-fab mini class="header-fab" (click)="getHeader()"><ion-icon name="build"></ion-icon></button>
 
     <div *ngIf="page == 'main'" class="content-main" text-wrap>
+      <!-- Avatar -->
       <div class="circular">
         <img [src]="avatar || 'assets/img/user_fallback_avatar.png'">
         <div *ngIf="ownProfile" class="overlay" (click)="getPicture()">
@@ -22,34 +25,59 @@
           </a>
         </div>
       </div>
-      <ion-card text-center [navPush]="subSettings" [navParams]="nameDescSettings">
+
+      <!-- Settings name & desc  -->
+      <ion-card *ngIf="ownProfile" text-center [navPush]="subSettings" [navParams]="nameDescSettings">
         <ion-card-header>
           <h1 *ngIf="profile.firstname || profile.lastname">{{profile.firstname}} {{profile.lastname}}</h1>
-          <h1 *ngIf="!profile.firstname && !profile.lastname">Dein Name</h1>
+          <h1 *ngIf="!profile.firstname && !profile.lastname">{{'SETTINGS.NO_NAME'|translate}}</h1>
         </ion-card-header>
         <ion-card-content>
           <p class="profile-description" *ngIf="profile.description">{{profile.description}}</p>
-          <p class="profile-description" *ngIf="!profile.description && ownProfile">{{'SETTINGS.NO_DESCRIPTION'|translate}}</p>
-          <p class="profile-description" *ngIf="!profile.description && !ownProfile">{{'PROFILE.NO_DESCRIPTION'|translate}}</p>
+          <p class="profile-description" *ngIf="!profile.description">{{'SETTINGS.NO_DESCRIPTION'|translate}}</p>
         </ion-card-content>
       </ion-card>
+      <!-- Profile name & desc -->
+      <ion-card *ngIf="!ownProfile" text-center>
+        <ion-card-header>
+          <h1 *ngIf="profile.firstname || profile.lastname">{{profile.firstname}} {{profile.lastname}}</h1>
+          <h1 *ngIf="!profile.firstname && !profile.lastname">{{'PROFILE.NO_NAME'}}</h1>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="profile-description" *ngIf="profile.description">{{profile.description}}</p>
+          <p class="profile-description" *ngIf="!profile.description">{{'PROFILE.NO_DESCRIPTION'|translate}}</p>
+        </ion-card-content>
+      </ion-card>
+      <!-- Badges -->
       <ion-card text-center>
         <ion-card-header>{{'PROFILE.BADGES'|translate}}</ion-card-header>
-        <ion-grid text-center class="badges" *ngIf="profile.badges.length > 0">
-          <ion-row>
-            <ion-col *ngFor="let badge of profile.badges" col-3>
-              <ion-icon [name]="getBadgeType(badge)" [color]="'primary'" (click)="showBadgeInfo(badge)"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        <span *ngIf="profile.badges.length == 0 && ownProfile">
-          <p>{{'SETTINGS.NO_BADGES_1'|translate}}</p>
-          <p>{{'SETTINGS.NO_BADGES_2'|translate}}</p>
-        </span>
-        <span *ngIf="profile.badges.length == 0 && !ownProfile">
-          <p>{{user.firstname}} {{'PROFILE.NO_BADGES'|translate}}</p>
-        </span>
+        <ion-card-content *ngIf="profile.badges">
+          <ion-grid text-center class="badges" *ngIf="profile.badges.length > 0">
+            <ion-row>
+              <ion-col *ngFor="let badge of profile.badges" col-3>
+                <ion-icon [name]="getBadgeType(badge)" [color]="'primary'" (click)="showBadgeInfo(badge)"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <span *ngIf="profile.badges.length === 0 && ownProfile">
+            <p>{{'SETTINGS.NO_BADGES_1'|translate}}</p>
+            <p>{{'SETTINGS.NO_BADGES_2'|translate}}</p>
+          </span>
+          <span *ngIf="profile.badges.length === 0 && !ownProfile">
+            <p>{{profile.firstname}} {{'PROFILE.NO_BADGES'|translate}}</p>
+          </span>
+        </ion-card-content>
+        <ion-card-content *ngIf="!profile.badges">
+          <span *ngIf="ownProfile">
+            <p>{{'SETTINGS.NO_BADGES_1'|translate}}</p>
+            <p>{{'SETTINGS.NO_BADGES_2'|translate}}</p>
+          </span>
+          <span *ngIf="!ownProfile">
+            <p>{{profile.firstname}} {{'PROFILE.NO_BADGES'|translate}}</p>
+          </span>
+        </ion-card-content>
       </ion-card>
+      <!-- Settings settings -->
       <ion-card *ngIf="ownProfile">
         <ion-card-header>{{'SETTINGS.PROFILE'|translate}}</ion-card-header>
         <ion-item-group>
@@ -68,6 +96,7 @@
           </button>
         </ion-item-group>
       </ion-card>
+      <!-- Settings notifications -->
       <ion-card *ngIf="ownProfile">
         <ion-card-header>{{'SETTINGS.NOTIFICATIONS'|translate}}</ion-card-header>
         <ion-item-group>
@@ -89,6 +118,7 @@
           </button>
         </ion-item-group>
       </ion-card>
+      <!-- Setting logout -->
       <ion-card *ngIf="ownProfile" text-center>
         <ion-list>
           <button ion-item color="secondary" (click)="logout()">
@@ -101,6 +131,7 @@
       </ion-card>
     </div>
 
+    <!-- Location Page -->
     <div *ngIf="page == 'location'" class="content-location" text-wrap text-center>
       <div #map id="map"></div>
       <form [formGroup]="locationForm" class="text-location">
@@ -128,20 +159,7 @@
       </form>
     </div>
 
-    <!--<div *ngIf="page == 'email'" class="content-location" text-wrap text-center>-->
-      <!--<form [formGroup]="emailForm" class="text-location">-->
-        <!--<ion-item>-->
-          <!--<ion-label>-->
-            <!--<ion-icon name="mail" item-start></ion-icon>-->
-          <!--</ion-label>-->
-          <!--<ion-input-->
-            <!--placeholder="{{'EMAIL'|translate|uppercase}}"-->
-            <!--formControlName="email"></ion-input>-->
-        <!--</ion-item>-->
-        <!--<button ion-button block color="secondary" (click)="saveData(this.emailForm)">{{'SAVE'|translate}}</button>-->
-      <!--</form>-->
-    <!--</div>-->
-
+    <!-- Phone Page -->
     <div *ngIf="page == 'phone'" class="content-location" text-wrap text-center>
       <form [formGroup]="phoneForm" class="text-location">
         <ion-item>
@@ -156,6 +174,7 @@
       </form>
     </div>
 
+    <!-- Name & Desc Page -->
     <div *ngIf="page == 'nameDesc'" class="content-location" text-wrap text-center>
       <form [formGroup]="nameDescForm" class="text-location">
         <ion-item>

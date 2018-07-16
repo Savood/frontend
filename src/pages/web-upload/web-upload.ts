@@ -48,6 +48,14 @@ export class WebUploadPage {
               message: "Bild hochgeladen!",
               duration: 5000
             }).present();
+          },
+          () => {
+            this.loading.dismiss();
+            this.toastCtrl.create({
+              position: 'top',
+              message: "Sorry, Fehler bei uns, versuch es später erneut!",
+              duration: 5000
+            }).present();
           }
         );
       }
@@ -63,6 +71,14 @@ export class WebUploadPage {
               message: "Bild hochgeladen!",
               duration: 5000
             }).present();
+          },
+          () => {
+            this.loading.dismiss();
+            this.toastCtrl.create({
+              position: 'top',
+              message: "Sorry, Fehler bei uns, versuch es später erneut!",
+              duration: 5000
+            }).present();
           }
         )
       } else {
@@ -71,7 +87,11 @@ export class WebUploadPage {
       }
     }
     else {
-      console.error('No file found!');
+        this.toastCtrl.create({
+          position: 'top',
+          message: "Hey, gib ein Bild an!",
+          duration: 5000
+        }).present();
     }
   }
 

@@ -1,7 +1,12 @@
 page-settings {
 
-  .badges ion-row ion-col ion-icon{
+  .badges ion-row ion-col ion-icon {
     font-size: 2em;
+  }
+  .header-fab {
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 
   .circular {
@@ -59,9 +64,9 @@ page-settings {
     overflow: hidden;
   }
 
-  ion-card{
+  ion-card {
     width: 100% !important;
-    margin: 8px 0   !important;
+    margin: 8px 0 !important;
   }
 
   .text-location {
@@ -79,21 +84,21 @@ page-settings {
     object-position: center;
   }
 
-  .hiddenIcon{
+  .hiddenIcon {
     color: white;
   }
 
-  .input-cover{
+  .input-cover {
     display: none;
   }
 
-  ion-item, ion-item .item-inner{
+  ion-item, ion-item .item-inner {
     border-bottom: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
   }
 
-  #map{
+  #map {
     height: 45vh;
     width: 100%;
   }
