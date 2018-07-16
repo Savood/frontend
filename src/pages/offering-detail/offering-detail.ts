@@ -177,7 +177,7 @@ export class OfferingDetailPage {
       });
     } else {
       window.open("https://www.google.com/maps/dir/?api=1" +
-        "&destination=" + this.offering.location.coordinates[1] + "," this.offering.location.coordinates[0],
+        "&destination=" + this.offering.location.coordinates[1] + "," + this.offering.location.coordinates[0],
         "_blank");
     }
   }
