@@ -1,0 +1,102 @@
+<!--
+  Generated template for the OfferinglistPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title></ion-title>
+
+  </ion-navbar>
+  <ion-segment [(ngModel)]="page" color="secondary">
+    <ion-segment-button value="owned">
+      {{'MY_OFFERINGS' | translate}}
+    </ion-segment-button>
+    <ion-segment-button value="requested">
+      {{'MY_SAVOODS' | translate}}
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+
+<ion-content padding>
+  <div [ngSwitch]="page">
+    <div *ngSwitchCase="'owned'">
+      <ion-card *ngFor="let item of owned_offerings" (click)="openItem(item)" class="savooded">
+        <div style="position: relative;">
+          <img [src]="offeringImages[item._id]" onError="this.src='assets/img/fallback_offering.jpg';">
+
+          <ion-fab right bottom edge>
+            <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="showDeleteOfferingDialog(item)">
+              <ion-icon name='trash'></ion-icon>
+            </button>
+          </ion-fab>
+        </div>
+
+        <ion-item>
+          <h1 padding-top ion-text text-wrap>{{item.name}}</h1>
+          <!--<p>{{item.date}} </p>-->
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-note>{{item.time | amLocale: browserLocal| amTimeAgo}}</ion-note>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-icon name="pin"></ion-icon>
+              <div>{{getDistanceString(item)}}</div>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-icon name="restaurant"></ion-icon>
+              <div>{{item.requestedBy}}</div>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </div>
+
+    <div *ngSwitchCase="'requested'">
+      <ion-card *ngFor="let item of requested_offerings" (click)="openItem(item)" class="savooded">
+        <div style="position: relative;">
+          <img [src]="offeringImages[item._id]" onError="this.src='assets/img/fallback_offering.jpg';">
+
+          <ion-fab right bottom edge>
+            <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="showUnsavoodDialog(item)">
+              <ion-icon name='restaurant'></ion-icon>
+            </button>
+          </ion-fab>
+        </div>
+        <ion-item>
+          <h1 padding-top ion-text text-wrap>{{item.name}}</h1>
+          <!--<p>{{item.date}} </p>-->
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-note>{{item.time | amLocale: browserLocal| amTimeAgo}}</ion-note>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-icon name="pin"></ion-icon>
+              <div>{{getDistanceString(item)}}</div>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-icon name="restaurant"></ion-icon>
+              <div>{{item.requestedBy}}</div>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </div>
+  </div>
+
+</ion-content>

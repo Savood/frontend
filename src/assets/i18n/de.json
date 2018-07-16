@@ -178,6 +178,24 @@
     "OFFERING_10":"Krasse 10-mal die Welt gerettet!",
     "OFFERING_25":"Fantastische 25-mal die Welt gerettet!",
     "OFFERING_50":"Unglaubliche 50-mal die Welt gerettet!"
-  }
+  },
 
+  "MY_OFFERINGS": "Meine Offerings",
+  "MY_SAVOODS": "Meine Savoods",
+
+  "UNSAVOOD_CONFIRM":"Ich bin mir sicher!",
+  "UNSAVOOD_TITLE":"Wenn du dein Savood wirklich zurückziehen willst, dann schreib 'Ja, ich will!",
+  "UNSAVOOD_CANCEL":"Ich habe es anders überlegt",
+  "UNSAVOOD_PLACEHOLDER":"Ja, ich will!",
+  "UNSAVOOD_SUCCESSFUL":"Dein Savood wurde zurückgezogen",
+  "UNSAVOOD_WRONG_TEXT":"Ups das hat leider nicht geklappt.",
+
+  "DELETE_OFFERING_CONFIRM":"Ich bin mir sicher!",
+  "DELETE_OFFERING_TITLE":"Wenn du dein Offering wirklich löschen willst, dann schreib 'Ja, ich will!",
+  "DELETE_OFFERING_CANCEL":"Ich habe es anders überlegt",
+  "DELETE_OFFERING_PLACEHOLDER":"Ja, ich will!",
+  "DELETE_OFFERING_SUCCESSFUL":"Dein Offering wurde gelöscht",
+  "DELETE_OFFERING_WRONG_TEXT":"Ups das hat leider nicht geklappt.",
+
+  "DELETE_OFFERING" : "Offering löschen"
 }

@@ -46,7 +46,7 @@ export class OfferingsPage {
       this.offeringsLoadingString = value.OFFERINGS_LOADING;
     });
 
-    this._auth.getActiveUser().subscribe(()=>{}, (err:HttpErrorResponse)=>{
+    this._auth.getActiveUser().subscribe((user)=>{console.log(user)}, (err:HttpErrorResponse)=>{
       if(err.status == 400){
         this.appCtrl.getRootNav().push("WelcomePage");
       }
@@ -126,5 +126,9 @@ export class OfferingsPage {
   getDistanceString(item): string {
     let dist = this._maps.getDistance(this.current_location, this._offering.changeOfferingLocationToLocation(item.location));
     return `${dist.amount} ${dist.unit}`;
+  }
+
+  openOfferingList(){
+    this.navCtrl.push("OfferinglistPage", {currLocation: this.current_location, browserLang: this.browser_local});
   }
 }

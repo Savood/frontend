@@ -10,7 +10,7 @@
 
 <ion-content elestic-header fullscreen>
   <div>
-    <img style="height: 60vh; width: auto; object-fit: cover" [src]="image || 'assets/img/fallback_offering.jpg'" imageViewer />
+    <img style="max-height: 60vh; width: 100vw; object-fit: cover" [src]="image || 'assets/img/fallback_offering.jpg'" imageViewer />
 
     <div style="position: relative;">
 
@@ -80,7 +80,7 @@
     </ion-list>
 
     <!--Location-->
-    <ion-list [style.display]="whichtab == 'location' ? 'block' : 'none'">
+    <ion-list [style.display]="whichtab == 'loca tion' ? 'block' : 'none'">
       <div #map id="map" ></div>
       <button ion-item (click)="openMapsNavigation()">
           <ion-icon name="navigate" item-left></ion-icon>
@@ -90,4 +90,5 @@
     </ion-list>
   </div>
 
+  <button *ngIf="own_offering" ion-button full (click)="showDeleteOfferingDialog()">{{"DELETE_OFFERING"| translate}}</button>
 </ion-content>
