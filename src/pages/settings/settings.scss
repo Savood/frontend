@@ -6,7 +6,8 @@ page-settings {
   .header-fab {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 30vh;
+    transform: translateY(-100%)
   }
 
   .circular {
