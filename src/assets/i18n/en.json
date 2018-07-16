@@ -108,6 +108,7 @@
     "PROFILE_BUTTON": "Edit Profile",
     "PAGE_PROFILE": "Edit Profile",
     "NOTIFICATIONS": "Notifications",
+    "NO_NAME": "Add a name!",
     "NO_DESCRIPTION": "Add a description!",
     "NO_BADGES_1": "You don't have any badges yet.",
     "NO_BADGES_2": "Continue savooding to earn some!"
@@ -124,6 +125,7 @@
     "LASTNAME": "Lastname",
     "PHONE": "Phone",
     "TITLE": "Other Profile",
+    "NO_NAME": "No name available!",
     "NO_DESCRIPTION": "No description available",
     "NO_BADGES": " doesn't have any badges yet!"
   },

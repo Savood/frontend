@@ -31,6 +31,7 @@
     "NAME_DESC": "Name & Beschreibung",
     "EMAIL": "Email",
     "PHONE": "Handynummer",
+    "NO_NAME": "Füge deinen Namen hinzu!",
     "NO_DESCRIPTION": "Füge deine Beschreibung hinzu!",
     "NO_BADGES_1": "Leider hast du noch keine Abzeichen.",
     "NO_BADGES_2": "Savoode weiter um welche zu erhalten!"
@@ -44,6 +45,7 @@
     "DESCRIPTION": "Beschreibung",
     "PHONE": "Telefon",
     "DELETE_ACCOUNT": "Konto löschen",
+    "NO_NAME": "Kein Name vorhanden!",
     "NO_DESCRIPTION": "Keine Beschreibung vorhanden",
     "NO_BADGES": " hat noch keine Abzeichen"
   },
@@ -146,7 +148,7 @@
   "GO":"Los gehts!",
   "TELEPHONE":"Telefonnummer",
 
-  "CREATE_USER_SUCCESS":"Jetzt kann es endlich los gehen. Innerhalb des Einstellungstab können sie ihr Profil weiter personifizieren.",
+  "CREATE_USER_SUCCESS":"Jetzt kann es endlich los gehen. Innerhalb des Einstellungstab kannst du dein Profil weiter personifizieren.",
 
   "OFFERING_MAP_TILE":"Rettungskarte",
   "MAP_LOADING":"Kleinen Moment, wir verteilen kurz das Essen...",
