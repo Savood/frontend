@@ -32,7 +32,7 @@ Zum Testen im Browser, einfach dieses Repository herunterladen, in den Ordner ge
 
 # Weitere Informationen für Dozenten die dieses Projekt potenziell bewerten
 
-Diese App verwendet i18n um sowohl in deutscher Sprache als auch in Englisch und Esperanto ein angemessenes Nutzungserlebnis zu bieten.
+Diese App verwendet **i18n** um sowohl in **deutscher Sprache** als auch in **Englisch** und **Esperanto** ein angemessenes Nutzungserlebnis zu bieten.
 Eine solche Maßnahme ist für eine geplante Globalisierung der App von großer Bedeutung.
 
 ## Komponenten
