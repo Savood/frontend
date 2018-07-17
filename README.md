@@ -28,4 +28,42 @@ Einfach die APK [hier]() herunterladen und los savooden
 Zum Testen im Browser, einfach dieses Repository herunterladen, in den Ordner gehen und `npm i` und `ionic serve` ausführen!
 
 
-## Viel Spaß beim Welt retten!
+## Viel Spaß beim Welt rette
+
+## Weitere Informationen für Dozenten die dieses Projekt potenziell bewerten
+
+Diese App verwendet i18n um sowohl in deutscher Sprache als auch in Englisch und Esperanto ein angemessenes Nutzungserlebnis zu bieten.
+Eine solche Maßnahme ist für eine geplante Globalisierung der App von großer Bedeutung.
+
+### Komponenten
+
+Die einzelnen Komponenten (Seiten bzw. Unterseiten) finden sich in dem Ordner `src/pages`.  
+Hierzu gehören:
+
+* **chats** -
+* **chat-overview** - 
+* **create-offering** -
+* **forgot-password** -
+* **login** -
+* **offering-detail** -
+* **offering-map** -
+* **offeringlist** -
+* **offerings** -
+* **register** -
+* **settings** -
+* **signup** -
+* **tabs** -
+* **web-upload** -
+* **welcome** -
+	
+### Services
+
+Die Seiten werden in ihrer Logik durch Services unterstützt.
+Die Services sind im Ordner `src/providers` zu finden.
+Sie teilen sich auf in `api`, `auth` und `maps`.
+
+#### API
+
+#### Auth
+
+#### Maps
