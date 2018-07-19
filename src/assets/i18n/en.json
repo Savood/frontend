@@ -111,14 +111,22 @@
     "NO_NAME": "Add a name!",
     "NO_DESCRIPTION": "Add a description!",
     "NO_BADGES_1": "You don't have any badges yet.",
-    "NO_BADGES_2": "Continue savooding to earn some!"
+    "NO_BADGES_2": "Continue savooding to earn some!",
+    "DELETE_ACCOUNT": "Delete Account",
+    "DELETE": {
+      "CONFIRM":"Ich bin mir sicher!",
+      "TITLE":"Wenn du dein Offering wirklich löschen willst, dann schreib 'Ja, ich will!",
+      "CANCEL":"Ich habe es anders überlegt",
+      "PLACEHOLDER":"Ja, ich will!",
+      "SUCCESSFUL":"Dein Offering wurde gelöscht",
+      "WRONG_TEXT":"Ups das hat leider nicht geklappt."
+    }
   },
 
   "CHOOSE_PICTURE": "Choose an image",
 
   "PROFILE": {
     "BADGES": "Badges",
-    "DELETE_ACCOUNT": "Delete Account",
     "DESCRIPTION": "Description",
     "EMAIL": "Email",
     "FIRSTNAME": "Firstname",

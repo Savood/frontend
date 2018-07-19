@@ -124,8 +124,8 @@
           <button ion-item color="secondary" (click)="logout()">
             {{'SETTINGS.LOGOUT'|translate|uppercase}}
           </button>
-          <button ion-item color="danger">
-            {{'PROFILE.DELETE_ACCOUNT'|translate|uppercase}}
+          <button ion-item color="danger" (click)="deleteAccount()">
+            {{'SETTINGS.DELETE_ACCOUNT'|translate|uppercase}}
           </button>
         </ion-list>
       </ion-card>
