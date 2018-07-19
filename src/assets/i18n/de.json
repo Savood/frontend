@@ -9,7 +9,7 @@
   "SLOGAN": "Nur lebendiges Food tut gut",
 
   "TAB": {
-    "TITLE1": "Items",
+    "TITLE1": "Savoods",
     "TITLE2": "Rettungskarte",
     "TITLE3": "Nachrichten",
     "TITLE4": "Account"
@@ -34,7 +34,16 @@
     "NO_NAME": "Füge deinen Namen hinzu!",
     "NO_DESCRIPTION": "Füge deine Beschreibung hinzu!",
     "NO_BADGES_1": "Leider hast du noch keine Abzeichen.",
-    "NO_BADGES_2": "Savoode weiter um welche zu erhalten!"
+    "NO_BADGES_2": "Savoode weiter um welche zu erhalten!",
+    "DELETE_ACCOUNT": "Konto löschen",
+    "DELETE": {
+      "CONFIRM":"Ich bin mir sicher!",
+      "TITLE":"Wenn du dein Offering wirklich löschen willst, dann schreib 'Ja, ich will!",
+      "CANCEL":"Ich habe es anders überlegt",
+      "PLACEHOLDER":"Ja, ich will!",
+      "SUCCESSFUL":"Dein Offering wurde gelöscht",
+      "WRONG_TEXT":"Ups das hat leider nicht geklappt.",
+    }
   },
 
   "PROFILE": {
@@ -45,7 +54,6 @@
     "EMAIL": "E-Mail",
     "DESCRIPTION": "Beschreibung",
     "PHONE": "Telefon",
-    "DELETE_ACCOUNT": "Konto löschen",
     "NO_NAME": "Kein Name vorhanden!",
     "NO_DESCRIPTION": "Keine Beschreibung vorhanden",
     "NO_BADGES": " hat noch keine Abzeichen"

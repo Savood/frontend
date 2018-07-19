@@ -2,6 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {
+  AlertController,
   App,
   IonicPage,
   LoadingController,
@@ -92,6 +93,8 @@ export class SettingsPage {
     profileChanged: this.profileChanged
   };
 
+  translated: any;
+
   subSettings: any = SettingsPage;
 
   constructor(public navCtrl: NavController,
@@ -107,8 +110,20 @@ export class SettingsPage {
               public platform: Platform,
               public _auth: AuthProvider,
               private app: App,
+              private alertCtrl: AlertController,
               private _social: SocialSharing,
+              private _translate: TranslateService,
               private _sanitizer: DomSanitizer) {
+
+    this._translate.get([
+      'SETTINGS.DELETE.TITLE', 'SETTINGS.DELETE.SUCCESSFUL', 'SETTINGS.DELETE.WRONG_TEXT', 'SETTINGS.DELETE.PLACEHOLDER', 'SETTINGS.DELETE.CONFIRM', 'SETTINGS.DELETE.CANCEL'
+    ]).subscribe(
+      (data) => {
+        console.log(data);
+        this.translated = data;
+      },
+      (err) => console.log(err)
+    );
   }
 
   ionViewDidLoad() {
@@ -332,7 +347,6 @@ export class SettingsPage {
     return this._user.usersIdBackgroundimageJpegGet(user._id).subscribe(
       (data) => {
         this.header = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
-        console.log(this.header);
       }
     );
   }
@@ -370,5 +384,48 @@ export class SettingsPage {
         }).present();
       }
     )
+  }
+
+  deleteAccount() {
+    let alert = this.alertCtrl.create({
+      title: this.translated['SETTINGS.DELETE.TITLE'],
+      inputs: [
+        {
+          name: 'text',
+          placeholder: this.translated['SETTINGS.DELETE.PLACEHOLDER'],
+          type: 'text'
+        }
+      ],
+      buttons: [
+        {
+          text: this.translated['SETTINGS.DELETE.CANCEL'],
+          role: 'cancel'
+        },
+        {
+          text: this.translated['SETTINGS.DELETE.CONFIRM'],
+          handler: data => {
+            let text: string = data.text;
+            text = text.toLowerCase().trim();
+            let val_text: string = this.translated['SETTINGS.DELETE.PLACEHOLDER'].toLowerCase().trim();
+            if (val_text === text) {
+              this._user.deleteUserById(this.profile._id).subscribe(
+                (data) => {
+                  this.navCtrl.setRoot('LoginPage');
+                }
+              )
+            } else {
+              let toast = this.toastCtrl.create({
+                message: this.translated['SETTINGS.DELETE.WRONG_TEXT'],
+                duration: 3000,
+                position: 'top'
+              });
+              toast.present();
+
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

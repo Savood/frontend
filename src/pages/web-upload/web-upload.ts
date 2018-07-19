@@ -101,17 +101,7 @@ export class WebUploadPage {
   }
 
   getPicture() {
-    if (Camera['installed']()) {
-      this.camera.getPicture({
-        destinationType: this.camera.DestinationType.DATA_URL,
-      }).then((data) => {
-        this.selectedFile = 'date:image/jpg;base64,' + data;
-      }, () => {
-        alert('Unable to take photo');
-      })
-    } else {
       this.fileInput.nativeElement.click();
-    }
   }
 
   processWebImage(event) {

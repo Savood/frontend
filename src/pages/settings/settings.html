@@ -92,7 +92,8 @@
           </button>
           <button ion-item [navPush]="subSettings" [navParams]="locationSettings">
             <ion-icon name="map" item-start></ion-icon>
-            {{'SETTINGS.LOCATION'|translate}}
+            <span *ngIf="profile.address.street">{{profile.address.street}} {{profile.address.number}}, {{profile.address.zip}} {{profile.address.city}}</span>
+            <span *ngIf="!profile.address.street">{{'SETTINGS.LOCATION'|translate}}</span>
           </button>
         </ion-item-group>
       </ion-card>
@@ -124,8 +125,8 @@
           <button ion-item color="secondary" (click)="logout()">
             {{'SETTINGS.LOGOUT'|translate|uppercase}}
           </button>
-          <button ion-item color="danger">
-            {{'PROFILE.DELETE_ACCOUNT'|translate|uppercase}}
+          <button ion-item color="danger" (click)="deleteAccount()">
+            {{'SETTINGS.DELETE_ACCOUNT'|translate|uppercase}}
           </button>
         </ion-list>
       </ion-card>

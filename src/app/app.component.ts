@@ -1,12 +1,13 @@
-import { Component, ViewChild } from '@angular/core';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, ViewChild} from '@angular/core';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {TranslateService} from '@ngx-translate/core';
 import {Config, Nav, Platform} from 'ionic-angular';
-import { FirstRunPage } from '../pages';
+import {FirstRunPage} from '../pages';
 
 
 @Component({
-  template: `<ion-nav #content [root]="rootPage"></ion-nav>`
+  template: `
+    <ion-nav #content [root]="rootPage"></ion-nav>`
 })
 export class MyApp {
   rootPage = FirstRunPage;
@@ -25,20 +26,8 @@ export class MyApp {
     this.translate.setDefaultLang('en');
     const browserLang = this.translate.getBrowserLang();
 
-    if (browserLang) {
-      if (browserLang === 'zh') {
-        const browserCultureLang = this.translate.getBrowserCultureLang();
-
-        if (browserCultureLang.match(/-CN|CHS|Hans/i)) {
-          this.translate.use('zh-cmn-Hans');
-        } else if (browserCultureLang.match(/-TW|CHT|Hant/i)) {
-          this.translate.use('zh-cmn-Hant');
-        }
-      } else {
-        this.translate.use(this.translate.getBrowserLang());
-      }
-    } else {
-      this.translate.use('en'); // Set your language here
+    if (browserLang === 'de' || browserLang === 'eo') {
+      this.translate.use(this.translate.getBrowserLang());
     }
 
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
