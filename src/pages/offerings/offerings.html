@@ -20,7 +20,7 @@
       <img [src]="offeringImages[item._id] || 'assets/img/fallback_offering.jpg'" style="width: 100vw; max-height: 40vh; object-fit:cover">
 
       <ion-fab right bottom edge>
-        <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="placeSavood(feed)">
+        <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="placeSavood(item)">
           <ion-icon name='restaurant'></ion-icon>
         </button>
       </ion-fab>

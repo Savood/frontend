@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {App, IonicPage, LoadingController, NavController} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
-import {OfferingsService} from "../../providers";
+import {Chat, MessagesService, OfferingsService} from "../../providers";
 import {UsersService} from "../../providers";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MapsService} from "../../providers/maps/maps";
@@ -36,6 +36,7 @@ export class OfferingsPage {
               public _auth: AuthProvider,
               public _offering: OfferingsService,
               public _user: UsersService,
+              public _messages: MessagesService,
               public loadingCtrl: LoadingController,
               private _sanitizer: DomSanitizer) {
 
@@ -110,15 +111,37 @@ export class OfferingsPage {
 
   /**
    * Place savood on offering
-   * @param feed
+   * @param item
    */
-  placeSavood(feed) {
-    if (feed.savooded) {
-      //TODO Send to message side
+  placeSavood(item: Offering) {
+    console.log(item);
+    if (item.savooded) {
+      this._messages.getAllChatsForOffering(item._id).subscribe(
+        (chats: Chat[]) => {
+          if (chats.length > 0) {
+            this.navCtrl.push('ChatPage',
+              {
+                chatId: chats[0]._id,
+                partner: chats[0].partner
+              });
+          }
+        }
+      )
     } else {
-      this._offering.placeSavood(feed.id).subscribe((data: SuccessObject) => {
-        if (data.success)
-          console.log("Wuhu");
+      this._offering.placeSavood(item._id).subscribe((data: SuccessObject) => {
+        if (data.success) {
+          this._messages.getAllChatsForOffering(item._id).subscribe(
+            (chats: Chat[]) => {
+              if (chats.length > 0) {
+                this.navCtrl.push('ChatPage',
+                  {
+                    chatId: chats[0]._id,
+                    partner: chats[0].partner
+                  });
+              }
+            }
+          )
+        }
       }, (err) => {
         console.log(err);
       });

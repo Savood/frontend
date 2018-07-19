@@ -156,23 +156,37 @@ export class OfferingDetailPage {
   }
 
   placeSavood() {
-    this._offering.placeSavood(this.offering._id).subscribe((data: SuccessObject) => {
-      if (data.success) {
-        this._messages.getAllChatsForOffering(this.offering._id).subscribe(
-          (chats: Chat[]) => {
-            if (chats.length > 0) {
-              this.navCtrl.push('ChatPage',
-                {
-                  chatId: chats[0]._id,
-                  partner: chats[0].partner
-                });
-            }
+    if (this.offering.savooded) {
+      this._messages.getAllChatsForOffering(this.offering._id).subscribe(
+        (chats: Chat[]) => {
+          if (chats.length > 0) {
+            this.navCtrl.push('ChatPage',
+              {
+                chatId: chats[0]._id,
+                partner: chats[0].partner
+              });
           }
-        )
-      }
-    }, (err) => {
-      console.log(err);
-    });
+        }
+      )
+    } else {
+      this._offering.placeSavood(this.offering._id).subscribe((data: SuccessObject) => {
+        if (data.success) {
+          this._messages.getAllChatsForOffering(this.offering._id).subscribe(
+            (chats: Chat[]) => {
+              if (chats.length > 0) {
+                this.navCtrl.push('ChatPage',
+                  {
+                    chatId: chats[0]._id,
+                    partner: chats[0].partner
+                  });
+              }
+            }
+          )
+        }
+      }, (err) => {
+        console.log(err);
+      });
+    }
   }
 
   getDistanceString(item): void {
