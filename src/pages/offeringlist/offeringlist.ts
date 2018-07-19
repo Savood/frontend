@@ -97,11 +97,26 @@ export class OfferinglistPage {
 
 
   getMySavoods(): void {
-    this._offering.getOfferings("requested").subscribe(data => this.requested_offerings = data, err => console.error(err));
+    this._offering.getOfferings("requested").subscribe(
+      data => {
+        this.requested_offerings = data;
+        for (let offering of data) {
+          this.getImageSource(offering);
+        }
+      },
+      err => console.error(err)
+    );
   }
 
   getMyOfferings(): void {
-    this._offering.getOfferings("owned").subscribe(data => this.owned_offerings = data, err => console.error(err));
+    this._offering.getOfferings("owned").subscribe(
+      data => {
+        this.owned_offerings = data;
+        for (let offering of data) {
+          this.getImageSource(offering);
+        }
+      },
+      err => console.error(err));
   }
 
   getImage(offering: Offering): string {

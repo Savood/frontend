@@ -26,7 +26,8 @@
     <div *ngSwitchCase="'owned'">
       <ion-card *ngFor="let item of owned_offerings" (click)="openItem(item)" class="savooded">
         <div style="position: relative;">
-          <img [src]="offeringImages[item._id]" onError="this.src='assets/img/fallback_offering.jpg';">
+          <img [src]="offeringImages[item._id]" onError="this.src='assets/img/fallback_offering.jpg';"
+               style="width: 100vw; max-height: 40vh; object-fit:cover">
 
           <ion-fab right bottom edge>
             <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="showDeleteOfferingDialog(item)">
@@ -64,7 +65,8 @@
     <div *ngSwitchCase="'requested'">
       <ion-card *ngFor="let item of requested_offerings" (click)="openItem(item)" class="savooded">
         <div style="position: relative;">
-          <img [src]="offeringImages[item._id]" onError="this.src='assets/img/fallback_offering.jpg';">
+          <img [src]="offeringImages[item._id]" onError="this.src='assets/img/fallback_offering.jpg';"
+               style="width: 100vw; max-height: 40vh; object-fit:cover">
 
           <ion-fab right bottom edge>
             <button ion-fab fab-map [color]="item.savooded?'secondary':'primary'" (click)="showUnsavoodDialog(item)">
