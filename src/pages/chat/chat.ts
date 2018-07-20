@@ -58,12 +58,15 @@ export class ChatPage {
   }
 
   sendMessage() {
+  if(this.newMessage != '')
+  {
     this._message.createNewMessage(this.chatId, {content: this.newMessage}).subscribe(
       (created) => {
         this.newMessage = '';
         this.refreshMessages();
       }
-    );
+    )
+  }
   }
 
   viewProfile(id: string) {
