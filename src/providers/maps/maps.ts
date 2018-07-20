@@ -16,6 +16,9 @@ export class MapsService {
 
   map: any;
 
+  /**
+   * Generates the service with a variable based on the platform (JSMaps for Web, NativeMaps for Android/iOS)
+   */
   constructor(public http: HttpClient,
               public geolocation: Geolocation) {
     //if (this.plt.is('cordova') &&

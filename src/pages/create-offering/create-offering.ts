@@ -74,21 +74,29 @@ export class CreateOfferingPage {
     this.form.valueChanges.subscribe(() => {
       this.valid = this.form.valid;
     });
-
   }
 
-  ionViewDidLoad() {
-  }
-
+  /**
+   * Run the init Map method on page enter
+   */
   ionViewDidEnter() {
     this.initMap();
   }
 
+  /**
+   * Returns the currently selected image
+   * @returns The currently selected image
+   */
   getOfferingImage() {
     // return 'url(' + this.form.controls['offeringPic'].value + ')';
     return this.form.controls['offeringPic'].value;
   }
 
+  /**
+   * Initializes the map for choosing a location by using the MapsService
+   * Adds a marker to the map which can be used to set the location
+   * Centers the Map and Marker on the current user position
+   */
   initMap() {
     this._maps.getGPS().then(
       (position) => {
@@ -103,11 +111,18 @@ export class CreateOfferingPage {
     )
   }
 
-  removeFocus(){
+  // TODO: Maybe fix it because im not sure it works
+  /**
+   * Removes focus of all input elements when the map is selected so the keyboard does not open
+   */
+  removeFocus() {
     const active = <HTMLInputElement>document.activeElement;
     active.blur();
   }
 
+  /**
+   * On focus of the bestByDate input field, opens the Datepicker so a date can be selected
+   */
   openDatePicker() {
     this.datePicker.show({
       date: new Date(),
@@ -119,6 +134,10 @@ export class CreateOfferingPage {
     );
   }
 
+  /**
+   * Method passed to he marker listener to get the position when the marker is moved
+   * Writes the position into the address fields
+   */
   usePointerLocation() {
     this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
       (address) => {
@@ -136,36 +155,43 @@ export class CreateOfferingPage {
     );
   }
 
+  /**
+   * Actually uploads the selcted image, run only after the offering is created (so there is an id to upload to)
+   * @param offeringId ID of the offering for which the image is
+   */
   uploadImage(offeringId: string) {
     this._offering.offeringsIdImageJpegPost(offeringId, this.image).subscribe();
   }
 
+  // TODO: A way to use the camera and actually choose the source from a context menu should be added
+  /**
+   * Run when the "Choose a pic"-Card is clicked
+   * Opens the dialog which allows to choose an image
+   */
   getPicture() {
-    if (Camera['installed']()) {
-      this.camera.getPicture({
-        destinationType: this.camera.DestinationType.DATA_URL,
-      }).then((data) => {
-        this.form.patchValue({'offeringPic': 'date:image/jpg;base64,' + data});
-      }, () => {
-        alert('Unable to take photo');
-      })
-    } else {
-      this.fileInput.nativeElement.click();
-    }
+    this.fileInput.nativeElement.click();
   }
 
+  /**
+   * On click of the input file field
+   * As the input file field is actually hidden, only called from the getPicture method (through faking a click)
+   * @param event Upload event of the hidden input field which is called when an image gets chosen
+   */
   processWebImage(event) {
     let reader = new FileReader();
     reader.onload = (readerEvent) => {
       let imageData = (readerEvent.target as any).result;
       this.form.patchValue({'offeringPic': imageData});
     };
-    if(event.target.files[0]){
+    if (event.target.files[0]) {
       this.image = event.target.files[0];
       reader.readAsDataURL(event.target.files[0]);
     }
   }
 
+  /**
+   * Finishes the creation process and calls the API to create the offering with all data
+   */
   createOffering() {
     this.loading.present();
 
