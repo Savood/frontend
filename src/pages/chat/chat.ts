@@ -51,12 +51,18 @@ export class ChatPage {
     this.getUserAvatar(_auth.getActiveUserId())
   }
 
+  /**
+   * Loads the messages on init and everytime a new message is sent
+   */
   refreshMessages(){
     this._message.getAllMessagesForChat(this.chatId).subscribe(
       (messages) => this.messages = messages
     );
   }
 
+  /**
+   * Sends the current content of the textfield in case it is not emtpy and clears it
+   */
   sendMessage() {
   if(this.newMessage != '')
   {
@@ -69,16 +75,28 @@ export class ChatPage {
   }
   }
 
+  /**
+   * On click of the profile picture the Profile Page for the profile is pushed
+   * @param id ID of the profile to view
+   */
   viewProfile(id: string) {
     this.navCtrl.push('SettingsPage', {profileId: id, pageTitleKey: 'PROFILE.TITLE', ownProfile: false});
   }
 
+  /**
+   * Loads the image for the partner
+   * @param userId ID of the profile for which the image needs to be loaded
+   */
   getPartnerAvatar(userId: string) {
     this._user.usersIdImageJpegGet(userId).subscribe(
       (avatar) => this.partnerImage = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(avatar))
     )
   }
 
+  /**
+   * Gets the avatar for the user
+   * @param userId ID of the own Profile
+   */
   getUserAvatar(userId: string) {
     this._user.usersIdImageJpegGet(userId).subscribe(
       (avatar) => this.userImage = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(avatar))

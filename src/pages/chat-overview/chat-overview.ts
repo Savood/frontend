@@ -40,8 +40,12 @@ export class ChatOverviewPage {
               private _sanitizer: DomSanitizer) {
   }
 
+  /**
+   * As soon as the page is entered, things are loaded:
+   * If the page is the main chat overview page the content for the two tabs is loaded
+   * Otherwise nothing needs to happen
+   */
   ionViewDidEnter(){
-
     if(this.page === 'startOverview'){
 
       let loading = this.loadingCtrl.create({
@@ -73,6 +77,9 @@ export class ChatOverviewPage {
     }
   }
 
+  /**
+   * After the view fully loaded the title is set and if the page is the chats for a offering page the chats are loaded
+   */
   ionViewDidLoad() {
     this.page = this.navParams.get('page') || this.page;
     this.pageTitleKey = this.navParams.get('pageTitleKey') || this.pageTitleKey;
@@ -87,6 +94,10 @@ export class ChatOverviewPage {
     }
   }
 
+  /**
+   * Gets the image source for every Offering and adds it to an array
+   * @param item Item for which the image is needed
+   */
   getImageSource(item: Offering) {
     return this._offerings.offeringsIdImageJpegGet(item._id).subscribe(
       (data) => {
@@ -95,6 +106,10 @@ export class ChatOverviewPage {
     );
   }
 
+  /**
+   * Gets the image source for every User with which there is a chat and adds it to an array
+   * @param user User of the Image to load
+   */
   getUserAvatar(user: User) {
     return this._user.usersIdImageJpegGet(user._id).subscribe(
       (data) => {
@@ -103,6 +118,11 @@ export class ChatOverviewPage {
     );
   }
 
+  /**
+   * On click of a chat, push the ChatPage with the correct chat information
+   * @param chatId ChatId for which messages need to be loaded
+   * @param partner Partner with which the chat is, so it can be instatly displayed
+   */
   openChat(chatId: string, partner: any) {
     this.navCtrl.push('ChatPage',
       {
@@ -111,6 +131,10 @@ export class ChatOverviewPage {
       });
   }
 
+  /**
+   * On click of an offering, push the ChatOverviewPage with the correct offering information
+   * @param offering Offering for which all chats need to be loaded
+   */
   openChatOverview(offering: Offering) {
     if(offering.creator._id === this._auth.getActiveUserId()){
       this.navCtrl.push('ChatOverviewPage',
@@ -135,6 +159,10 @@ export class ChatOverviewPage {
     }
   }
 
+  /**
+   * Get all chats which are related to the offering (happens after openChatOverview)
+   * @param offeringId OfferingId for which chats will be loaded
+   */
   getChats(offeringId: string) {
     this._messages.getAllChatsForOffering(offeringId).subscribe(
       (chats) => {

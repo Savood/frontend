@@ -34,6 +34,11 @@ export class WebUploadPage {
     });
   }
 
+  /**
+   * If an image was chosen by the user, upload it to the database
+   * If the page was opened for uploading an avatar, upload the image as Avatar
+   * If the page was opened for uploading an header, upload the image as Header
+   */
   uploadFile() {
     if (this.image) {
       if (this.navParams.get('type') === 'avatar') {
@@ -95,15 +100,29 @@ export class WebUploadPage {
     }
   }
 
+  /**
+   * Returns the currently selected image
+   * @returns the currently selected image
+   */
   getOfferingImage() {
     // return 'url(' + this.form.controls['offeringPic'].value + ')';
     return this.selectedFile;
   }
 
+  // TODO: A way to use the camera and actually choose the source from a context menu should be added
+  /**
+   * Run when the "Choose a pic"-Card is clicked
+   * Opens the dialog which allows to choose an image
+   */
   getPicture() {
       this.fileInput.nativeElement.click();
   }
 
+  /**
+   * On click of the input file field
+   * As the input file field is actually hidden, only called from the getPicture method (through faking a click)
+   * @param event Upload event of the hidden input field which is called when an image gets chosen
+   */
   processWebImage(event) {
     let reader = new FileReader();
     reader.onload = (readerEvent) => {

@@ -23,9 +23,13 @@ import {Camera} from "@ionic-native/camera";
 import {DomSanitizer} from "@angular/platform-browser";
 
 /**
- * The Settings page is a simple form that syncs with a Settings provider
- * to enable the user to customize settings for the app.
- *
+ * The Settings page is a fairly complicated and well designed page to fulfill two purposes: Settings and Profile
+ * For every user who is not you, this page shows the general information about the user
+ * For yourself, this page displays you general information, as well as all subsettings pages and a logout button
+ * This difference is mostly handled by the ownProfile variable which is set based on the id of profile compared to
+ * the id of the currently logged in user
+ * The display of the subSettings is handled by Navparams which specify which page to display
+ * This makes for a fairly complicated HTML which is documented as well (on a high level)
  */
 @IonicPage(
   {
@@ -69,6 +73,9 @@ export class SettingsPage {
   pageTitleKey: string = 'SETTINGS.TITLE';
   pageTitle: string;
 
+  /**
+   * SubSettings objects which ae passed as NavParams and filter the needed elements
+   */
   locationSettings = {
     page: 'location',
     pageTitleKey: 'SETTINGS.LOCATION',
@@ -76,7 +83,6 @@ export class SettingsPage {
     profileId: '',
     profileChanged: this.profileChanged
   };
-
   phoneSettings = {
     page: 'phone',
     pageTitleKey: 'SETTINGS.PHONE',
@@ -84,7 +90,6 @@ export class SettingsPage {
     profileId: '',
     profileChanged: this.profileChanged
   };
-
   nameDescSettings = {
     page: 'nameDesc',
     pageTitleKey: 'SETTINGS.NAME_DESC',
@@ -126,9 +131,11 @@ export class SettingsPage {
     );
   }
 
-  ionViewDidLoad() {
-  }
-
+  /**
+   * Does all the basic NavParams handling before the Page is entered
+   * Checks for ownProfile
+   * Loads data based on the page that is currently displayed
+   */
   ionViewWillEnter() {
     this.page = this.navParams.get('page') || this.page;
     this.pageTitleKey = this.navParams.get('pageTitleKey') || this.pageTitleKey;
@@ -175,12 +182,6 @@ export class SettingsPage {
       );
     }
 
-    // if (this.navParams.get('page') == 'email') {
-    //   this.emailForm = this.formBuilder.group({
-    //     email: [this.profile.email]
-    //   });
-    // }
-
     if (this.navParams.get('page') == 'phone') {
       this.phoneForm = this.formBuilder.group({
         phone: [this.profile.phone]
@@ -210,12 +211,20 @@ export class SettingsPage {
     });
   }
 
+  /**
+   * The location settings needs an additional handler because the map can only be initialized after the page was entered
+   */
   ionViewDidEnter() {
     if (this.navParams.get('page') == 'location') {
       this.initMap();
     }
   }
 
+  /**
+   * Initializes the map for choosing a location by using the MapsService
+   * Adds a marker to the map which can be used to set the location
+   * Centers the Map and Marker on the current user position
+   */
   initMap() {
     let loading = this.loadingCtrl.create({
       content: 'Please wait...',
@@ -237,6 +246,10 @@ export class SettingsPage {
     )
   }
 
+  /**
+   * Method passed to he marker listener to get the position when the marker is moved
+   * Writes the position into the address fields
+   */
   usePointerLocation() {
     this._maps.getAddress(this._maps.getMarkerPosition(this.locationMarker)).then(
       (address) => {
@@ -251,6 +264,10 @@ export class SettingsPage {
     );
   }
 
+  /**
+   * Allows to enter a position manually in the Adress field and update the marker accordingly
+   * Uses the MapsService to get the Geolocation related to the Address
+   */
   useEnteredLocation() {
     let formattedAddress: string =
       this.profile.address.street + " " +
@@ -270,6 +287,10 @@ export class SettingsPage {
     );
   }
 
+  /**
+   * Saves the data of the form which was currently being edited
+   * @param form Form which was currently being edited (see HTML for call and passing)
+   */
   saveData(form: FormGroup) {
     let newSettings = {};
     Object.assign(newSettings, this.profile, form.value);
@@ -307,19 +328,34 @@ export class SettingsPage {
     }
   }
 
+  /**
+   * Pushes the upload page for images with the header specification
+   */
   getHeader() {
     this.navCtrl.push('WebUploadPage', {type: 'header', callback: this.imageChanged, userId: this.profile._id});
   }
 
+  /**
+   * Pushes the upload page for images with the avatar specification
+   */
   getPicture() {
     this.navCtrl.push('WebUploadPage', {type: 'avatar', callback: this.imageChanged, userId: this.profile._id});
   }
 
+  /**
+   * Does the logout and redirects the user to the LoginPage
+   */
   logout() {
     this._auth.logout();
     this.app.getRootNav().setRoot(LoginPage, {"LOGGED_OUT": true});
   }
 
+  /**
+   * On Click of the Share-Button
+   * Saves the Link to the current profile either in the clipboard or
+   * Opens the SocialPlugin if the platform is Android or iOS
+   * The link is unique to the profile and can be used to access the profile immediatly
+   */
   sharePage() {
     let route: string[] = this.platform.url().split('/');
 
@@ -343,22 +379,35 @@ export class SettingsPage {
     }
   }
 
+  /**
+   * Loads the Header image
+   * @param user User for which to load the Header
+   */
   getUserHeader(user: User) {
-    return this._user.usersIdBackgroundimageJpegGet(user._id).subscribe(
+    this._user.usersIdBackgroundimageJpegGet(user._id).subscribe(
       (data) => {
         this.header = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
       }
     );
   }
 
+  /**
+   * Loads the avatar image
+   * @param user User for which to load the avatar
+   */
   getUserAvatar(user: User) {
-    return this._user.usersIdImageJpegGet(user._id).subscribe(
+    this._user.usersIdImageJpegGet(user._id).subscribe(
       (data) => {
         this.avatar = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
       }
     );
   }
 
+  /**
+   * Checks the type of the badge which the user has and displays the accoding icon
+   * @param badge Badge (String) Which to check for type
+   * @returns {string} Returns the name of the Ionicon
+   */
   getBadgeType(badge: string) {
     let badgeType: string = badge.split('_')[0];
     switch (badgeType) {
@@ -373,6 +422,10 @@ export class SettingsPage {
     }
   }
 
+  /**
+   * On Click of a badge, displays info about the badge and how it was earned
+   * @param badge Badge which to display the info for
+   */
   showBadgeInfo(badge: string) {
     let key: string = 'BADGES.' + badge;
     this.translate.get(key).subscribe(
@@ -386,6 +439,9 @@ export class SettingsPage {
     )
   }
 
+  /**
+   * Deletes the UserAccount
+   */
   deleteAccount() {
     let alert = this.alertCtrl.create({
       title: this.translated['SETTINGS.DELETE.TITLE'],
