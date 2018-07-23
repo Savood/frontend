@@ -41,6 +41,10 @@ export class OfferingMapPage {
       this.initMap();
   }
 
+  /**
+   * Method to initialise the map
+   * @returns {Promise<void>}
+   */
   async initMap() {
     const default_radius = env.default_radius;
 

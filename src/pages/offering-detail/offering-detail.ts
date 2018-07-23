@@ -37,7 +37,6 @@ export class OfferingDetailPage {
   current_location: Location = null;
   browser_local = null;
 
-
   delete_offering_title: string = null;
   delete_offering_placeholder: string = null;
   delete_offering_confirm: string = null;
@@ -92,6 +91,9 @@ export class OfferingDetailPage {
 
   }
 
+  /**
+   * Gets called when the segment changes
+   */
   onSegmentChanged() {
 
   }
@@ -100,6 +102,9 @@ export class OfferingDetailPage {
     this.initMap();
   }
 
+  /**
+   * Method to intialise the map
+   */
   initMap() {
     let offering = this.offering;
 
@@ -115,6 +120,11 @@ export class OfferingDetailPage {
       });
   }
 
+  /**
+   * Gets the source of the offering image
+   * @param offering
+   * @returns {Subscription}
+   */
   getImageSource(offering: Offering) {
     return this._offering.offeringsIdImageJpegGet(offering._id).subscribe(
       (data) => {
@@ -123,6 +133,11 @@ export class OfferingDetailPage {
     );
   }
 
+  /**
+   * gets the avatar picture of a user
+   * @param user
+   * @returns {Subscription}
+   */
   getUserAvatar(user: User) {
     return this._user.usersIdImageJpegGet(user._id).subscribe(
       (data) => {
@@ -131,6 +146,9 @@ export class OfferingDetailPage {
     );
   }
 
+  /**
+   * Shares the page of an offering
+   */
   sharePage() {
     let route: string[] = this.platform.url().split('/');
 
@@ -155,6 +173,9 @@ export class OfferingDetailPage {
     }
   }
 
+  /**
+   * Place a savood on the offering
+   */
   placeSavood() {
     if (this.offering.savooded) {
       this._messages.getAllChatsForOffering(this.offering._id).subscribe(
@@ -189,11 +210,18 @@ export class OfferingDetailPage {
     }
   }
 
+  /**
+   * Gets the string of distance to the offering
+   * @param item
+   */
   getDistanceString(item): void {
     let dist = this._maps.getDistance(this.current_location, this._offering.changeOfferingLocationToLocation(item.location));
     this.distanceString = `${dist.amount} ${dist.unit}`;
   }
 
+  /**
+   * Redirects user to google maps navigation to offering
+   */
   openMapsNavigation() {
     if (this.platform.is('cordova')) {
       this.launchNavigator.navigate(this.offering.location.coordinates, {
@@ -206,11 +234,18 @@ export class OfferingDetailPage {
     }
   }
 
+  /**
+   * Redirects user to anothers user's page
+   * @param user
+   */
   goToCreator(user: User) {
     this.navCtrl.push('SettingsPage', {profileId: user._id, pageTitleKey: 'PROFILE.TITLE'});
   }
 
 
+  /**
+   * Opens a dialog to delete an offering
+   */
   showDeleteOfferingDialog() {
     let item = this.offering;
     let alert = this.alertCtrl.create({
@@ -245,6 +280,10 @@ export class OfferingDetailPage {
     alert.present();
   }
 
+  /**
+   * Method to delete an offering, redirects to offering provider
+   * @param item
+   */
   deleteOffering(item: Offering) {
     this._offering.deleteOfferingById(item._id).subscribe(() => {
       let toast = this._toast.create({
@@ -257,6 +296,9 @@ export class OfferingDetailPage {
 
   }
 
+  /**
+   * gets invoked when delete dialog gets dismissed.
+   */
   revokeDeletionOfOffering() {
 
     let toast = this._toast.create({

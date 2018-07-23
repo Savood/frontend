@@ -148,11 +148,19 @@ export class OfferingsPage {
     }
   }
 
+  /**
+   * Gets string for distance
+   * @param item
+   * @returns {string}
+   */
   getDistanceString(item): string {
     let dist = this._maps.getDistance(this.current_location, this._offering.changeOfferingLocationToLocation(item.location));
     return `${dist.amount} ${dist.unit}`;
   }
 
+  /**
+   * Opens a list to handle own or savooded offerings
+   */
   openOfferingList() {
     this.navCtrl.push("OfferinglistPage", {currLocation: this.current_location, browserLang: this.browser_local});
   }

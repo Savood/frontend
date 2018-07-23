@@ -89,13 +89,14 @@ export class OfferinglistPage {
     );
   }
 
-
   ionViewDidLoad() {
     this.getMyOfferings();
     this.getMySavoods();
   }
 
-
+  /**
+   * Returns the offerings which where savooded by the current user
+   */
   getMySavoods(): void {
     this._offering.getOfferings("requested").subscribe(
       data => {
@@ -108,6 +109,9 @@ export class OfferinglistPage {
     );
   }
 
+  /**
+   * Returns the offerings created by the current user
+   */
   getMyOfferings(): void {
     this._offering.getOfferings("owned").subscribe(
       data => {
@@ -119,10 +123,10 @@ export class OfferinglistPage {
       err => console.error(err));
   }
 
-  getImage(offering: Offering): string {
-    return this._offering.getImagePath(offering);
-  }
-
+  /**
+   * redirects to the detail page of an offering
+   * @param item offering
+   */
   openItem(item: Offering) {
     this.navCtrl.push('OfferingDetailPage', {
       offering: item,
@@ -130,11 +134,20 @@ export class OfferinglistPage {
     });
   }
 
+  /**
+   * Gets a string to display the distance
+   * @param item distance
+   * @returns {string} formatted string
+   */
   getDistanceString(item): string {
     let dist = this._maps.getDistance(this.currentLocation, this._offering.changeOfferingLocationToLocation(item.location));
     return `${dist.amount} ${dist.unit}`;
   }
 
+  /**
+   * Shows dialog to unsavood an offering
+   * @param feed
+   */
   showUnsavoodDialog(feed) {
     let alert = this.alertCtrl.create({
       title: this.unsavood_title,
@@ -168,6 +181,9 @@ export class OfferinglistPage {
     alert.present();
   }
 
+  /**
+   * Unsavood offering via offering provider
+   */
   unsavood() {
 
     //TODO UNSAVOOD API CALL
@@ -182,6 +198,9 @@ export class OfferinglistPage {
 
   }
 
+  /**
+   * Gets called when the dialog to unsavood an offering got dismissed
+   */
   revokeUnsavood() {
     let toast = this._toast.create({
       message: this.unsavood_wrong_text,
@@ -192,6 +211,10 @@ export class OfferinglistPage {
 
   }
 
+  /**
+   * Opens dialog to delete an offering
+   * @param item offering
+   */
   showDeleteOfferingDialog(item: Offering) {
     let alert = this.alertCtrl.create({
       title: this.delete_offering_title,
@@ -225,6 +248,10 @@ export class OfferinglistPage {
     alert.present();
   }
 
+  /**
+   * Deletes offering via offering provider
+   * @param item
+   */
   deleteOffering(item: Offering) {
     this._offering.deleteOfferingById(item._id).subscribe(() => {
       let toast = this._toast.create({
@@ -237,6 +264,9 @@ export class OfferinglistPage {
 
   }
 
+  /**
+   * Gets called when the dialog to delete an offering got dismissed
+   */
   revokeDeletionOfOffering() {
 
     let toast = this._toast.create({
