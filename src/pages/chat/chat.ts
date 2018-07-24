@@ -88,7 +88,7 @@ export class ChatPage {
    * @param userId ID of the profile for which the image needs to be loaded
    */
   getPartnerAvatar(userId: string) {
-    this._user.usersIdImageJpegGet(userId).subscribe(
+    this._user.usersIdImageJpegGet(userId, 50, 0).subscribe(
       (avatar) => this.partnerImage = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(avatar))
     )
   }
@@ -98,7 +98,7 @@ export class ChatPage {
    * @param userId ID of the own Profile
    */
   getUserAvatar(userId: string) {
-    this._user.usersIdImageJpegGet(userId).subscribe(
+    this._user.usersIdImageJpegGet(userId, 50, 0).subscribe(
       (avatar) => this.userImage = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(avatar))
     )
   }

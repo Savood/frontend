@@ -99,7 +99,7 @@ export class ChatOverviewPage {
    * @param item Item for which the image is needed
    */
   getImageSource(item: Offering) {
-    return this._offerings.offeringsIdImageJpegGet(item._id).subscribe(
+    return this._offerings.offeringsIdImageJpegGet(item._id, 50, 0).subscribe(
       (data) => {
         this.offeringImages[item._id] = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
       }
@@ -111,7 +111,7 @@ export class ChatOverviewPage {
    * @param user User of the Image to load
    */
   getUserAvatar(user: User) {
-    return this._user.usersIdImageJpegGet(user._id).subscribe(
+    return this._user.usersIdImageJpegGet(user._id, 50, 0).subscribe(
       (data) => {
         this.chatImages[user._id] = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
       }

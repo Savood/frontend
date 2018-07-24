@@ -139,7 +139,7 @@ export class OfferingDetailPage {
    * @returns {Subscription}
    */
   getUserAvatar(user: User) {
-    return this._user.usersIdImageJpegGet(user._id).subscribe(
+    return this._user.usersIdImageJpegGet(user._id, 50, 0).subscribe(
       (data) => {
         this.avatar = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
       }

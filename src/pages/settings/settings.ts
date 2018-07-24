@@ -384,7 +384,7 @@ export class SettingsPage {
    * @param user User for which to load the Header
    */
   getUserHeader(user: User) {
-    this._user.usersIdBackgroundimageJpegGet(user._id).subscribe(
+    this._user.usersIdBackgroundimageJpegGet(user._id, 500, 0).subscribe(
       (data) => {
         this.header = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
       }
@@ -396,7 +396,7 @@ export class SettingsPage {
    * @param user User for which to load the avatar
    */
   getUserAvatar(user: User) {
-    this._user.usersIdImageJpegGet(user._id).subscribe(
+    this._user.usersIdImageJpegGet(user._id, 500, 0).subscribe(
       (data) => {
         this.avatar = this._sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
       }
