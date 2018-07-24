@@ -32,6 +32,8 @@ export class MyApp {
         this._auth.renewToken().then(data => {
           if (data && this._auth.isLoggedIn()) {
             this.nav.setRoot(MainPage);
+          } else {
+            this.nav.setRoot(FirstRunPage);
           }
         });
       }
