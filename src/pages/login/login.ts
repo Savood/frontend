@@ -40,41 +40,6 @@ export class LoginPage {
       this.emailPlaceholder = value.EMAIL;
       this.passwordPlaceholder = value.PASSWORD;
     });
-
-    if (!navParams.get("LOGGED_OUT")) {
-      if (this._auth.isLoggedIn()) {
-        navCtrl.setRoot(MainPage);
-      } else {
-        this._auth.renewToken().then(data => {
-          if (data && this._auth.isLoggedIn()) {
-            navCtrl.setRoot(MainPage);
-          }
-        });
-      }
-    }
-
-    this._deeplinks.route({
-      '/profile/:profileId': 'SettingsPage',
-      '/savood/:offeringId': 'OfferingDetailPage',
-      '/': {}
-    }).subscribe(
-      (match) => {
-        if (this._auth.isLoggedIn()) {
-          navCtrl.push(match.$route, match.$args);
-        }
-      },
-      (nomatch) => {
-        if (nomatch !== 'cordova_not_available') {
-          let toast = this.toastCtrl.create({
-            message: "RESSOURCE_NOT_AVAILABLE",
-            duration: 3000,
-            position: 'top'
-          });
-          toast.present();
-        }
-      }
-    )
-
   }
 
   // Attempt to login in through our User service
