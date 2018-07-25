@@ -223,8 +223,9 @@ export class OfferingDetailPage {
    * Redirects user to google maps navigation to offering
    */
   openMapsNavigation() {
+
     if (this.platform.is('cordova')) {
-      this.launchNavigator.navigate(this.offering.location.coordinates, {
+      this.launchNavigator.navigate([this.offering.location.coordinates[1], this.offering.location.coordinates[0]], {
         app: this.launchNavigator.APP.USER_SELECT
       });
     } else {
