@@ -124,7 +124,6 @@ export class SettingsPage {
       'SETTINGS.DELETE.TITLE', 'SETTINGS.DELETE.SUCCESSFUL', 'SETTINGS.DELETE.WRONG_TEXT', 'SETTINGS.DELETE.PLACEHOLDER', 'SETTINGS.DELETE.CONFIRM', 'SETTINGS.DELETE.CANCEL'
     ]).subscribe(
       (data) => {
-        console.log(data);
         this.translated = data;
       },
       (err) => console.log(err)
@@ -290,12 +289,23 @@ export class SettingsPage {
   /**
    * Saves the data of the form which was currently being edited
    * @param form Form which was currently being edited (see HTML for call and passing)
+   * @param location if the data to be saved is for the address, use additional decorating
    */
-  saveData(form: FormGroup) {
-    let newSettings = {};
-    Object.assign(newSettings, this.profile, form.value);
+  saveData(form: FormGroup, location?: boolean) {
+    let newSettings: User = {};
+    let patchValue = form.value;
+    if(location){
+      newSettings = this.profile;
+      newSettings.address = form.value;
+      patchValue = {address: form.value};
+      console.log(patchValue)
+    } else {
+      Object.assign(newSettings, this.profile, form.value);
+    }
+
+    console.log(patchValue)
     if (form.dirty) {
-      this._user.updateUserById(this.profile._id, form.value).subscribe(
+      this._user.updateUserById(this.profile._id, patchValue).subscribe(
         () => {
           this.profileChanged(newSettings);
           this.navCtrl.pop().then();
