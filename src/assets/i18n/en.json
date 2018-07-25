@@ -198,12 +198,12 @@
   "UNSAVOOD_SUCCESSFUL":"Successfully revoked your Savood",
   "UNSAVOOD_WRONG_TEXT":"It looks like you are not sure enough",
 
-  "DELETE_OFFERING__CONFIRM":"I am pretty sure!",
-  "DELETE_OFFERING__TITLE":"If you really want to delete your offering, write: 'Yes, I do!",
-  "DELETE_OFFERING__CANCEL":"Okay, I changed my mind",
-  "DELETE_OFFERING__PLACEHOLDER":"Yes, I do!",
-  "DELETE_OFFERING__SUCCESSFUL":"Successfully deleted your Offering",
-  "DELETE_OFFERING__WRONG_TEXT":"It looks like you are not sure enough",
+  "DELETE_OFFERING_CONFIRM":"I am pretty sure!",
+  "DELETE_OFFERING_TITLE":"If you really want to delete your offering, write: 'Yes, I do!",
+  "DELETE_OFFERING_CANCEL":"Okay, I changed my mind",
+  "DELETE_OFFERING_PLACEHOLDER":"Yes, I do!",
+  "DELETE_OFFERING_SUCCESSFUL":"Successfully deleted your Offering",
+  "DELETE_OFFERING_WRONG_TEXT":"It looks like you are not sure enough",
 
   "DELETE_OFFERING" : "Delete Offering"
 }
